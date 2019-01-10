@@ -1,0 +1,33 @@
+{
+  "name": "coin-ocean",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "concurrently": "^4.1.0",
+    "cors": "^2.8.5",
+    "csv-reader": "^1.0.3",
+    "dotenv": "^6.1.0",
+    "express": "^4.16.3",
+    "knex": "^0.15.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "client-install": "cd coin-ocean-react && yarn install",
+    "start": "node app.js",
+    "client": "cd coin-ocean-react && yarn start",
+    "dev": "concurrently \"yarn run start\" \"yarn run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/henry039/coin-ocean.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/henry039/coin-ocean/issues"
+  },
+  "homepage": "https://github.com/henry039/coin-ocean#readme"
+}
