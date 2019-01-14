@@ -1,23 +1,23 @@
-// require('dotenv').config();
+require('dotenv').config();
 
-// const knex = require('knex')({
-//     client:'postgresql',
-//     connection: {
-//         database: process.env.DATABASE,
-//         user:     process.env.DATABASE_USER,
-//         password: process.env.DATABASE_PASSWORD
-//     }
-// })
+const knex = require('knex')({
+    client:'postgresql',
+    connection: {
+        database: process.env.DATABASE,
+        user:     process.env.DATABASE_USER,
+        password: process.env.DATABASE_PASSWORD
+    }
+})
 
 // fake seed import
-const fakeData = require('./fakeSeed')
+// const fakeData = require('../utils/fakeSeed')
 
 class fetchDB {
     constructor(){}
 
     getBitcoin(){
-        // return knex('bitcoin_test')
-        return fakeData
+        return knex('bitcoin_test')
+        // return fakeData
     }
 }
 

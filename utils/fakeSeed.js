@@ -4,7 +4,7 @@ const test_data = require('./fake.json')
 const createTestSeed = (dataArr) =>{
   // console.log(
     return {
-      date: dataArr[0],
+      date: dataArr[0], //string YYYY-MM-DD
       price: Number(dataArr[5]) ,
       txVol: Number(dataArr[1]) ,
       txCount: Number(dataArr[3]),
