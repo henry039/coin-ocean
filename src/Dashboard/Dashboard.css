@@ -1,13 +1,55 @@
 .coinlist{
-    border: 1px solid #000000;
+    border: 1px solid #ffffff;
+    background-color:#004080;
+    color: #ffffff;
     padding: 5px;
-    margin: 10px;
+    margin: 8px;
     width: 80%;
     display: flex;
+    box-shadow: 2px 2px grey;
+    
 }
 
-.coinlist p{
-    border: 1px solid #000000;
-    margin-right: 50px;
+
+.rank{
+    font-weight: bold;
+    width: 30px;
 }
 
+.name{
+    width: 100px;
+    display: flex;
+    justify-items: flex-start;
+    margin-right: 10px;
+}
+
+.marketcap{
+    width: 130px;
+}
+
+.price{
+    width: 130px;
+    margin-right: 10px;
+}
+
+.change{
+    width: 50px;
+    display: flex;
+    justify-items: flex-start;
+    margin-right: 40px;
+
+}
+
+.vol{
+    width: 130px;
+    display: flex;
+    justify-items: flex-start;
+    margin-right: 10px;
+}
+
+.supply{
+    width: 130px;
+    display: flex;
+    justify-items: flex-start;
+    margin-right: 10px;
+}
