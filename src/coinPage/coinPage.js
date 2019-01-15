@@ -1,24 +1,15 @@
 import React, { Component } from "react";
-import "./coinPage.css";
+import Hischart from './Section/coininfoandchart/hischart'
 
-class coinPage extends Component {
-  constructor() {
-    super();
-    this.state = {
-      coin: [],
-      error: null,
-      coinlist: true
-    };
-  }
-
-
+class CoinPage extends Component {
   render() {
-    return( 
-    <div>
-    <p>Hello</p>
-    </div>
+    return (
+      <div>
+        {/* <DashboardPage /> */}
+        <Hischart />
+      </div>
     )
   }
 }
 
-export default coinPage;
+export default CoinPage;
