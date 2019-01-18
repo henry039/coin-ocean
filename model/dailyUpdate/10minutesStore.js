@@ -42,8 +42,10 @@ function redisHandle(coin_detail){
             // check 4 conditions
             let isNewKey = !(client.exists(key)) && !(listOfKeys.includes(key))
             let isExpiredKey = !(client.exists(key)) && (listOfKeys.includes(key))
-            console.log('checking key', isNewKey, isExpiredKey)
-
+            console.log(key)
+            console.log('redis ',client.exists(key))
+            console.log('masterArr ',listOfKeys.includes(key))
+            console.log('checking new key', isNewKey)
             if(isNewKey){
                 appendKeyList(key, listOfKeys)
                 return storeSingleDetail(key, coin_detail)
@@ -55,6 +57,8 @@ function redisHandle(coin_detail){
         }
     })
 }
+
+redisHandle()
 
 function appendKeyList(key, keyList){
     return getAsync(keyList).then(reply => {
@@ -133,10 +137,10 @@ const minData = function(coin) {
     }).catch(err => console.log(err))
 }
 
-const job = new CronJob('0 */1 * * * *', ()=>{
-    fetchCoinDetail()
-    minData('bitcoin')
-})
-job.start()
+// const job = new CronJob('0 */1 * * * *', ()=>{
+//     fetchCoinDetail()
+//     minData('bitcoin')
+// })
+// job.start()
 
 module.exports = minData
