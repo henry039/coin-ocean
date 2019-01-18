@@ -1,5 +1,5 @@
 require('dotenv').config();
-
+const minuteData = require('./dailyUpdate/10minutesStore')
 const knex = require('knex')({
     client:'postgresql',
     connection: {
@@ -9,15 +9,31 @@ const knex = require('knex')({
     }
 })
 
+
 // fake seed import
 // const fakeData = require('../utils/fakeSeed')
 
 class fetchDB {
     constructor(){}
 
-    getBitcoin(){
-        return knex('bitcoin_test')
+    getCoinHistory(coin){
+        return knex(coin)
         // return fakeData
+    }
+
+    getCoinMinute(coin){
+        return minuteData(coin).then(data => data)
+    }
+
+    dailyUpdate(coin, payload){
+        return knex.transaction(async (trx)=>{
+            trx(coin).insert({
+                date: payload.date,
+                price: payload.price,
+                txVol: payload.txVol,
+                marketCap: payload.marketCap,
+            })
+        })
     }
 }
 
