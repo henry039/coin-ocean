@@ -2,9 +2,11 @@
 import * as React from 'react';
 import axios from 'axios';
 import ReactApexChart from "react-apexcharts";
+import Ind from "./indivcoincard"
+import './hischart.css'
 
-// const url = 'http://localhost:5000/api/history/bitcoin'
-const url = '/api/history/bitcoin'
+const url = 'http://localhost:5000/api/history/bitcoin'
+// const url = '/api/history/bitcoin'
 
 class ChartHistory extends React.Component {
     constructor(props) {
@@ -25,8 +27,9 @@ class ChartHistory extends React.Component {
                     labels: {
                         formatter: function (val) {
                             return `${val} USD`
-                        }
-                    }
+                        },
+                        minWidth: 100
+                    },
                 },
                 dataLabels: {
                     enabled: false
@@ -86,9 +89,10 @@ class ChartHistory extends React.Component {
                         formatter: function (val) {
                             const million = 100000000
                             let BillionBase = (val / million)
-                            return `${BillionBase.toFixed(2)}M`
-                        }
-                    }
+                            return `${BillionBase.toFixed(0)}B`
+                        },
+                        minWidth: 100,
+                    },
                 },
                 dataLabels: {
                     enabled: false
@@ -107,7 +111,7 @@ class ChartHistory extends React.Component {
                     }
                 },
                 tooltip: {
-                    enabled: true,
+                    // enabled: true,
                     followCursor: false,
                     theme: 'dark',
                     x: {
@@ -140,19 +144,21 @@ class ChartHistory extends React.Component {
                 ]
             }],
             series_vol: [{
-                type: 'column', data: [
+                // type: 'column'
+                data: [
                     { x: "2017-11-12", y: 6295.45 },
                 ]
                 // data: [
                 //     { x: "2017-11-12", y: 6295.45 },
                 // ]
-            }]
+            }],
+            info: []
         }
     }
 
     updateSeries = (rawData) => {
         let updatePrice = this.extractPrice(rawData)
-        let updateExchange = this.extractExchange(rawData)
+        let updateExchange = this.extractTxVol(rawData)
         // console.log(updatePrice)
         // console.log(updateExchange)
         this.setState({
@@ -192,16 +198,25 @@ class ChartHistory extends React.Component {
         }
         return Object.assign({}, {
             name: 'TxVol',
-            type: 'column',
+            // type: 'column',
             data: dataSet
         })
     }
 
     componentDidMount() {
         axios.get(url).then(res => {
+            console.log(res)
             this.setState({ history: res.data })
             this.updateSeries(res.data.slice(res.data.length - 365))
         })
+
+        fetch('https://api.coinmarketcap.com/v1/ticker/?convert=USD&limit=1')
+            .then(res => res.json())
+            .then(result => {
+                this.setState({
+                    info: result,
+                });
+            })
     }
 
     handleClick = (e) => {
@@ -230,25 +245,46 @@ class ChartHistory extends React.Component {
 
     render() {
         return (
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <button onClick={this.handleClick} value="7d">7d</button>
-                <button onClick={this.handleClick} value='1m'>1m</button>
-                <button onClick={this.handleClick} value='3m'>3m</button>
-                <button onClick={this.handleClick} value='1y'>1y</button>
-                <button onClick={this.handleClick} value='3y'>3y</button>
-                <div style={{ width: '1000px', height: '500px' }}>
-                    < ReactApexChart
-                        options={this.state.options_price}
-                        series={this.state.series_price}
-                        height='70%'
-                        type='area'
-                    />
-                    <ReactApexChart
-                        options={this.state.options_vol}
-                        series={this.state.series_vol}
-                        height='30%'
-                        type='line'
-                    />
+            <div className="coininfo">
+                {this.state.info.map((info, index) => {
+                    return (
+                        <div className="indivcoin">
+                            <Ind 
+                            name={info.name}
+                            symbol={info.symbol}
+                            price_usd={Math.round((info.price_usd)*100)/100}
+                            price_btc={Math.round((info.price_btc)*100)/100}
+                            change={Math.round((info.percent_change_24h)*100)/100}
+                            marketcap={Math.round(info.market_cap_usd)}
+                            volume={Math.round(info['24h_volume_usd'])}
+                            total={Math.round(info.total_supply)}
+                            max={Math.round(info.max_supply)}
+                            />
+                        </div>
+                    );
+                })} 
+                <div>
+                    <div className='chartbutton'>
+                        <button onClick={this.handleClick} value="7d">7d</button>
+                        <button onClick={this.handleClick} value='1m'>1m</button>
+                        <button onClick={this.handleClick} value='3m'>3m</button>
+                        <button onClick={this.handleClick} value='1y'>1y</button>
+                        <button onClick={this.handleClick} value='3y'>3y</button>
+                    </div>
+                    <div className='chart'>
+                        < ReactApexChart
+                            options={this.state.options_price}
+                            series={this.state.series_price}
+                            height='70%'
+                            type='area'
+                        />
+                        <ReactApexChart
+                            options={this.state.options_vol}
+                            series={this.state.series_vol}
+                            height='30%'
+                            type='area'
+                        />
+                    </div>
                 </div>
             </div>
         )

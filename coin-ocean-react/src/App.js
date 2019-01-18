@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
 // import './App.css';
-import ChartHistory from './components/charts/historyChart'
+// import DashboardPage from "./DashboardPage/DashboardPage"
+// import CoinPage from './coinPage/CoinPage'
+import CoinPage from './coinPage/coinPage'
 class App extends Component {
   render() {
     return (
-      <ChartHistory />
+      <div>
+        {/* <DashboardPage /> */}
+        <CoinPage />
+      </div>
     );
   }
 }

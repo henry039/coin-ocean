@@ -1,0 +1,44 @@
+.cointitle{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0px;
+}
+
+.coinname{
+    font-weight: bold;
+    margin-bottom: 0px;
+}
+
+.coinsymbol{
+    color:#8c8c8c;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 20px;
+    margin-left: 5px;
+    margin-bottom: 0px;
+    font-size: 13px;
+}
+
+.time{
+    margin-top: 0px;
+    display: flex;
+    justify-content: flex-end;
+    color:#8c8c8c;
+    font-size: 10px;
+    margin-right: 10px;
+}
+
+.font-weight{
+    font-weight: bold;
+    margin-right: 2px;
+}
+
+.price{
+    font-weight: bold;
+}
+
+.infoset{
+    display: flex;
+    justify-content: flex-start;
+}
