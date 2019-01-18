@@ -1,7 +1,7 @@
 import Dashboard from "./Section/Dashboard/Dashboard";
-import Infobar from "./Section/infobar/Infobar";
+import Infobar from "../General/infobar/Infobar";
 import React, { Component } from "react";
-import Title from "./Section/titlebar/Titlebar";
+import Title from "../General/titlebar/Titlebar";
 import "./DashboardPage.css";
 
 class DashboardPage extends Component {
@@ -49,12 +49,8 @@ class DashboardPage extends Component {
     } else if (this.state.coinlist) {
       coins = (
         <div>
-          <section className="titlebar">
           <Title />
-          </section>
-          <section className="infobar">
-            <Infobar />
-          </section>
+          <Infobar />
           <section className="Dashboard">
           <h1>Real Time Top {this.state.coin.length} Cryptocurrencies List</h1>
             <section className="apptitle">
