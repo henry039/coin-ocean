@@ -1,9 +1,9 @@
 // require('dotenv').config()
-// const axios = require('axios')
+const axios = require('axios')
 // const redis = require('redis')
-// const CronJob = require('cron').CronJob;
+const CronJob = require('cron').CronJob;
 
-// // const up2second = 1000;
+// const up2second = 1000;
 // const up2minute = 60;
 // const up2hour = 60;
 // const up2day = 24;
@@ -13,7 +13,7 @@
 // const getAsync = promisify(client.get).bind(client);
 // const setAsync = promisify(client.set).bind(client);
 // const setexAsync = promisify(client.setex).bind(client);
-// // const checkKeyExist = promisify(client.exists).bind(client)
+// const checkKeyExist = promisify(client.exists).bind(client)
 
 // client.on('error', err => {
 //     console.log('error event - ' + err);
@@ -37,40 +37,55 @@
 //             return storeSingleDetail(key, coin_detail)
 //         }else{
 //             let listOfKeys = JSON.parse(reply)
-    
+
 //             // check is it neccerry to update
 //             // check 4 conditions
-//             let isNewKey = !(client.exists(key)) && !(listOfKeys.includes(key))
-//             let isExpiredKey = !(client.exists(key)) && (listOfKeys.includes(key))
-//             console.log(key)
-//             console.log('redis ',client.exists(key))
-//             console.log('masterArr ',listOfKeys.includes(key))
-//             console.log('checking new key', isNewKey)
-//             if(isNewKey){
-//                 appendKeyList(key, listOfKeys)
-//                 return storeSingleDetail(key, coin_detail)
-//             }else if(isExpiredKey){
-//                 return removeKeyList(key, listOfKeys)
-//             }else{
-//                 return ;
-//             }
+//             checkKeyExist(key).then(isKeyExist =>{
+//                 let isNewKey = !(isKeyExist) && !(listOfKeys.includes(key))
+//                 let isExpiredKey = !(isKeyExist) && (listOfKeys.includes(key))
+//                 if(isNewKey){
+//                     appendKeyList(key, keyList)
+//                     return storeSingleDetail(key, coin_detail)
+//                 }else if(isExpiredKey){
+//                     return removeKeyList(key, keyList)
+//                 }else{
+//                     return ;
+//                 }
+//             })
 //         }
 //     })
 // }
 
+// let testObj = {
+//         "id": "bitcoin", 
+//         "name": "Bitcoin", 
+//         "symbol": "BTC", 
+//         "rank": "1", 
+//         "price_usd": "3668.55011364", 
+//         "price_btc": "1.0", 
+//         "24h_volume_usd": "5310964705.4", 
+//         "market_cap_usd": "64153905849.0", 
+//         "available_supply": "17487537.0", 
+//         "total_supply": "17487537.0", 
+//         "max_supply": "21000000.0", 
+//         "percent_change_1h": "-0.06", 
+//         "percent_change_24h": "0.87", 
+//         "percent_change_7d": "-0.35", 
+//         "last_updated": "1547799621"
+//     }
+
 // function appendKeyList(key, keyList){
 //     return getAsync(keyList).then(reply => {
 //         let listOfKeys = JSON.parse(reply)
-//         let updatedList = listOfKeys.push(key)
-//         return setAsync(keyList, JSON.stringify(updatedList))
+//         listOfKeys.push(key)
+//         return setAsync(keyList, JSON.stringify(listOfKeys))
 //     })
 // }
 
 // function removeKeyList(key, keyList){
-//     return getAsync(keyList).then(reply => {
-//         let listOfKeys = JSON.parse(reply)
-//         let removeIndex = listOfKeys.indexOf(key)
-//         let updatedList = listOfKeys.splice(removeIndex, 1)
+//     return getAsync(keyList).then(reply =>{
+//         let removeIndex = reply.indexOf(key)
+//         let updatedList = reply.splice(removeIndex, 1)
 //         return setAsync(keyList, JSON.stringify(updatedList))
 //     })
 // }
@@ -87,12 +102,6 @@
 //             return await getAsync(time).then(reply => {
 //                 totalRecord.push(JSON.parse(reply))
 //             })
-//             // if(checkKeyExist(time)){
-//             // }else{
-//             //     const removeIndex = masterArr.indexOf(time)
-//             //     let updatedMasterArr = masterArr.splice(removeIndex, 1)
-//             //     return setAsync(`latest_${coin}`, JSON.stringify(updatedMasterArr))
-//             // }
 //         })
 //         return Promise.all(detail).then(() => { return totalRecord })
 //     }).catch(err => console.log(err))
@@ -100,43 +109,46 @@
 
 // const job = new CronJob('0 */1 * * * *', ()=>{
 //     fetchCoinDetail()
-//     minData('bitcoin')
 // })
 // job.start()
 
-// module.exports = minData
+// an array return[ MTS, OPEN, CLOSE, HIGH, LOW	,VOLUME]
+// form in a obj { x : 0th, y : 2th}
 
+function fiveMinFetch() {
+    return axios.get('https://api.bitfinex.com/v2/candles/trade:5m:tBTCUSD/hist?limit=289')
+        .then(res => extractPrice(res.data))
+}
 
+function hourFetch() {
+    return axios.get('https://api.bitfinex.com/v2/candles/trade:1h:tBTCUSD/hist?limit=25')
+        .then(res => extractPrice(res.data))
+}
 
+function extractPrice(rawData) {
+    // arr of { x: '05/06/2014', y: 54 }
+    // x(date) y(price)
+    let dataSet = []
+    for (let i in rawData) {
+        dataSet.push(Object.assign({}, {
+            x: rawData[i][0],
+            y: rawData[i][2]
+        }))
+    }
+    return [Object.assign({}, {
+        name: 'Price',
+        data: dataSet
+    })]
+}
 
+// fiveMinFetch()
+// const job = new CronJob('0 */5 * * * *', ()=>{
+//     fiveMinFetch()
+// })
+// job.start()
 
+module.exports = {
+    minute : fiveMinFetch,
+    hour : hourFetch
+}
 
-// function redisStore (detail){
-//     let key = `${detail.last_updated}_${detail.id}`
-//     getAsync(key).then(reply =>{
-//         if(reply === null){
-//             fullCoinQueue.push(key)
-//             setAsync(`latest_${detail.id}`, JSON.stringify(fullCoinQueue))
-//             appendFullCoinList(deyail.id, key)
-//             return setexAsync(key, up2minute * up2hour * up2day, JSON.stringify(detail))
-//         }else{
-//             return;
-//         }
-//     })
-// }
-
-// function appendFullCoinList(coin, key){
-//     getAsync(`latest_${coin}`).then(reply =>{
-//         let courrentList = JSON.parse(reply)
-//         let updatedList = courrentList.push(key)
-//         setAsync(`latest_${coin}`, JSON.stringify(updatedList))
-//     })
-// }
-
-// function coinDetail() {
-//     return axios.get(process.env.APIs).then(res => {
-//         res.data.map(realtime_coin_detail =>{
-//             redisStore(realtime_coin_detail)
-//         })
-//     }).catch(err => console.log(err))
-// }
