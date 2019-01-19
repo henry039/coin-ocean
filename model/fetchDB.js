@@ -1,5 +1,5 @@
 require('dotenv').config();
-const minuteData = require('./dailyUpdate/10minutesStore')
+const realTimeData = require('./dailyUpdate/10minutesStore')
 const knex = require('knex')({
     client:'postgresql',
     connection: {
@@ -21,8 +21,8 @@ class fetchDB {
         // return fakeData
     }
 
-    getCoinMinute(coin){
-        return minuteData(coin).then(data => data)
+    getRealTimeCoin(){
+        return realTimeData
     }
 
     dailyUpdate(coin, payload){

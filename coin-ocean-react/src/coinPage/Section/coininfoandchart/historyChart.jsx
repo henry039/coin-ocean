@@ -5,8 +5,8 @@ import ReactApexChart from "react-apexcharts";
 import Ind from "./indivcoincard"
 import './hischart.css'
 
-const url = 'http://localhost:5000/api/history/bitcoin'
-// const url = '/api/history/bitcoin'
+// const url = 'http://localhost:5000/api/history/bitcoin'
+const url = '/api/history/bitcoin'
 
 class ChartHistory extends React.Component {
     constructor(props) {
@@ -205,7 +205,6 @@ class ChartHistory extends React.Component {
 
     componentDidMount() {
         axios.get(url).then(res => {
-            console.log(res)
             this.setState({ history: res.data })
             this.updateSeries(res.data.slice(res.data.length - 365))
         })

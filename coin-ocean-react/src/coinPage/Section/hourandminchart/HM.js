@@ -3,7 +3,8 @@ import axios from "axios";
 import ReactApexChart from "react-apexcharts";
 import './HM.css'
 
-const url = "http://localhost:5000/api/bitcoin";
+// const url = "http://localhost:5000/api/bitcoin";
+const url = "/api/realtime/bitcoin";
 
 class Hourandmin extends React.Component {
   constructor(props) {
@@ -11,154 +12,107 @@ class Hourandmin extends React.Component {
     this.state = {
       options: {
         title: {
-          text: "Bitcoin Price Movement"
-        },
-        xaxis: {
-          type: "datetime"
-        },
-        tooltip: {
-          shared: true
+          text: 'Price Graph (24hr)'
         },
         chart: {
-          stacked: false
+          id: 'price',
+        },
+        yaxis: {
+          title: {
+            text: 'Price'
+          },
+          labels: {
+            formatter: function (val) {
+              return `${val} USD`
+            }
+          }
+        },
+        dataLabels: {
+          enabled: false
         },
         stroke: {
-          // width: [1, 1, 1],
-          curve: "smooth"
+          curve: 'smooth'
         },
-        plotOptions: {
-          bar: {
-            columnWidth: "50%"
+        toolbar: {
+          tools: {
+            selection: false
           }
         },
         markers: {
-          size: 0
+          size: 0,
+          hover: {
+            size: 6
+          }
         },
-        yaxis: [
-          {
-            title: {
-              text: "Price"
-            },
-            labels: {
-              formatter: function(val) {
-                return `${val}USD`;
-              }
-            }
+        tooltip: {
+          followCursor: false,
+          theme: 'dark',
+          x: {
+            show: false
           },
-          {
-            show: false,
-            // min: 0,
-            max: 163942095652,
+          marker: {
+            show: false
+          },
+          y: {
             title: {
-              text: "txVol(24hr)"
-            },
-            labels: {
-              formatter: function(val) {
-                const million = 100000000;
-                let BillionBase = val / million;
-                return `${BillionBase.toFixed(2)}M`;
+              formatter: function () {
+                return ''
               }
             }
           }
-        ]
-      },
-      series: [
-        {
-          type: "line",
-          data: [{ x: "2017-11-12", y: 6295.45 }]
         },
-        {
-          type: "column",
-          data: [{ x: "2017-11-12", y: 6295.45 }]
-        }
-      ]
-      // series: [],
-    };
+        grid: {
+          clipMarkers: false
+        },
+        xaxis: {
+          type: 'datetime',
+          tickAmount: 6,
+        },
+      },
+      series_hour: [],
+      series_minute: []
+    }
   }
-
-  updateSeries = rawData => {
-    let updateData = this.normalizedData(rawData);
-    // console.log(updateData)
-    this.setState({ series: updateData });
-  };
-
-  extractPrice = rawData => {
-    // arr of { x: '05/06/2014', y: 54 }
-    // x(date) y(price)
-    let dataSet = [];
-    for (let i in rawData) {
-      dataSet.push(
-        Object.assign(
-          {},
-          {
-            x: rawData[i].date,
-            y: Number(rawData[i].price)
-          }
-        )
-      );
-    }
-    return Object.assign(
-      {},
-      {
-        name: "Price",
-        type: "line",
-        data: dataSet
-      }
-    );
-  };
-
-  extractTxVol = rawData => {
-    // arr of { x: '05/06/2014', y: 54 }
-    // x(date) y(price)
-    let dataSet = [];
-    for (let i in rawData) {
-      dataSet.push(
-        Object.assign(
-          {},
-          {
-            x: rawData[i].date,
-            y: Number(rawData[i].txVol)
-          }
-        )
-      );
-    }
-    return Object.assign(
-      {},
-      {
-        name: "TxVol",
-        type: "column",
-        data: dataSet
-      }
-    );
-  };
-
-  normalizedData = input => {
-    let price = this.extractPrice(input);
-    let txVol = this.extractTxVol(input);
-    return [price, txVol];
-  };
 
   componentDidMount() {
     axios.get(url).then(res => {
-      this.setState({ history: res.data });
-      this.updateSeries(res.data.slice(res.data.length - 365 * 5));
-    });
+      this.setState({ 
+        series_hour: res.data.hourCoin,
+        series_minute: res.data.minuteCoin
+      })
+    })
+    this.interval = setInterval(() => {
+      axios.get(url).then(res => {
+        this.setState({ 
+          series_hour: res.data.hourCoin,
+          series_minute: res.data.minuteCoin
+        })
+      })
+    }, 1000 * 60 * 5);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
 
   render() {
     return (
       <div className="flex">
         <div className="hmchart">
-            <ReactApexChart
+          {/* hour */}
+          <ReactApexChart
             options={this.state.options}
-            series={this.state.series}
-            />
+            series={this.state.series_hour}
+            type='area'
+          />
         </div>
         <div className="hmchart">
-            <ReactApexChart
+          {/* minute */}
+          <ReactApexChart
             options={this.state.options}
-            series={this.state.series}
-            />
+            series={this.state.series_minute}
+            type='area'
+          />
         </div>
       </div>
     );

@@ -9,8 +9,10 @@ module.exports = (app) => {
         res.send(coinHistory)
     })
     app.get('/api/realtime/:coin', async(req,res)=>{
-        let coinRealtime = await db.getCoinMinute(req.params.coin)
-        res.send(coinRealtime)
+        // let coinRealtime = await db.getCoinMinute(req.params.coin)
+        let minuteCoin = await db.getRealTimeCoin().minute()
+        let hourCoin = await db.getRealTimeCoin().hour()
+        res.send({minuteCoin, hourCoin})
     })
     app.get('/api/meta/:id', (req, res) => {
         const ids = req.params.id
