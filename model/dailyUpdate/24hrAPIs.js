@@ -1,7 +1,7 @@
 const CronJob = require('cron').CronJob;
 const db = new (require('../fetchDB'))
 const axios = require('axios')
-require('dotenv').config()
+require('dotenv').config({path: '../../.env'})
 
 // Seconds: 0-59
 // Minutes: 0-59

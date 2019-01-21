@@ -25,7 +25,8 @@ class Hourandmin extends React.Component {
             formatter: function (val) {
               return `${val} USD`
             }
-          }
+          },
+          tickAmount: 4
         },
         dataLabels: {
           enabled: false

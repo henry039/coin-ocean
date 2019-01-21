@@ -6,9 +6,7 @@ exports.up = function(knex, Promise) {
           table.string('date').notNullable()
           table.decimal('price')
           table.decimal('txVol', null)
-        //   table.integer('txCount')
           table.decimal('marketCap', null)
-        //   table.decimal('exchangeVol', null)
       })
   })
 };
