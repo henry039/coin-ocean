@@ -1,8 +1,8 @@
-import Comment from './comment'
+import Comment from '../Comment/comment'
 import CryptoNewsApi from 'crypto-news-api'
 import React, { Component } from "react";
 import "./NC.css";
-import News from './news'
+import News from '../News/news'
 
 class NC extends Component {
   constructor(props){
@@ -25,14 +25,6 @@ class NC extends Component {
     console.log(this.state.news)
   })
   .catch(error => console.error(error))
-
-    // axios.get('https://cryptocontrol.io/api/v1/public/news/coin/bitcoin?key=40d4452688001be85d8a40dd3fd5de35')
-    //     .then(response => {
-    //         console.log(response.data);
-    //         this.setState({
-    //           news: response
-    //         })
-    //     }).catch(() => console.log('Someting going wrong'));
 }
 
   buttonnewsClick = () => {

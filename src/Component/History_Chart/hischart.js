@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import ReactApexChart from "react-apexcharts";
-import Ind from "./indivcoincard"
+import Ind from "../CoinInfo/indivcoincard"
 import './hischart.css'
 
 const url = 'http://localhost:5000/api/bitcoin'

@@ -1,8 +1,7 @@
-import Dashboard from "./Section/Dashboard/Dashboard";
-import Infobar from "../General/infobar/Infobar";
 import React, { Component } from "react";
-import Title from "../General/titlebar/Titlebar";
 import "./DashboardPage.css";
+
+
 
 class DashboardPage extends Component {
   constructor() {
@@ -44,13 +43,27 @@ class DashboardPage extends Component {
       minimumFractionDigits: 0
     })
 
+
+    const Dashboard = props => {
+      return (
+          <div className="coinlist">
+            <p className='rank'>{props.rank}</p>
+            <p className='name'>{props.name}</p>
+            <p className='marketcap'>{props.marketcap}</p>
+            <p className='price'>{props.price}</p>
+            <p className='change'>{props.change}</p>
+            <p className='vol'>{props.vol}</p>
+            <p className='supply'>{props.supply}</p>
+            <p className="maxsupply">{props.maxsupply}</p>
+          </div>
+      );
+    };
+
     if (this.state.error) {
       return <div>Error: {this.state.error.message}</div>;
     } else if (this.state.coinlist) {
       coins = (
         <div>
-          <Title />
-          <Infobar />
           <section className="Dashboard">
           <h1>Real Time Top {this.state.coin.length} Cryptocurrencies List</h1>
             <section className="apptitle">
@@ -80,7 +93,6 @@ class DashboardPage extends Component {
                 />
               );
             })}
-            
           </section>
         </div>
       );

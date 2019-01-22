@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
-// import DashboardPage from "./DashboardPage/DashboardPage"
-import CoinPage from './coinPage/CoinPage'
+// import DashboardPage from "./Page/CryptoList"
+import CoinPage from './Page/CoinPage'
 
 class App extends Component {
   render() {

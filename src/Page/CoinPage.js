@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import Hischart from './Section/coininfoandchart/hischart'
-import Titlebar from '../General/titlebar/Titlebar'
-import Infobar from '../General/infobar/Infobar'
-import Hourandmin from "./Section/hourandminchart/HM";
-import NC from './Section/newsandcomment/NC'
+import Hischart from "../Component/History_Chart/hischart"
+import Titlebar from '../Component/Titlebar/Titlebar'
+import Infobar from '../Component/Infobar/Infobar'
+import Hourandmin from "../Component/HourMin_Chart/HM";
+import NC from '../Component/News&Comment/NC'
 
 class CoinPage extends Component {
   render() {

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from 'axios';
-import "./infobar.css";
+import "./Infobar.css";
 
 class Infobar extends Component{
     constructor(prop){
