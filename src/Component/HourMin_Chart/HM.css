@@ -1,0 +1,10 @@
+.flex{
+    display: flex;
+    justify-content: center;
+}
+
+.hmchart{
+    width: 500px;
+    height: auto;
+    padding: 20px;
+}

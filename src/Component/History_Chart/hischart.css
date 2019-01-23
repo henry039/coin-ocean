@@ -1,0 +1,34 @@
+.chart{
+    width: 600px;
+    height:auto;
+}
+
+.coininfo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 100px;
+}
+
+.chartbutton{
+    display: flex;
+    justify-content: center;
+}
+
+.chartbutton button{
+    margin: 1px;
+}
+
+.chartbutton button:hover{
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.indivcoin{
+    border: 2px solid #004080;
+    height: 50%;
+    width : 250px;
+    box-shadow: 5px 5px #ff8000;
+    padding: 10px;
+    margin-right: 100px;
+}
