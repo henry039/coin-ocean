@@ -1,7 +1,22 @@
 .infoboard{
     text-align: center;
+    margin: 20px;
 }
 
-.infoboard button{
-    margin : 20px;
+/* .infoboard button{
+    margin-left: 20px;
+} */
+
+.comment{
+    background-color: #002233;
 }
+
+.flextocenter{
+   display: flex;
+   justify-content: center;
+}
+
+.aligntocenter{
+    text-align: center;
+}
+
