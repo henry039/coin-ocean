@@ -3,8 +3,8 @@ import React, { Component } from "react";
 // import CryptoList from "./Page/CryptoList"
 // import CoinPage from './Page/CoinPage'
 // import Signup from './Page/Signup'
-import Signin from './Page/Signin'
-// import Demo from './demo'
+// import Signin from './Page/Signin'
+import HomePage from './Page/HomePage'
 
 class App extends Component {
   render() {
@@ -14,7 +14,8 @@ class App extends Component {
         {/* <CoinPage /> */}
         {/* <Demo /> */}
         {/* <Signup /> */}
-        <Signin />
+        {/* <Signin /> */}
+        <HomePage />
       </div>
     )
   }

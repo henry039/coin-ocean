@@ -1,0 +1,59 @@
+.hsflex{
+    display: flex;
+    justify-content: center;
+}
+
+.justdemo{
+    width: 200px;
+    height: 100px;
+    border: 1px solid #000000;
+    margin: 30px 30px;
+
+}
+
+.homeimg {
+    width: 98%;
+    height: auto;
+    margin: 5px 0px;
+}
+
+.hsmaincontainer{
+    width:70%;
+    text-align: center;
+}
+
+.hssidecontainer{
+    background-color: #1a0d00;
+    width:30%;
+}
+
+.hsabout{
+    background-color: #333333;
+    color: #ffffff;
+    padding: 5px;
+    margin: 30px 20px;
+    width: 90%;
+    text-align: center;
+}
+
+.hscontact{
+    background-color: #333333;
+    color: #ffffff;
+    padding: 5px;
+    margin: 30px 20px;
+    width: 90%;
+    text-align: center;
+}
+
+.routingtolist{
+    color:#ffcc00;
+    border: 1px solid #ffcc00;
+    border-radius: 5px;
+    margin: 30px 100px;
+    
+}
+
+.routingtolist:hover{
+    color:#ffffff;
+    background-color:#ffcc00;
+}

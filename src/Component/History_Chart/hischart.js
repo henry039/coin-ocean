@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import ReactApexChart from "react-apexcharts";
 import Ind from "../CoinInfo/indivcoincard"
+import HM from "../HourMin_Chart/HM"
 import './hischart.css'
 
 const url = 'http://localhost:5000/api/bitcoin'
@@ -176,38 +177,49 @@ class ChartHistory extends React.Component {
 // =====================William modified=====================
     render() {
         return (
-            <div className="coininfo"> 
-                {this.state.info.map((info, index) => {
-                    return (
-                        <div className="indivcoin">
-                        <Ind 
-                        name={info.name}
-                        symbol={info.symbol}
-                        price_usd={Math.round((info.price_usd)*100)/100}
-                        price_btc={Math.round((info.price_btc)*100)/100}
-                        change={Math.round((info.percent_change_24h)*100)/100}
-                        marketcap={Math.round(info.market_cap_usd)}
-                        volume={Math.round(info['24h_volume_usd'])}
-                        total={Math.round(info.total_supply)}
-                        max={Math.round(info.max_supply)}
-                        />
-                        </div>
-                    );
-                })} 
+            <div>
+                <div className="coininfo"> 
+                    {this.state.info.map((info, index) => {
+                        return (
+                            <div className="indivcoin">
+                            <Ind 
+                            name={info.name}
+                            symbol={info.symbol}
+                            price_usd={Math.round((info.price_usd)*100)/100}
+                            price_btc={Math.round((info.price_btc)*100)/100}
+                            change={Math.round((info.percent_change_24h)*100)/100}
+                            marketcap={Math.round(info.market_cap_usd)}
+                            volume={Math.round(info['24h_volume_usd'])}
+                            total={Math.round(info.total_supply)}
+                            max={Math.round(info.max_supply)}
+                            />
+                            </div>
+                        );
+                    })} 
 
-                <div>
-                    <div className="chartbutton">
-                        <button onClick={this.handleClick} value="7d">7d</button>
-                        <button onClick={this.handleClick} value='1m'>1m</button>
-                        <button onClick={this.handleClick} value='3m'>3m</button>
-                        <button onClick={this.handleClick} value='1y'>1y</button>
-                        <button onClick={this.handleClick} value='5y'>5y</button>
+                    <div>
+                        <div className="chartbutton">
+                            <button onClick={this.handleClick} value="7d">7d</button>
+                            <button onClick={this.handleClick} value='1m'>1m</button>
+                            <button onClick={this.handleClick} value='3m'>3m</button>
+                            <button onClick={this.handleClick} value='1y'>1y</button>
+                            <button onClick={this.handleClick} value='5y'>5y</button>
+                        </div>
+                        <div className="chart">
+                            <ReactApexChart
+                                options={this.state.options}
+                                series={this.state.series}
+                            />
+                        </div>
                     </div>
-                    <div className="chart">
-                        <ReactApexChart
-                            options={this.state.options}
-                            series={this.state.series}
-                        />
+                </div>
+
+                <div className="flex">
+                    <div className="hmchart">
+                        <HM/>
+                    </div>
+                    <div className="hmchart">
+                        <HM/>
                     </div>
                 </div>
             </div>

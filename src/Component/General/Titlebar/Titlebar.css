@@ -40,9 +40,6 @@
     height:auto;
 }
 
-.searchbox{
-    margin-left: 60px;
-}
 
 .easymoney{
     color:rgba(255,255,255,.5);
@@ -89,7 +86,13 @@
 }
 
 .titleimg{
-    width: 100px;
-    height: 50px;
-    border:0px;
+    width: 145px;
+    height: 55px;
+    margin: 0px 25px 0px 0px;
+    display: flex;
+    align-items: center;
+}
+
+.searchbox{
+    margin-left:10px;
 }

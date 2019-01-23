@@ -1,7 +1,6 @@
 import React from "react";
 import axios from "axios";
 import ReactApexChart from "react-apexcharts";
-import './HM.css'
 
 const url = "http://localhost:5000/api/bitcoin";
 
@@ -148,12 +147,6 @@ class Hourandmin extends React.Component {
   render() {
     return (
       <div className="flex">
-        <div className="hmchart">
-            <ReactApexChart
-            options={this.state.options}
-            series={this.state.series}
-            />
-        </div>
         <div className="hmchart">
             <ReactApexChart
             options={this.state.options}

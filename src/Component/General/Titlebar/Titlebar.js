@@ -2,15 +2,9 @@ import React, { Component } from "react";
 import './Titlebar.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
+import icon from '../../../picture/easymoney.png'
 
 class Titlebar extends Component{
-    constructor(prop){
-        super(prop);
-        this.state = {
-            coin: []
-        };
-    }
-
     render(){
         return(
             <div>
@@ -38,9 +32,7 @@ class Titlebar extends Component{
                         </form>
                         </ul>
 
-                        <div className="sperationline"></div>
-
-                        <img src="" alt="title" href="/" className="titleimg" />
+                        <img src={icon} alt="title" href="/" className="titleimg" />
 
                         <div className="form-inline my-2 my-lg-0">
                         <button className="btn borderlogin my-2 my-sm-0" type="submit">SignIn</button>

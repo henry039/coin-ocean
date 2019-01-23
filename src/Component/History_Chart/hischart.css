@@ -32,3 +32,14 @@
     padding: 10px;
     margin-right: 100px;
 }
+
+.flex{
+    display: flex;
+    justify-content: center;
+}
+
+.hmchart{
+    width: 500px;
+    height: auto;
+    padding: 20px;
+}
