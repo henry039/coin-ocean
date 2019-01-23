@@ -1,17 +1,17 @@
-import { put, take, call, select } from 'redux-saga/effects';
-import * as actions from '../actions';
-import * as selectors from '../selectors';
+import { fork } from 'redux-saga/effects';
+import * as wallet from './wallet';
+import * as trade from './trade-history';
+import * as comments from './comments';
 
-import * as api from './api';
-
-export function* getRolesSaga(uid) {
-	while (true) {
-		yield take(actions.actionType.CREATE_DB_WALLET);
-		try {
-            yield call(api.createWallet, uid);
-			yield put(actions.createWallet(res));
-		} catch(error) {
-			yield put(actions.setError());
-		}
-	}
+export default function* rootSaga() {
+	yield fork(wallet.createWalletSaga);
+	yield fork(wallet.getWalletSaga);
+    yield fork(wallet.updateWalletSaga);
+    
+	yield fork(trade.addTradeSaga);
+    yield fork(trade.getTradeSaga);
+    
+	yield fork(comments.addCommentSaga);
+	yield fork(comments.getAllCommentsSaga);
+	yield fork(comments.getUserCommentsSaga);
 }

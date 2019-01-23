@@ -1,13 +1,10 @@
 import { combineReducers } from 'redux';
-
-// import { players } from './players';
-import { selections } from './selections';
-
-const appReducer = combineReducers({
-	// players,
-    selections
-});
+import {wallet} from './wallet';
+import { trade_history } from './trade_history';
+import {comments } from './comments';
 
 export const rootReducer = combineReducers({
-	app: appReducer
+	wallet,
+	trade_history,
+	comments
 });

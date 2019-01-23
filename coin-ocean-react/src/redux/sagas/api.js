@@ -1,21 +1,21 @@
 import axios from 'axios';
 
 // wallet
-export function createWallet(uid, payload) {
+export function createWallet_api(uid, payload) {
 	return axios.post('/api/create/wallet', { uid, payload })
 		.then(checkStatus)
         // .then(res => res.json());
         .then(res)
 }
 
-export function getWallet(uid) {
+export function getWallet_api(uid) {
 	return axios.post('/api/get/wallet', { uid })
 		.then(checkStatus)
         // .then(res => res.json());
         .then(res)
 }
 
-export function updateWallet(uid, payload) {
+export function updateWallet_api(uid, payload) {
 	return axios.post('/api/create/wallet', { uid, payload })
 		.then(checkStatus)
         // .then(res => res.json());
@@ -23,30 +23,30 @@ export function updateWallet(uid, payload) {
 }
 
 // trade-history
-export function getTrade(uid){
+export function getTrade_api(uid){
 	return axios.post('/api/get/trade-history', {uid})
 		.then(checkStatus)
 		.then(res)
 }
-export function addTrade(uid, payload){
+export function addTrade_api(uid, payload){
 	return axios.post('/api/add/trade-history', {uid, payload})
 		.then(checkStatus)
 		.then(res)
 }
 
 // comment
-export function getAllComments(payload='bitcoin'){
+export function getAllComments_api(payload='bitcoin'){
 	return axios.get('/api/allComments/'+ payload.coins)
 		.then(checkStatus)
 		.then(res)
 }
-export function getUserComments(uid, payload){
-	return axios.get('/api/get/comments', {uid, payload})
+export function getUserComments_api(uid, payload){
+	return axios.post('/api/get/comments', {uid})
 		.then(checkStatus)
 		.then(res)
 }
-export function addComments(uid, payload){
-	return axios.get('/api/add/comments', {uid, payload})
+export function addComments_api(uid, payload){
+	return axios.post('/api/add/comments', {uid, payload})
 		.then(checkStatus)
 		.then(res)
 }
