@@ -1,16 +1,16 @@
 import React, { Component } from "react";
-import DashboardPage from "../Component/Dashboard/Dashboard";
+import Signinform from "../Component/Signinform/Signinform"
 import Titlebar from "../Component/General/Titlebar/Titlebar"
 import Infobar from "../Component/General/Infobar/Infobar"
 
 
-class CryptoList extends Component {
+class Signup extends Component {
   render() {
     return (
       <div>
         <Titlebar />
         <Infobar />
-        <DashboardPage />
+        <Signinform />
       </div>
     )
   }
@@ -18,4 +18,4 @@ class CryptoList extends Component {
 
 
 
-export default CryptoList;
+export default Signup;

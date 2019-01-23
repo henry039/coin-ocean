@@ -1,0 +1,45 @@
+.signinicon{
+    text-align: center;
+    margin: 50px;
+}
+
+.signinform{
+    display: flex;
+    justify-content: center;
+}
+
+.signinbacket{
+    width: 500px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    padding: 40px;
+    margin-bottom: 100px;
+}
+
+.form-row{
+    margin-bottom: 20px;
+}
+
+.signinseperation{
+    width: 90%;
+    border: 0.5px solid rgb(204, 204, 204, 0.2);
+    margin: 40px 0px;
+}
+
+.gotosignup{
+    text-align: center;
+}
+
+.gotosignup p{
+    margin:3px 0px;
+}
+
+.gotosignup a{
+    text-decoration: none;
+    color:#ffffff;
+}
+
+.gotosoicalmedia{
+    text-align: center;
+    margin: 20px;
+}
