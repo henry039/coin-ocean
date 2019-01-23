@@ -24,12 +24,14 @@ module.exports = (app) => {
         res.send(walletDetail)
     })
 
-    app.post('/api/update/wallet', (req, res)=>{
-        if(req.data.payload.dailyPL){
-            db.dailyUpdateWallet(req.data.uid, req.data.payload)
-        }else{
-            db.updateWallet(req.data.uid, req.data.payload)
-        }
+    app.post('/api/update/wallet', async(req, res)=>{
+        let updatedWallet = await db.updateWallet(req.data.uid, req.data.payload)
+        res.send(updatedWallet)
+        // if(req.data.payload.dailyPL){
+        //     db.dailyUpdateWallet(req.data.uid, req.data.payload)
+        // }else{
+        //     db.updateWallet(req.data.uid, req.data.payload)
+        // }
     })
 
     // trade-history

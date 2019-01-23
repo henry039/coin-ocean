@@ -23,7 +23,7 @@ class App extends React.Component {
     }
   }
 
-  componentDidMount = () => {
+  componentWillMount = () => {
     firebase.auth().onAuthStateChanged(user => {
       this.setState({ isSignedIn: !!user })
       console.log(firebase.auth().currentUser.uid)

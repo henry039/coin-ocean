@@ -2,8 +2,7 @@ import { applyMiddleware, createStore, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import rootReducer from './reducers';
 import rootSaga from './app/sagas/sagas';
-
-// const initialState = {};
+import { initialState } from './state'
 
 //Create saga middleware (keeps API logic in one place)
 const sagaMiddleware = createSagaMiddleware(rootSaga);
@@ -12,6 +11,6 @@ const sagaMiddleware = createSagaMiddleware(rootSaga);
 const createStoreWithMiddleware = compose(applyMiddleware(sagaMiddleware), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())(createStore);
 
 //Create redux store (holds the state tree of the app)
-const store = createStoreWithMiddleware(rootReducer);
+const store = createStoreWithMiddleware(rootReducer, initialState);
 
 export default store;
