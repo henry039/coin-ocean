@@ -6,10 +6,10 @@ export function* getAllCommentsSaga() {
 	while (true) {
 		const {payload} = yield take(actions.actionType.GET_DB_ALL_COMMENTS);
 		try {
-            const res = yield call(api.getAllComments_api, payload.coins);
-			yield put(actions.getCoinComments(res));
+			const {data} = yield call(api.getAllComments_api, payload.body);
+			yield put(actions.getCoinComments(data.body));
 		} catch(error) {
-			yield put(actions.setError());
+			yield put(actions.emitError(error.response));
 		}
 	}
 }
@@ -18,10 +18,10 @@ export function* getUserCommentsSaga() {
 	while (true) {
 		const {payload} = yield take(actions.actionType.GET_DB_USER_COMMENTS);
 		try {
-            const res = yield call(api.getUserComments_api, payload.uid);
-			yield put(actions.getUserComments(res));
+            const {data} = yield call(api.getUserComments_api, payload.uid);
+			yield put(actions.getUserComments(data.body));
 		} catch(error) {
-			yield put(actions.setError());
+			yield put(actions.emitError(error.response));
 		}
 	}
 }
@@ -30,10 +30,10 @@ export function* addCommentSaga() {
 	while (true) {
 		const {payload} = yield take(actions.actionType.ADD_DB_COMMENTS);
 		try {
-            const res = yield call(api.addComments_api, payload.uid, payload.payload);
-			yield put(actions.addComments(res));
+			const {data} = yield call(api.addComments_api, payload.uid, payload.body);
+			yield put(actions.addComments(data.body));
 		} catch(error) {
-			yield put(actions.setError());
+			yield put(actions.emitError(error.response));
 		}
 	}
 }

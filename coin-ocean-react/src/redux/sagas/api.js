@@ -4,51 +4,48 @@ import axios from 'axios';
 export function createWallet_api(uid, payload) {
 	return axios.post('/api/create/wallet', { uid, payload })
 		.then(checkStatus)
-        // .then(res => res.json());
-        .then(res)
+		.then(res => res)
 }
 
 export function getWallet_api(uid) {
 	return axios.post('/api/get/wallet', { uid })
 		.then(checkStatus)
-        // .then(res => res.json());
-        .then(res)
+		.then(res => res)
 }
 
 export function updateWallet_api(uid, payload) {
-	return axios.post('/api/create/wallet', { uid, payload })
+	return axios.post('/api/update/wallet', { uid, payload })
 		.then(checkStatus)
-        // .then(res => res.json());
-        .then(res)
+		.then(res => res)
 }
 
 // trade-history
-export function getTrade_api(uid){
-	return axios.post('/api/get/trade-history', {uid})
+export function getTrade_api(uid) {
+	return axios.post('/api/get/trade-history', { uid })
 		.then(checkStatus)
-		.then(res)
+		.then(res => res)
 }
-export function addTrade_api(uid, payload){
-	return axios.post('/api/add/trade-history', {uid, payload})
+export function addTrade_api(uid, payload) {
+	return axios.post('/api/add/trade-history', { uid, payload })
 		.then(checkStatus)
-		.then(res)
+		.then(res => res)
 }
 
 // comment
-export function getAllComments_api(payload='bitcoin'){
-	return axios.get('/api/allComments/'+ payload.coins)
+export function getAllComments_api(payload = 'bitcoin') {
+	return axios.get('/api/allComments/' + payload)
 		.then(checkStatus)
-		.then(res)
+		.then(res => res)
 }
-export function getUserComments_api(uid, payload){
-	return axios.post('/api/get/comments', {uid})
+export function getUserComments_api(uid, payload) {
+	return axios.post('/api/get/comments', { uid })
 		.then(checkStatus)
-		.then(res)
+		.then(res => res)
 }
-export function addComments_api(uid, payload){
-	return axios.post('/api/add/comments', {uid, payload})
+export function addComments_api(uid, payload) {
+	return axios.post('/api/add/comments', { uid, payload })
 		.then(checkStatus)
-		.then(res)
+		.then(res => res)
 }
 
 

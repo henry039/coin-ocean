@@ -65,7 +65,7 @@ class fetchDB {
     }
 
     getWallet(uid) {
-        return knex('wallet').where('uid', uid)[0]
+        return knex('wallet').where('uid', uid)
     }
 
     updateWallet(uid, payload) {
@@ -128,11 +128,11 @@ class fetchDB {
 
     // Comment Section
     getAllComments(tag) {
-        return knex('comment').where('tag', tag)
+        return knex('comment').where('tag', tag).orderBy('id', 'desc')
     }
 
     getUserComments(uid) {
-        return knex('comment').where('uid', uid)
+        return knex('comment').where('uid', uid).orderBy('id', 'desc')
     }
 
     addComments(uid, payload) {

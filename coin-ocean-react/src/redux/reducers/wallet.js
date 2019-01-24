@@ -4,20 +4,18 @@ import { initialState } from '../state';
 export const wallet = handleActions({
     CREATE_WALLET : (state, action) => ({
         ...state,
-        wallet : {
-            ...state.wallet,
-            rest : action.payload.rest
-        }
+        rest : action.payload.res
     }),
 
     UPDATE_WALLET : (state, action) =>({
         ...state,
-        wallet : {
-            coins : {
-                ...state.wallet.coins,
-                [action.payload.coinsName] : action.payload.quantity
-            },
-            rest : action.payload.rest,
-        }
+        coins : action.payload.res.coins,
+        rest : action.payload.res.rest,
+    }),
+
+    GET_WALLET : (state, action) => ({
+        coins : action.payload.res.coins,
+        rest : action.payload.res.rest,
+        dailyPL : action.payload.res.dailyPL
     })
 }, initialState.wallet)

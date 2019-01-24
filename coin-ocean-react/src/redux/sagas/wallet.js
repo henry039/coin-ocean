@@ -6,10 +6,10 @@ export function* createWalletSaga() {
 	while (true) {
 		const {payload} = yield take(actions.actionType.CREATE_DB_WALLET);
 		try {
-            const res = yield call(api.createWallet_api, payload.uid);
-			yield put(actions.createWallet(res));
+			const {data} = yield call(api.createWallet_api, payload.uid, payload.body);
+			yield put(actions.createWallet(data[0].rest));
 		} catch(error) {
-			yield put(actions.setError());
+			yield put(actions.emitError(error.response));
 		}
 	}
 }
@@ -18,10 +18,10 @@ export function* getWalletSaga() {
 	while (true) {
 		const {payload} = yield take(actions.actionType.GET_DB_WALLET);
 		try {
-            const res = yield call(api.getWallet_api, payload.uid);
-			yield put(actions.getWallet(res));
+			const {data} = yield call(api.getWallet_api, payload.uid);
+			yield put(actions.getWallet(data.body));
 		} catch(error) {
-			yield put(actions.setError());
+			yield put(actions.emitError(error.response));
 		}
 	}
 }
@@ -30,10 +30,10 @@ export function* updateWalletSaga() {
 	while (true) {
 		const {payload} = yield take(actions.actionType.UPDATE_DB_WALLET);
 		try {
-            const res = yield call(api.updateWallet_api, payload.uid, payload.payload);
-			yield put(actions.updateWallet(res));
+			const {data} = yield call(api.updateWallet_api, payload.uid, payload.body);
+			yield put(actions.updateWallet(data.body));
 		} catch(error) {
-			yield put(actions.setError());
+			yield put(actions.emitError(error.response));
 		}
 	}
 }

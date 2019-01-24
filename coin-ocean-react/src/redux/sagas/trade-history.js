@@ -6,10 +6,10 @@ export function* addTradeSaga() {
 	while (true) {
 		const {payload} = yield take(actions.actionType.ADD_DB_TRADE_HISTORY);
 		try {
-            const res = yield call(api.addTrade_api, payload.uid, payload.payload);
-			yield put(actions.addTradeHistory(res));
+			const {data} = yield call(api.addTrade_api, payload.uid, payload.body);
+			yield put(actions.addTradeHistory(data.body));
 		} catch(error) {
-			yield put(actions.setError());
+			yield put(actions.emitError(error.response));
 		}
 	}
 }
@@ -18,10 +18,10 @@ export function* getTradeSaga() {
 	while (true) {
 		const {payload} = yield take(actions.actionType.GET_DB_TRADE_HISTORY);
 		try {
-            const res = yield call(api.getTrade_api, payload.uid);
-			yield put(actions.getWallet(res));
+			const {data} = yield call(api.getTrade_api, payload.uid);
+			yield put(actions.getTradeHistory(data.body));
 		} catch(error) {
-			yield put(actions.setError());
+			yield put(actions.emitError(error.response));
 		}
 	}
 }

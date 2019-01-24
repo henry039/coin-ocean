@@ -14,6 +14,6 @@ app.use(cors({
     allowMethods: ['GET', 'POST', 'DELETE'],
     allowHeaders: ['Content-Type', 'Authorization', 'Accept'],
 }))
-app.use(parser.urlencoded({extend: false}))
+app.use(parser.urlencoded({extended: false}))
 app.use(parser.json())
 router(app)

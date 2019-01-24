@@ -1,6 +1,9 @@
 export const actionType = {
     // CREATE_USER: 'CREATE_USER'
 
+    // USER
+    USER_STATUS : 'USER_STATUS',
+
     // WALLET
     CREATE_WALLET : 'CREATE_WALLET',
     GET_WALLET : 'GET_WALLET',
@@ -23,4 +26,7 @@ export const actionType = {
     ADD_DB_COMMENTS : 'ADD_DB_COMMENTS',
     GET_DB_ALL_COMMENTS : 'GET_DB_ALL_COMMENTS',
     GET_DB_USER_COMMENTS : 'GET_DB_USER_COMMENTS',
+
+    // ERROR
+    EMIT_ERROR : 'EMIT_ERROR'
 }

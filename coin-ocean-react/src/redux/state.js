@@ -29,6 +29,10 @@ export const initialState = {
     //     {date : '2019-1-1', context : 'First time to trade', tag : 'bitcoin'},
     //     {date : '2019-1-2', context : 'Second time to trade', tag : 'bitcoin'},
     // ],
-    comment : []
+    comments : [],
+    error : {
+        isError : false,
+        error_msg : null
+    }
 
 };
