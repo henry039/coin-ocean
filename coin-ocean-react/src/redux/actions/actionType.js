@@ -2,7 +2,8 @@ export const actionType = {
     // CREATE_USER: 'CREATE_USER'
 
     // USER
-    USER_STATUS : 'USER_STATUS',
+    USER_LOGIN : 'USER_LOGIN',
+    USER_LOGOUT : 'USER_LOGOUT',
 
     // WALLET
     CREATE_WALLET : 'CREATE_WALLET',

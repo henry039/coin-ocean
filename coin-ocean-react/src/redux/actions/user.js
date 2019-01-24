@@ -1,4 +1,6 @@
 import { actionType } from './actionType';
 import { createAction } from 'redux-actions';
 
-export const userTracking = createAction(actionType.USER_STATUS, (uid, signInBool) => ({uid, signInBool}))
+export const userLogin = createAction(actionType.USER_LOGIN, (uid, signInBool) => ({uid, signInBool}))
+
+export const userLogout = createAction(actionType.USER_LOGOUT)
