@@ -1,0 +1,15 @@
+.profileboard{
+    display: flex;
+    justify-content: center;
+    margin: 50px;
+
+}
+
+.profileboard button {
+    margin: 30px;
+}
+
+.putintomiddle{
+    text-align: center;
+    margin-bottom: 300px;
+}

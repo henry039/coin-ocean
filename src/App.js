@@ -4,7 +4,8 @@ import React, { Component } from "react";
 // import CoinPage from './Page/CoinPage'
 // import Signup from './Page/Signup'
 // import Signin from './Page/Signin'
-import HomePage from './Page/HomePage'
+// import HomePage from './Page/HomePage'
+import Profile from './Page/Profile'
 
 class App extends Component {
   render() {
@@ -12,10 +13,10 @@ class App extends Component {
       <div>
         {/* <CryptoList /> */}
         {/* <CoinPage /> */}
-        {/* <Demo /> */}
         {/* <Signup /> */}
         {/* <Signin /> */}
-        <HomePage />
+        {/* <HomePage /> */}
+        <Profile />
       </div>
     )
   }

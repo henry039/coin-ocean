@@ -18,6 +18,4 @@ class CoinPage extends Component {
 }
 
 
-
-
 export default CoinPage;

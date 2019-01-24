@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./Signupform.css";
+import Easy_icon from "../../picture/easymoney_icon.png"
 
 
 class Signupform extends Component {
@@ -8,7 +9,7 @@ class Signupform extends Component {
       <div className="signupform">
         <div className="signupcontainer">
             <div className="signupicon">
-                <img src="" alt="icon" />
+                <img src={Easy_icon} alt="icon" />
             </div>
 
             <div className="signupbacket">

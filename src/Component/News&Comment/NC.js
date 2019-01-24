@@ -3,6 +3,8 @@ import CryptoNewsApi from "crypto-news-api";
 import React, { Component } from "react";
 import "./NC.css";
 import News from "../News/news";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 class NC extends Component {
   constructor(props) {
@@ -75,8 +77,8 @@ class NC extends Component {
     return (
       <div>
         <div className="infoboard">
-          <button onClick={this.buttonnewsClick}>News</button>
-          <button onClick={this.buttoncommentClick}>Comment</button>
+          <button className="btn btn-outline-warning infoboardbtn" onClick={this.buttonnewsClick}>News</button>
+          <button className="btn btn-outline-warning infoboardbtn" onClick={this.buttoncommentClick}>Comment</button>
         </div>
       {info}
       </div>

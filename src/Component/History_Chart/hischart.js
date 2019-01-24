@@ -4,6 +4,8 @@ import ReactApexChart from "react-apexcharts";
 import Ind from "../CoinInfo/indivcoincard"
 import HM from "../HourMin_Chart/HM"
 import './hischart.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 const url = 'http://localhost:5000/api/bitcoin'
 
@@ -199,11 +201,11 @@ class ChartHistory extends React.Component {
 
                     <div>
                         <div className="chartbutton">
-                            <button onClick={this.handleClick} value="7d">7d</button>
-                            <button onClick={this.handleClick} value='1m'>1m</button>
-                            <button onClick={this.handleClick} value='3m'>3m</button>
-                            <button onClick={this.handleClick} value='1y'>1y</button>
-                            <button onClick={this.handleClick} value='5y'>5y</button>
+                            <button className="btn btn-outline-danger" onClick={this.handleClick} value="7d">7d</button>
+                            <button className="btn btn-outline-danger" onClick={this.handleClick} value='1m'>1m</button>
+                            <button className="btn btn-outline-danger" onClick={this.handleClick} value='3m'>3m</button>
+                            <button className="btn btn-outline-danger" onClick={this.handleClick} value='1y'>1y</button>
+                            <button className="btn btn-outline-danger" onClick={this.handleClick} value='5y'>5y</button>
                         </div>
                         <div className="chart">
                             <ReactApexChart

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./Signinform.css";
+import Easy_name from "../../picture/easymoney_name.png"
 
 
 class Signinform extends Component {
@@ -8,7 +9,7 @@ class Signinform extends Component {
       <div className="signinform">
         <div className="signincontainer">
             <div className="signinicon">
-                <img src="" alt="icon" />
+                <img src={Easy_name} alt="icon" />
             </div>
 
             <div className="signinbacket">

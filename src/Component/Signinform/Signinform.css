@@ -1,6 +1,11 @@
 .signinicon{
     text-align: center;
-    margin: 50px;
+    margin: 20px;
+}
+
+.signinform img{
+    width:100px;
+    height: auto;
 }
 
 .signinform{
