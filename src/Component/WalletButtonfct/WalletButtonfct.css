@@ -11,5 +11,69 @@
 
 .putintomiddle{
     text-align: center;
-    margin-bottom: 300px;
+    margin-bottom: 150px;
+}
+
+
+.yeswatchlist{
+    width:70%;
+    margin-left: auto;
+    margin-right:auto;
+}
+
+
+.watchlistbar{
+    border-bottom: 3px double #993d00;
+    display: flex;
+    justify-content: center;
+    margin-left: auto;
+    margin-right:auto;
+    width:100%;
+    font-weight:bold;
+}
+
+.watchlistbar p{
+    margin:0;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.watchlistbar{
+    border-bottom: 3px double #993d00;
+    display: flex;
+    justify-content: center;
+    margin-left: auto;
+    margin-right:auto;
+    width:100%;
+    font-weight:bold;
+}
+
+.watchlistbar p{
+    margin:0;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.yesinvestlist{
+    width:77%;
+    margin-left: auto;
+    margin-right:auto;
+}
+
+.listbar{
+    border-bottom: 3px double #993d00;
+    display: flex;
+    justify-content: center;
+    margin-left: auto;
+    margin-right:auto;
+    width:100%;
+    font-weight:bold;
+}
+
+.listbar p{
+    margin:0;
+    margin-left: 40px;
+    margin-right: 40px;
+    font-size:15px;
+    width: 100px;
 }

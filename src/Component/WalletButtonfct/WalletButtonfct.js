@@ -3,7 +3,7 @@ import WatchList from './Watchlist/Watchlist'
 import Invested from './Invested/Invested'
 import MyComment from './MyComment/MyComment'
 import Trade from './TradeHistory/TradeHistory'
-import Setting from './Setting/Setting'
+import Application from './Application/Application'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import './WalletButtonfct.css'
@@ -16,7 +16,7 @@ class WalletButtonfct extends Component {
       Invested: false,
       Trade: false,
       MyComment: false,
-      Setting: false,
+      Application: false,
     };
   }
 
@@ -26,7 +26,7 @@ class WalletButtonfct extends Component {
         Invested: false,
         Trade: false,
         MyComment: false,
-        Setting: false,
+        Application: false,
     });
   };
 
@@ -36,7 +36,7 @@ class WalletButtonfct extends Component {
         Invested: true,
         Trade: false,
         MyComment: false,
-        Setting: false,
+        Application: false,
     });
   };
 
@@ -46,7 +46,7 @@ class WalletButtonfct extends Component {
         Invested: false,
         Trade: true,
         MyComment: false,
-        Setting: false,
+        Application: false,
     });
   };
 
@@ -56,7 +56,7 @@ class WalletButtonfct extends Component {
         Invested: false,
         Trade: false,
         MyComment: true,
-        Setting: false,
+        Application: false,
     });
   };
 
@@ -66,7 +66,7 @@ class WalletButtonfct extends Component {
         Invested: false,
         Trade: false,
         MyComment: false,
-        Setting: true,
+        Application: true,
     });
   };
 
@@ -76,31 +76,120 @@ class WalletButtonfct extends Component {
     if (this.state.WatchList) {
       info = (
         <div>
-          <WatchList />
+          <div className="yeswatchlist">
+            <div className="watchlistbar">
+                  <p>Rank</p>
+                  <p>Name</p>
+                  <p>MarketCap</p>
+                  <p>Price</p>
+                  <p>Change(24h)</p>
+            </div>
+          </div>
+          <WatchList 
+          rank="rank"
+          name="bitcoin"
+          marketcap="marketcap"
+          price="$4000"
+          change="+3.78%"
+          keyid="#btc"
+          re_keyid="btc"
+          />
+          <WatchList 
+          rank="rank"
+          name="bitcoin"
+          marketcap="marketcap"
+          price="$4000"
+          change="+3.78%"
+          keyid="#xrp"
+          re_keyid="xrp"
+          />
+          <WatchList 
+          rank="rank"
+          name="bitcoin"
+          marketcap="marketcap"
+          price="$4000"
+          change="+3.78%"
+          keyid="#eth"
+          re_keyid="eth"
+          />
         </div>
       );
     }else if (this.state.Invested) {
       info = (
-        <div className="comment">
-         <Invested />
+        <div className="investlist">
+          <div className="yesinvestlist">
+            <div className="listbar">
+                  <p>Coin</p>
+                  <p>Assets/Quantity</p>
+                  <p>Price/Cost</p>
+                  <p>Today Earn</p>
+                  <p>Total Earn</p>
+                  <p>Invest %</p>
+            </div>
+          </div>
+         <Invested 
+         coin="bitcoin"
+         symbol="(BTC)"
+         assets="$34567"
+         quantity="200"
+         price="$567"
+         cost="$345"
+         tdyearn="$567"
+         tdypercent="4%"
+         totearn="$5678"
+         totpercent="5%"
+         invest="40%"/>
+         <Invested 
+         coin="bitcoin"
+         symbol="(BTC)"
+         assets="$34567"
+         quantity="200"
+         price="$567"
+         cost="$345"
+         tdyearn="$567"
+         tdypercent="4%"
+         totearn="$5678"
+         totpercent="5%"
+         invest="40%"/>
+         <Invested 
+         coin="bitcoin"
+         symbol="(BTC)"
+         assets="$34567"
+         quantity="200"
+         price="$567"
+         cost="$345"
+         tdyearn="$567"
+         tdypercent="4%"
+         totearn="$5678"
+         totpercent="5%"
+         invest="40%"/>
         </div>
       );
     }else if (this.state.Trade) {
         info = (
-          <div className="comment">
+          <div className="tradelist">
+          <div className="yesinvestlist">
+            <div className="listbar">
+                  <p>Coin</p>
+                  <p>Buy/Quantity</p>
+                  <p>Sell/Quantity</p>
+                  <p>Value</p>
+                  <p>Time</p>
+            </div>
+          </div>
            <Trade />
           </div>
         );
     }else if (this.state.MyComment) {
         info = (
-          <div className="comment">
+          <div className="commentlist">
            <MyComment />
           </div>
         );
-    }else if (this.state.Setting) {
+    }else if (this.state.Application) {
         info = (
-          <div className="comment">
-           <Setting />
+          <div className="applist">
+           <Application />
           </div>
         );
     }

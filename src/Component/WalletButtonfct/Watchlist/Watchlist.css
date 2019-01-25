@@ -1,4 +1,51 @@
 .nolist {
-    padding: 50px;
+    padding: 20px;
+    border: 2px dashed #cccccc;
+    margin-top : 30px;
+}
+
+.noliststate p{
+    margin:0;
+    margin-top: 10px;
     
 }
+
+.nolist{
+    margin-right: auto;
+    margin-left: auto;
+    width:40%;
+}
+
+
+.watchlistdata{
+    border-bottom: 4px dashed #005266;
+    display: flex;
+    justify-content: center;
+    margin-left: auto;
+    margin-right:auto;
+    padding-right: 40px;
+    cursor: pointer;
+}
+
+.watchlistdata p{
+    margin-top:15px;
+    margin-bottom:15px;
+    margin-left: 60px;
+    margin-right: 60px;
+    text-align: center;
+}
+
+.card{
+    border:0;
+}
+
+.chartcontrol{
+    width: 500px;
+    height: 300px;
+    margin-left: auto;
+    margin-right:auto;
+    border: 1px dashed #cccccc;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
