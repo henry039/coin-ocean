@@ -19,7 +19,8 @@ export function* getWalletSaga() {
 		const {payload} = yield take(actions.actionType.GET_DB_WALLET);
 		try {
 			const {data} = yield call(api.getWallet_api, payload.uid);
-			yield put(actions.getWallet(data.body));
+			console.log(data)
+			yield put(actions.getWallet(data));
 		} catch(error) {
 			yield put(actions.emitError(error.response));
 		}
@@ -31,7 +32,7 @@ export function* updateWalletSaga() {
 		const {payload} = yield take(actions.actionType.UPDATE_DB_WALLET);
 		try {
 			const {data} = yield call(api.updateWallet_api, payload.uid, payload.body);
-			yield put(actions.updateWallet(data.body));
+			yield put(actions.updateWallet(data));
 		} catch(error) {
 			yield put(actions.emitError(error.response));
 		}

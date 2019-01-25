@@ -21,23 +21,23 @@ module.exports = (app) => {
 
     app.post('/api/get/wallet', async (req, res) => {
         let walletDetail = await db.getWallet(req.body.uid)
-        res.send(formatWalletOutput(req.body.uid, walletDetail))
+        res.send(formatWalletOutput(walletDetail))
     })
 
     app.post('/api/update/wallet', async (req, res) => {
         let updatedWallet = await db.updateWallet(req.body.uid, req.body.payload)
-        res.send(formatWalletOutput(req.body.uid, updatedWallet))
+        res.send(formatWalletOutput(updatedWallet))
     })
 
     // trade-history
     app.post('/api/get/trade-history', async (req, res) => {
         let history = await db.getTradeHistory(req.body.uid)
-        res.send(formatTradeOutput(req.body.uid, history))
+        res.send(formatTradeOutput(history))
     })
 
     app.post('/api/add/trade-history', async (req, res) => {
         let history = await db.insertTradeHistory(req.body.uid, req.body.payload)
-        res.send(formatTradeOutput(req.body.uid, history))
+        res.send(formatTradeOutput(history))
     })
 
     // Comment
@@ -48,12 +48,12 @@ module.exports = (app) => {
 
     app.post('/api/get/comments', async (req, res) => {
         let comments = await db.getUserComments(req.body.uid)
-        res.send(formatCommentsOutput(req.body.uid, comments))
+        res.send(formatCommentsOutput(comments))
     })
 
     app.post('/api/add/comments', async (req, res) => {
         let comments = await db.addComments(req.body.uid, req.body.payload)
-        res.send(formatCommentsOutput(req.body.uid, comments))
+        res.send(formatCommentsOutput(comments))
     })
 
     // meta Data
@@ -67,49 +67,42 @@ module.exports = (app) => {
     // })
 }
 
-function formatWalletOutput(uid, input) {
-    const {coins, rest, dailyPL} = input[0]
+function formatWalletOutput(input) {
+    const { coins, rest, dailyPL } = input[0]
     return {
-        uid,
-        body : {
-            coins: JSON.parse(coins),
-            rest: JSON.parse(rest),
-            dailyPL: JSON.parse(dailyPL)
-        }
+        coins: JSON.parse(coins),
+        rest: JSON.parse(rest),
+        dailyPL: JSON.parse(dailyPL)
     }
 }
 
-function formatTradeOutput(uid, input) {
+function formatTradeOutput(input) {
     const body = input.map((data) => {
         return {
-            date : data.date,
-            action : JSON.parse(data.action)
+            date: data.date,
+            action: JSON.parse(data.action)
         }
     })
-    return {
-        uid, body
-    }
+    return { body }
 }
 
-function formatCommentsOutput(uid, input) {
-    const body = input.map((data)=>{
+function formatCommentsOutput(input) {
+    const body = input.map((data) => {
         return {
-            date : data.date,
-            context : data.context,
-            tag : data.tag
+            date: data.date,
+            context: data.context,
+            tag: data.tag
         }
     })
-    return {
-        uid, body
-    }
+    return { body }
 }
 
-function allCommentsOutput(input){
-    const body = input.map((data)=>{
+function allCommentsOutput(input) {
+    const body = input.map((data) => {
         return {
-            date : data.date,
-            context : data.context,
-            tag : data.tag
+            date: data.date,
+            context: data.context,
+            tag: data.tag
         }
     })
     return { body }
