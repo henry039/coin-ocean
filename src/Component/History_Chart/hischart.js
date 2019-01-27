@@ -6,6 +6,7 @@ import HM from "../HourMin_Chart/HM"
 import './hischart.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
+import { withRouter } from 'react-router-dom';
 
 const url = 'http://localhost:5000/api/bitcoin'
 
@@ -178,6 +179,8 @@ class ChartHistory extends React.Component {
     }
 // =====================William modified=====================
     render() {
+
+        console.log()
         return (
             <div>
                 <div className="coininfo"> 
@@ -230,4 +233,4 @@ class ChartHistory extends React.Component {
     // =====================William modified end=====================
 }
 
-export default ChartHistory;
+export default withRouter(ChartHistory);

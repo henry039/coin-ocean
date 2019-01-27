@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import HomeStructure from '../Component/HomeStructure/HomeStructure';
-import Titlebar from '../Component/General/Titlebar/Titlebar'
-import Infobar from '../Component/General/Infobar/Infobar'
+import Titlebar from "../Component/General/Titlebar/Titlebar"
+import Infobar from "../Component/General/Infobar/Infobar"
 
 
 
