@@ -44,6 +44,7 @@ class Titlebar extends Component{
                             </Link>
                         </li>
                         <form className="form-inline my-2 my-lg-0 searchbox">
+                        
                         <input className="form-control mr-sm-2" value={this.state.inputValue} onChange={(e) => this.setState({inputValue: e.target.value})} type="search" placeholder="Search Coin" aria-label="Search" />
                         <Link to={`/coinpage/${this.state.inputValue}`}>
                         <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>

@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import { withRouter } from 'react-router-dom';
 
+
 const url = 'http://localhost:5000/api/bitcoin'
 
 class ChartHistory extends React.Component {
@@ -79,7 +80,8 @@ class ChartHistory extends React.Component {
                 }
             ],
             // =====================William add=====================
-            info: []
+            info: [],
+            pageid : `${this.props.match.params.id}`
             // =====================William add end=====================
         }
     }
@@ -137,13 +139,14 @@ class ChartHistory extends React.Component {
         })
 
         // =====================William add=====================
-        fetch("https://api.coinmarketcap.com/v1/ticker/?convert=USD&limit=1")
+        fetch("https://api.coinmarketcap.com/v1/ticker/?convert=USD&limit=100")
         .then(res => res.json())
         .then(
             result => {
             this.setState({
-                info: result,
+                info: result.filter(e => {return e.symbol === this.state.pageid.toUpperCase()}),
             });
+          
             },
             error => {
             this.setState({
@@ -179,8 +182,6 @@ class ChartHistory extends React.Component {
     }
 // =====================William modified=====================
     render() {
-
-        console.log()
         return (
             <div>
                 <div className="coininfo"> 
@@ -188,7 +189,7 @@ class ChartHistory extends React.Component {
                         return (
                             <div className="indivcoin">
                             <Ind 
-                            name={info.name}
+                            name={info.id}
                             symbol={info.symbol}
                             price_usd={Math.round((info.price_usd)*100)/100}
                             price_btc={Math.round((info.price_btc)*100)/100}

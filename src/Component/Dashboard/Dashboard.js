@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./DashboardPage.css";
+import {Link} from 'react-router-dom';
 
 
 
@@ -14,7 +15,7 @@ class DashboardPage extends Component {
   }
 
   componentDidMount() {
-    fetch("https://api.coinmarketcap.com/v1/ticker/?convert=USD&limit=15")
+    fetch("https://api.coinmarketcap.com/v1/ticker/?convert=USD&limit=100")
       .then(res => res.json())
       .then(
         result => {
@@ -48,7 +49,7 @@ class DashboardPage extends Component {
       return (
           <div className="coinlist">
             <p className='rank'>{props.rank}</p>
-            <p className='name'>{props.name}</p>
+            <Link to={`/coinpage/${props.symbol}`}><p className='name'>{props.name}</p></Link>
             <p className='marketcap'>{props.marketcap}</p>
             <p className='price'>{props.price}</p>
             <p className='change'>{props.change}</p>
@@ -90,6 +91,7 @@ class DashboardPage extends Component {
                   vol={formatter.format(Math.round(coin["24h_volume_usd"]))}
                   supply={Math.round(coin.total_supply) + coin.symbol}
                   maxsupply={Math.round(coin.max_supply) + coin.symbol}
+                  symbol ={coin.symbol}
                 />
               );
             })}
