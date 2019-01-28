@@ -1,0 +1,26 @@
+.investlistdata{
+    border-bottom: 4px dashed #005266;
+    display: flex;
+    justify-content: center;
+    margin-left: auto;
+    margin-right:auto;
+    padding-right: 40px;
+    width:100%;
+}
+
+.investlistdata p{
+    margin-top:15px;
+    margin-bottom:15px;
+    margin-left: 60px;
+    margin-right: 61px;
+}
+
+.investcoin{
+    padding-left:50px;
+}
+
+.yesinvestlist{
+    width:77%;
+    margin-left: auto;
+    margin-right:auto;
+}

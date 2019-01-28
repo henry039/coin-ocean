@@ -1,6 +1,9 @@
 export const actionType = {
     // CREATE_USER: 'CREATE_USER'
 
+    // LATEST_PRICE
+    GET_PRICE : 'GET_PRICE',
+
     // USER
     USER_LOGIN : 'USER_LOGIN',
     USER_LOGOUT : 'USER_LOGOUT',

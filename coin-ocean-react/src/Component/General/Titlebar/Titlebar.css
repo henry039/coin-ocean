@@ -1,0 +1,98 @@
+.header{
+    background-color: #143d6b;
+    height: 8vh;
+    color: #ffffff;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.websitename{
+    font: small-caps bold 31px/1 sans-serif;
+    margin: 0;
+}
+
+
+
+.leftbutton button{
+    background-color: #143d6b;
+    color:#ffffff;
+    border: 0px;
+    font-weight: bold;
+    width: 100px;
+    height:100%;
+    margin-left: 15px;
+    font-size: 18px;
+}
+
+.leftbutton button:hover{
+    color:#ffcc66;
+    border: 0px;
+    font-weight: bold;
+    font-size: 1.1em;
+    cursor: pointer;
+}
+
+.sperationline{
+    border: 1px solid #cccccc;
+    margin: 0px 20px;
+    height:auto;
+}
+
+
+.easymoney{
+    color:rgba(255,255,255,.5);
+    padding-right:0;
+    padding-left:0;
+    display: block;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.easymoney:hover{
+    color:rgba(255,255,255,.5);
+    text-decoration: none;
+    
+}
+
+.borderlogin{
+    color:#ffaa00;
+    border: 1px solid #ffaa00;
+    margin: 0px 10px;
+}
+
+.borderlogin:hover{
+    color:#ffffff;
+    background-color : #ffaa00;
+}
+
+.bordersignup{
+    color:#ff8080;
+    border: 1px solid #ff8080;
+    margin: 0px 10px;
+}
+
+.bordersignup:hover{
+    color:#ffffff;
+    background-color : #ff8080;
+    
+}
+
+.nav-link{
+    color: #ffd11a;
+    margin-left: 30px;
+}
+
+.titleimg{
+    width: 158px;
+    height: 55px;
+    margin: 0px 25px 0px 0px;
+    display: flex;
+    align-items: center;
+}
+
+.searchbox{
+    margin-left:10px;
+}

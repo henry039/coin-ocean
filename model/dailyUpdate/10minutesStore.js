@@ -1,26 +1,19 @@
 const axios = require('axios')
-const CronJob = require('cron').CronJob;
+require('dotenv').config({path : '../../.env'})
+const { bitfinex_switch } = require('./symbol_in_common')
+
+function fiveMinFetch(coin_id) {
+    return axios.get(`${process.env.MINUTE_PRE}${bitfinex_switch[coin_id]}${process.env.MINUTE_SUF}`)
+        .then(res => extractPrice(res.data))
+}
+
+function hourFetch(coin_id) {
+    return axios.get(`${process.env.HOUR_PRE}${bitfinex_switch[coin_id]}${process.env.HOUR_SUF}`)
+        .then(res => extractPrice(res.data))
+}
 
 // an array return[ MTS, OPEN, CLOSE, HIGH, LOW	,VOLUME]
 // form in a obj { x : 0th, y : 2th}
-
-let minuteMasterArray = []
-let hourMasterArray = []
-
-function fiveMinFetch() {
-    return axios.get('https://api.bitfinex.com/v2/candles/trade:5m:tBTCUSD/hist?limit=289')
-        .then(res => extractPrice(res.data))
-        .then(output => minuteMasterArray = output)
-        .then(() => minuteMasterArray)
-}
-
-function hourFetch() {
-    return axios.get('https://api.bitfinex.com/v2/candles/trade:1h:tBTCUSD/hist?limit=25')
-        .then(res => extractPrice(res.data))
-        .then(output => hourMasterArray = output)
-        .then(()=> hourMasterArray)
-}
-
 function extractPrice(rawData) {
     // arr of { x: '05/06/2014', y: 54 }
     // x(date) y(price)
@@ -37,34 +30,71 @@ function extractPrice(rawData) {
     })]
 }
 
-async function exportRealTimeData() {
-    if(minuteMasterArray.length === 0 || hourMasterArray.length === 0){
-        let minuteCoin = await fiveMinFetch()
-        let hourCoin = await hourFetch()
-        return {minuteCoin, hourCoin}
-    }else{
-        return {
-            minuteCoin : minuteMasterArray,
-            hourCoin : hourMasterArray
+const option = {
+    title: {
+        text: 'Price Graph (24hr)'
+    },
+    chart: {
+        id: 'price',
+    },
+    yaxis: {
+        title: {
+            text: 'Price'
+        },
+        labels: {
+            formatter: function (val) {
+                return `${val} USD`
+            }
+        },
+        tickAmount: 4
+    },
+    dataLabels: {
+        enabled: false
+    },
+    stroke: {
+        curve: 'smooth'
+    },
+    toolbar: {
+        tools: {
+            selection: false
         }
-    }
+    },
+    markers: {
+        size: 0,
+        hover: {
+            size: 6
+        }
+    },
+    tooltip: {
+        followCursor: false,
+        theme: 'dark',
+        x: {
+            show: false
+        },
+        marker: {
+            show: false
+        },
+        y: {
+            title: {
+                formatter: function () {
+                    return ''
+                }
+            }
+        }
+    },
+    grid: {
+        clipMarkers: false
+    },
+    xaxis: {
+        type: 'datetime',
+        tickAmount: 6,
+    },
 }
 
-const minJob = new CronJob('0 */5 * * * *', ()=>{
-    fiveMinFetch()
-})
-minJob.start()
+module.exports = {
+    minute : fiveMinFetch,
+    hour : hourFetch,
+}
 
-const hourJob = new CronJob('0 0 */1 * * *', ()=>{
-    hourFetch()
-})
-hourJob.start()
-
-// module.exports = {
-//     minute : fiveMinFetch,
-//     hour : hourFetch
-// }
-
-module.exports = exportRealTimeData
 
 

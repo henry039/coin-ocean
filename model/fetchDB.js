@@ -1,6 +1,6 @@
 // require('dotenv').config({path: '../.env'});
 require('dotenv').config();
-const realTimeData = require('./dailyUpdate/10minutesStore')
+// const realTimeData = require('./dailyUpdate/10minutesStore')
 const knex = require('knex')({
     client: 'postgresql',
     connection: {
@@ -10,20 +10,20 @@ const knex = require('knex')({
     }
 })
 // fake seed import
-// const fakeData = require('../utils/fakeSeed')
+const fakeData = require('../utils/fakeSeed')
 
 class fetchDB {
     constructor() { }
 
     // Chart Data Section
     getCoinHistory(coin) {
-        return knex(coin)
-        // return fakeData
+        // return knex(coin)
+        return fakeData
     }
 
-    getRealTimeCoin() {
-        return realTimeData
-    }
+    // getRealTimeCoin() {
+    //     return realTimeData
+    // }
 
     dailyUpdate(coin, payload) {
         let { date, price, txVol, marketCap } = payload
@@ -66,6 +66,13 @@ class fetchDB {
 
     getWallet(uid) {
         return knex('wallet').where('uid', uid)
+            .then(reply => {
+                if(reply[0] === undefined){
+                    return this.createWallet(uid, {rest : 100000000})
+                }else{
+                    return reply
+                }
+            })
     }
 
     updateWallet(uid, payload) {
@@ -156,7 +163,7 @@ class fetchDB {
 }
 let a = new fetchDB()
 // a.createWallet('test1', {rest: 1000}).then(console.log)
-// a.getWallet('test1').then(console.log)
+// a.getWallet('test245').then(console.log)
 // a.updateWallet('test1', {coins: [{name: 'bitcoin', quantity: 10}], rest:7500}).then(console.log).catch(err => console.error(err))
 // a.dailyUpdateWallet('test1', {dailyPL: 17640}).then(console.log).catch(err => console.error(err))
 

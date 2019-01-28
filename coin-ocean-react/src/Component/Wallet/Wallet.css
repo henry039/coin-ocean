@@ -1,0 +1,80 @@
+.walletsection{
+    height: auto;
+    display:flex; 
+    justify-content: center;
+    margin: 100px 100px 0px 150px;
+}
+
+.wallet{
+    background: url("../../picture/walletdesignone.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    display:flex; 
+}
+
+.walletlefthside{
+    display:flex; 
+    justify-content: center;
+    width:400px;
+    height: 150px;
+    margin-top: 175px;
+}
+
+.walletlefthside img{
+    width:90px;
+    height:90px;
+    border-radius: 10px;
+    margin-right: 20px;
+    margin-top: 10px;
+}
+
+
+.walletuser{
+    margin-right: 40px;
+}
+
+
+.walletrigthside{
+    width:400px;
+    height: 400px;
+}
+
+.secondcontainer{
+    padding:0px;
+}
+
+.secondcontainer h2, .secondcontainer h6, .secondcontainer p, .secondcontainer h3{
+    margin:0;
+}
+
+.moneyshowone{
+    margin-top:89px;
+}
+
+.moneyshowone p, .moneyshowtwo p {
+    font-weight: bold;
+    color:#0066ff;
+}
+
+.walletreview{
+    font-size:10px;
+    margin: 20px 0px;
+}
+
+.walletreview p{
+    margin:0;
+    font-weight: bold;
+
+}
+
+.walletreview button{
+    background: none;
+    border:0;
+    font-size: 20px;
+    margin-left: 15px;
+    cursor: pointer;
+}
+
+.moneyshowtwo{
+    margin-top:45px;
+}

@@ -7,17 +7,17 @@ module.exports = (app) => {
         let coinHistory = await db.getCoinHistory(req.params.coin)
         res.send(coinHistory)
     })
-    app.get('/api/realtime/:coin', async (req, res) => {
-        // let coinRealtime = await db.getCoinMinute(req.params.coin)
-        let realTimeData = await db.getRealTimeCoin()()
-        res.send(realTimeData)
-    })
+    // app.get('/api/realtime/:coin', async (req, res) => {
+    //     // let coinRealtime = await db.getCoinMinute(req.params.coin)
+    //     let realTimeData = await db.getRealTimeCoin()()
+    //     res.send(realTimeData)
+    // })
 
     // Wallet
-    app.post('/api/create/wallet', async (req, res) => {
-        let newWallet = await db.createWallet(req.body.uid, req.body.payload);
-        res.send(newWallet)
-    })
+    // app.post('/api/create/wallet', async (req, res) => {
+    //     let newWallet = await db.createWallet(req.body.uid, req.body.payload);
+    //     res.send(newWallet)
+    // })
 
     app.post('/api/get/wallet', async (req, res) => {
         let walletDetail = await db.getWallet(req.body.uid)

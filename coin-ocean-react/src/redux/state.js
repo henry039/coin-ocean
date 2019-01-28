@@ -33,6 +33,6 @@ export const initialState = {
     error : {
         isError : false,
         error_msg : null
-    }
-
+    },
+    prices : {}
 };

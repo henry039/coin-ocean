@@ -1,7 +1,7 @@
-const CronJob = require('cron').CronJob;
+// const CronJob = require('cron').CronJob;
 const db = new (require('../fetchDB'))
 const axios = require('axios')
-require('dotenv').config({path: '../../.env'})
+// require('dotenv').config({path: '../../.env'})
 
 // Seconds: 0-59
 // Minutes: 0-59
@@ -27,5 +27,5 @@ let dailyWork = axios.get(process.env.APIs)
     .catch(err => console.error(err))
 
 // everyday 9am
-const job = new CronJob('0 0 9 * * *', dailyWork)
-job.start()
+// const job = new CronJob('0 0 9 * * *', dailyWork)
+// job.start()
