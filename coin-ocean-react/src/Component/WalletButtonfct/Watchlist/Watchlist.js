@@ -8,8 +8,8 @@ class WatchList extends Component{
     constructor(props) {
         super(props);
         this.state = {
-            watchlist: ["Saab", "Volvo", "BMW"],
-            watchlistcontext: false
+            watchlist: [],
+            watchlistcontext: true
         };
         this.keyid = props.keyid.toString();
         this.re_keyid = props.re_keyid.toString();
