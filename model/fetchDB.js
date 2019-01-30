@@ -1,6 +1,4 @@
-// require('dotenv').config({path: '../.env'});
-require('dotenv').config();
-// const realTimeData = require('./dailyUpdate/10minutesStore')
+require('dotenv').config({path: '../.env'});
 const knex = require('knex')({
     client: 'postgresql',
     connection: {
@@ -13,17 +11,33 @@ const knex = require('knex')({
 const fakeData = require('../utils/fakeSeed')
 
 class fetchDB {
-    constructor() { }
-
+    // User Profile
+    createUserProfile(uid, payload){
+        let {photoURL, displayName} = payload
+        if(photoURL !== undefined && displayName !== undefined){
+            return knex.transaction((trx)=> {
+                trx('user')
+                    .insert({
+                        photoURL,
+                        displayName,
+                        uid
+                    })
+                    .then(trx.commit)
+                    .catch(trx.rollback)
+            }).then(()=> knex('user').where('uid', uid))
+        }else{
+            return Promise.reject(new Error('payload missing'))
+        }
+    }
+    getUserProfile(uid){
+        return knex('user_profile').where('uid', uid)
+            .catch(err => Promise.reject(new Error('No Such User')))
+    }
     // Chart Data Section
     getCoinHistory(coin) {
         // return knex(coin)
         return fakeData
     }
-
-    // getRealTimeCoin() {
-    //     return realTimeData
-    // }
 
     dailyUpdate(coin, payload) {
         let { date, price, txVol, marketCap } = payload
@@ -134,12 +148,27 @@ class fetchDB {
     }
 
     // Comment Section
-    getAllComments(tag) {
-        return knex('comment').where('tag', tag).orderBy('id', 'desc')
+    async getAllComments(tag) {
+        let comments = await knex('comment').where('tag', tag).orderBy('id', 'desc')
+        let output = comments.map(async(comment) => {
+            const query = await knex('user_profile').where('uid', comment.uid)
+            const {displayname, photourl} = query[0]
+            return {
+                date : comment.date,
+                context : comment.context,
+                tag : comment.tag,
+                displayName : displayname,
+                photoURL : photourl
+            }
+        })
+        return await Promise.all(output)
     }
 
-    getUserComments(uid) {
-        return knex('comment').where('uid', uid).orderBy('id', 'desc')
+    async getUserComments(uid) {
+        return {
+            comments : await knex('comment').where('uid', uid).orderBy('id', 'desc'),
+            profile : await knex('user_profile').where('uid', uid)
+        }
     }
 
     addComments(uid, payload) {
@@ -163,18 +192,19 @@ class fetchDB {
 }
 let a = new fetchDB()
 // a.createWallet('test1', {rest: 1000}).then(console.log)
-// a.getWallet('test245').then(console.log)
-// a.updateWallet('test1', {coins: [{name: 'bitcoin', quantity: 10}], rest:7500}).then(console.log).catch(err => console.error(err))
-// a.dailyUpdateWallet('test1', {dailyPL: 17640}).then(console.log).catch(err => console.error(err))
+// a.getWallet('test1').then(console.log)
+// a.updateWallet('test1', {coins: [{name: 'BTC', quantity: 10}], rest:7500}).then(console.log).catch(err => console.error(err))
+// a.dailyUpdateWallet('test1', {dailyPL: [17640]}).then(console.log).catch(err => console.error(err))
 
-// a.insertTradeHistory('test1', {action : {name: 'bitcoin', track: ['buy', 20]}}).then(console.log).catch(err => console.error(err))
+// a.insertTradeHistory('test1', {action : ['BTC','buy', 20, 4000]}).then(console.log).catch(err => console.error(err))
 // a.getTradeHistory('test1').then(console.log)
 
-// a.addComments('test1',{ context: 'william is awesome', tag: 'bitcoin'}).then(console.log)
+// a.addComments('test1',{ context: 'From DB', tag: 'BTC'}).then(console.log)
 // a.getUserComments('test1').then(console.log)
-// a.getAllComments('test1').then(console.log)
+// a.getAllComments('BTC').then(console.log)
+
+// a.getUserProfile('test1').then(console.log)
 
 // a.dailyUpdate('bitcoin',{ date:"2009-01-03",price:0,txVol:0,marketCap:0}).then(console.log).catch(err=>console.error(err))
-
 
 module.exports = fetchDB

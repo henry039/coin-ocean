@@ -1,7 +1,7 @@
 
 exports.up = function(knex, Promise) {
   return knex.transaction(async (trx)=>{
-      await trx.schema.createTable('bitcoin', (table)=>{
+      await trx.schema.createTable('BTC', (table)=>{
           table.increments().primary();
           table.string('date').notNullable()
           table.decimal('price')
@@ -13,6 +13,6 @@ exports.up = function(knex, Promise) {
 
 exports.down = function(knex, Promise) {
   return knex.transaction(async (trx)=>{
-      await trx.schema.dropTable('bitcoin')
+      await trx.schema.dropTable('BTC')
   })
 };

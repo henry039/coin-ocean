@@ -1,6 +1,6 @@
 const axios = require('axios')
 require('dotenv').config({ path: '../../.env' })
-const { bitfinex_switch, bitfinex_switch_temp } = require('./symbol_in_common')
+const { bitfinex_switch_temp } = require('./symbol_in_common')
 
 function fiveMinFetch(coin_id) {
     return axios.get(`${process.env.MINUTE_PRE}${bitfinex_switch_temp[coin_id]}${process.env.MINUTE_SUF}`)
