@@ -55,10 +55,10 @@ class Signinform extends Component {
 
             <button type="submit" className="btn btn-warning">Sign in EasyMoney</button>
             </form>
-            <div className="gotosoicalmedia">
+            {/* <div className="gotosoicalmedia">
                 <SoicalLogin/>
                 <small><p>Using Soical Media Login?</p></small>
-            </div>
+            </div> */}
 
             <div className="signinseperation"></div>
 
