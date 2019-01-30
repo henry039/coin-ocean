@@ -7,7 +7,8 @@ import homeimg2 from '../../picture/homepage2.png'
 import homeimg3 from '../../picture/homepage3.png'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
-
+import Chart from '../charts/simpleRealtime.jsx'
+import {Link} from 'react-router-dom';
 
 class HomeStructure extends Component {
 
@@ -17,7 +18,8 @@ class HomeStructure extends Component {
        <div className="flexalltofit">
             <div className="hssidecontainer" >
                <HomeSideinfo />
-               <button className=" btn routingtolist " href="/">Cryptocurrencies List</button>
+               <Link to={`/cryptolist`}><button className=" btn routingtolist " href="/">Cryptocurrencies List</button></Link>
+
                <div className="hsabout">
                <h5>What is EasyMoney?</h5>
                <h6>VIP members can use the full set of powerful
@@ -37,9 +39,9 @@ class HomeStructure extends Component {
 
             <div className="hsmaincontainer">
                 <div className="hsflex">
-                    <div className="justdemo"></div>
-                    <div className="justdemo"></div>
-                    <div className="justdemo"></div>
+                    <div className="justdemo"><Chart coin='BTC'/></div>
+                    <div className="justdemo"><Chart coin='XRP'/></div>
+                    <div className="justdemo"><Chart coin='ETH'/></div>
                 </div>
 
                 <div>

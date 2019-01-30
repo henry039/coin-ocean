@@ -1,38 +1,38 @@
 import * as React from "react"
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth"
-import * as firebase from 'firebase';
 import { connect } from 'react-redux'
 import { userLogin, userLogout } from '../../redux/actions'
-
-const config = {
-  apiKey: process.env.REACT_APP_KEY,
-  authDomain: process.env.REACT_APP_DOMAIN,
-};
-firebase.initializeApp(config);
+import firebase from '../Firebase'
 
 class SoicalLogin extends React.Component {
   state = { isSignedIn: false }
   uiConfig = {
     signInFlow: "popup",
     signInOptions: [
-      firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+      firebase.firebase_.auth.GoogleAuthProvider.PROVIDER_ID,
       //   firebase.auth.FacebookAuthProvider.PROVIDER_ID,
       //   firebase.auth.TwitterAuthProvider.PROVIDER_ID,
-      firebase.auth.GithubAuthProvider.PROVIDER_ID,
-      firebase.auth.EmailAuthProvider.PROVIDER_ID
+      firebase.firebase_.auth.GithubAuthProvider.PROVIDER_ID,
+      firebase.firebase_.auth.EmailAuthProvider.PROVIDER_ID
     ],
     callbacks: {
-      signInSuccess: () => false
+      signInSuccessWithAuthResult : () => false
     }
   }
 
   componentWillMount = () => {
-    firebase.auth().onAuthStateChanged(user => {
-      this.setState({ isSignedIn: !!user })
-      // console.log(firebase.auth().currentUser.uid)
-      // this.props.userTracking(firebase.auth().currentUser.uid, this.state.isSignedIn)
-      this.props.userLogin(firebase.auth().currentUser.uid, this.state.isSignedIn)
-    })
+    let user = firebase.auth().currentUser
+    if(user){
+      this.setState({isSignedIn : !!user})
+    }else{
+      this.setState({isSignedIn : !!user})
+    }
+    // firebase.auth().onAuthStateChanged(user => {
+    //   this.setState({ isSignedIn: !!user })
+    //   console.log(firebase.auth().currentUser)
+    //   // console.log(firebase.auth().currentUser.uid)
+    //   // this.props.userLogin(firebase.auth().currentUser.uid, this.state.isSignedIn)
+    // })
   }
 
   // handle = () => {
@@ -48,7 +48,7 @@ class SoicalLogin extends React.Component {
             <button onClick={() => {firebase.auth().signOut();  this.props.userLogout()}}>Sign out!</button>
             <h1>Welcome {firebase.auth().currentUser.displayName}</h1>
             <img
-              alt="profile picture"
+              alt="profile pic"
               src={firebase.auth().currentUser.photoURL}
             />
             {/* <button onClick={this.handle}>Click on me</button> */}

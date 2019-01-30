@@ -32,11 +32,7 @@
     font-weight:bold;
 }
 
-.watchlistbar p{
-    margin:0;
-    margin-left: 50px;
-    margin-right: 50px;
-}
+
 
 .watchlistbar{
     border-bottom: 3px double #993d00;
@@ -44,14 +40,15 @@
     justify-content: center;
     margin-left: auto;
     margin-right:auto;
-    width:100%;
     font-weight:bold;
 }
 
 .watchlistbar p{
     margin:0;
-    margin-left: 50px;
-    margin-right: 50px;
+    margin-left: 30px;
+    margin-right: 30px;
+    width: 100px;
+    text-align: center;
 }
 
 .yesinvestlist{

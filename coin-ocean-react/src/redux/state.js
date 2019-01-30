@@ -4,8 +4,14 @@ export const initialState = {
     //     isSignedIn : true
     // },
     user : {
-        uid : null,
-        isSignedIn : false
+        // uid : undefined,
+        uid : 'test1',
+        isSignedIn : false,
+        // profile : {
+        //     pic : 'www.....img',
+        //     displayName : 'ggggg'
+        // },
+        profile : {}
     },
     wallet : {
         // coins : {

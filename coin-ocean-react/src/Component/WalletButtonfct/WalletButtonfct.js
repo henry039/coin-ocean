@@ -7,6 +7,7 @@ import Application from './Application/Application'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import './WalletButtonfct.css'
+import {cal_coin_assets} from '../../redux/selectors'
 
 class WalletButtonfct extends Component {
   constructor(props) {
@@ -177,7 +178,16 @@ class WalletButtonfct extends Component {
                   <p>Time</p>
             </div>
           </div>
-           <Trade />
+           <Trade 
+           coin="bitcoin"
+           symbol="(BTC)"
+           buy="$3000"
+           buyquantity="200"
+           sell="---"
+           sellquantity="---"
+           value="$60000"
+           time="2018-1-12:1530"
+           />
           </div>
         );
     }else if (this.state.MyComment) {

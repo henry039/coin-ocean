@@ -1,17 +1,16 @@
 import * as React from 'react';
-import axios from 'axios';
 import ReactApexChart from "react-apexcharts";
-
-const url = '/api/realtime/bitcoin'
-
-export default class RealTimeChart extends React.Component {
+import openSocket from 'socket.io-client'
+import { connect } from 'react-redux'
+export class RealTimeChart extends React.Component {
     constructor(props) {
         super(props);
+        this.ws = openSocket(process.env.REACT_APP_WS)
         this.state = {
             options: {
-                // title: {
-                //     text: 'Price Graph (24hr)'
-                // },
+                title: {
+                    text: `${this.props.coin}`
+                },
                 chart: {
                     id: 'price',
                     toolbar: {
@@ -84,11 +83,20 @@ export default class RealTimeChart extends React.Component {
         }
     }
 
-    componentDidMount() {
-        axios.get(url).then(res => {
-            this.setState({ series: res.data.hourCoin })
-            this.setState({
+    componentWillMount(){
+        this.ws.emit('hour chart init', `${this.props.coin}`)
+    }
+    
+    componentDidUpdate() {
+        const {prices} = this.props
+        this.ws.on('hour chart reply', (reply)=>{
+            this.setState((pre)=>({
+                series : reply.data,
+                })
+            )
+            this.setState((pre)=>({
                 options: {
+                    ...pre.options,
                     annotations: {
                         yaxis: [
                             {
@@ -101,7 +109,8 @@ export default class RealTimeChart extends React.Component {
                                         fontSize: '20px',
                                         background: "#00E396"
                                     },
-                                    text: this.state.series[0].data[0].y,
+                                    // text: `${this.state.series[0].data[0].y.toFixed(2)}`,
+                                    text: `${Number(prices[this.props.coin].price).toFixed(2)}`,
                                 }
                             }
                         ],
@@ -123,29 +132,20 @@ export default class RealTimeChart extends React.Component {
                         ]
                     }
                 }
-            })
+                })
+            )
         })
-        this.interval = setInterval(() => {
-            axios.get(url).then(res => {
-                this.setState({ series: res.data.hourCoin })
-            })
-        }, 1000 * 60 * 5);
-    }
-
-    componentWillUnmount() {
-        clearInterval(this.interval);
     }
 
     render() {
         return (
-            <div style={{ width: 300, height: 170 }}>
-                <ReactApexChart
-                    options={this.state.options}
-                    series={this.state.series}
-                    type='line'
-                />
-            </div>
-
+            <ReactApexChart
+                options={this.state.options}
+                series={this.state.series}
+                type='line'
+            />
         )
     }
 }
+
+export default connect((state)=> ({prices: state.prices}))(RealTimeChart)

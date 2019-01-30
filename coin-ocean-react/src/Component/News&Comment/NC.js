@@ -1,4 +1,5 @@
-import {RecipeReviewCard, CommentInput} from "../Comment/comment";
+// import {RecipeReviewCard, CommentInput} from "../Comment/comment";
+import Comment from '../Comment'
 import CryptoNewsApi from "crypto-news-api";
 import React, { Component } from "react";
 import "./NC.css";
@@ -89,10 +90,11 @@ class NC extends Component {
     } else if (this.state.commentShow) {
       info = (
         <div className="comment">
-          <CommentInput />
+          <Comment coin={this.state.pageid2}/>
+          {/* <CommentInput />
           <div className="flextocenter">
             <RecipeReviewCard />
-          </div>
+          </div> */}
         </div>
       );
     }

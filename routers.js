@@ -1,6 +1,5 @@
 const fetchDB = require('./model/fetchDB')
 const db = new fetchDB()
-// const axios = require('axios')
 
 module.exports = (app) => {
     app.get('/api/history/:coin', async (req, res) => {
@@ -14,11 +13,6 @@ module.exports = (app) => {
     // })
 
     // Wallet
-    // app.post('/api/create/wallet', async (req, res) => {
-    //     let newWallet = await db.createWallet(req.body.uid, req.body.payload);
-    //     res.send(newWallet)
-    // })
-
     app.post('/api/get/wallet', async (req, res) => {
         let walletDetail = await db.getWallet(req.body.uid)
         res.send(formatWalletOutput(walletDetail))

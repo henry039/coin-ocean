@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import openSocket from 'socket.io-client'
 import CryptoList from "./Page/CryptoList"
 import CoinPage from './Page/CoinPage'
 import Signup from './Page/Signup'
@@ -7,17 +8,32 @@ import HomePage from './Page/HomePage'
 import Profile from './Page/Profile'
 import NoMatch from './Page/NoMatch'
 
-// import Auth from './Component/auth'
+// import Auth from './Component/Signinform/auth'
 // import Test from './container/test'
 // import Chart from './Component/charts/pie'
 // import Ws from './container/ws'
-import { Provider } from 'react-redux';
-import { Route, Switch } from 'react-router-dom'
-import store from './redux/store'
+import { BrowserRouter as Router,
+Route, Switch } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { getPrice } from './redux/actions'
 class App extends Component {
+  constructor(props){
+    super(props);
+    this.ws = openSocket(process.env.REACT_APP_WS)
+    this.ws.on('realtime price', (reply)=>{
+      this.props.getPrice(reply)
+    })
+    
+  }
+  componentWillMount(){
+    this.ws.emit('realtime price init')
+    this.ws.on('realtime price init reply', (reply)=>{
+      this.props.getPrice(reply)
+    })
+  }
   render() {
     return (
-      <Provider store={store}>
+      <Router>
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route path="/cryptolist" component={CryptoList} />
@@ -26,13 +42,14 @@ class App extends Component {
           <Route path="/signin" component={Signin} />
           <Route path="/profile" component={Profile} />
           <Route component={NoMatch} />
-          {/* <Test /> */}
-          {/* <Chart /> */}
-          {/* <Ws /> */}
         </Switch>
-      </Provider>
+        {/* <Auth/> */}
+        {/* <Test /> */}
+        {/* <Chart /> */}
+        {/* <Ws /> */}
+      </Router>
     );
   }
 }
 
-export default App;
+export default connect((state)=>({prices : state.prices}), {getPrice})(App);
