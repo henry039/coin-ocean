@@ -4,24 +4,30 @@ import usericon from '../../picture/press.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faStickyNote } from '@fortawesome/free-solid-svg-icons'
+import { connect } from 'react-redux'
 library.add(faStickyNote);
 
-
-class Wallet extends Component{
-    render(){
-        return(
+class Wallet extends Component {
+    render() {
+        const { wallet } = this.props
+        return (
             <div>
                 <div className="walletsection">
                     <div className="wallet">
                         <div className="walletlefthside">
                             <div>
-                                <img src={usericon} alt="usericon"/>
+                                <img src={usericon} alt="usericon" />
                             </div>
                             <div className="walletuser">
                                 <h4>Coinshu</h4>
                                 <h6>Member ID: 007</h6>
                                 <h6>Ranking: 1</h6>
-                                <h6>EYN coin: 100</h6>
+                                {Object.keys(wallet.coins).map((coin)=>{
+                                    return (
+                                        // <h6>EYN coin: 100</h6>
+                                        <h6>{coin} : {wallet.coins[coin]}</h6>
+                                    )
+                                })}
                             </div>
                         </div>
 
@@ -36,7 +42,7 @@ class Wallet extends Component{
                                     <h3>$ 10000</h3>
                                     <h6>+ 3.67%</h6>
                                 </div>
-                            </div>    
+                            </div>
                             <div className="walletreview">
                                 <p>Review More</p>
                                 <button><FontAwesomeIcon icon="sticky-note" /></button>
@@ -49,4 +55,4 @@ class Wallet extends Component{
     }
 }
 
-export default Wallet;
+export default connect((state) => ({ wallet: state.wallet, user: state.user }))(Wallet);

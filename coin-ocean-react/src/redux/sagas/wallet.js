@@ -19,7 +19,6 @@ export function* getWalletSaga() {
 		const {payload} = yield take(actions.actionType.GET_DB_WALLET);
 		try {
 			const {data} = yield call(api.getWallet_api, payload.uid);
-			console.log(data)
 			yield put(actions.getWallet(data));
 		} catch(error) {
 			yield put(actions.emitError(error.response));

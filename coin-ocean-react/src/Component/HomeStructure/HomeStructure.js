@@ -7,6 +7,7 @@ import homeimg2 from '../../picture/homepage2.png'
 import homeimg3 from '../../picture/homepage3.png'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
+import Chart from '../charts/simpleRealtime.jsx'
 
 
 class HomeStructure extends Component {
@@ -37,9 +38,9 @@ class HomeStructure extends Component {
 
             <div className="hsmaincontainer">
                 <div className="hsflex">
-                    <div className="justdemo"></div>
-                    <div className="justdemo"></div>
-                    <div className="justdemo"></div>
+                    <div className="justdemo"><Chart coin='BTC'/></div>
+                    <div className="justdemo"><Chart coin='XRP'/></div>
+                    <div className="justdemo"><Chart coin='ETH'/></div>
                 </div>
 
                 <div>

@@ -6,7 +6,7 @@ class Hourandmin extends React.Component {
   constructor(props) {
     super(props);
     // this.coin_id = 'bitcoin'
-    this.ws = openSocket('/')
+    this.ws = openSocket(process.env.REACT_APP_WS)
     this.state = {
       options: {
         title: {
@@ -14,6 +14,9 @@ class Hourandmin extends React.Component {
         },
         chart: {
           id: 'price',
+          toolbar: {
+            show: false
+          }
         },
         yaxis: {
           title: {
@@ -21,10 +24,10 @@ class Hourandmin extends React.Component {
           },
           labels: {
             formatter: function (val) {
-              return `${val} USD`
+              return `${val.toFixed(2)} USD`
             }
           },
-          tickAmount: 4
+          // tickAmount: 4
         },
         dataLabels: {
           enabled: false
@@ -65,23 +68,23 @@ class Hourandmin extends React.Component {
         },
         xaxis: {
           type: 'datetime',
-          tickAmount: 6,
+          // tickAmount: 6,
         },
       },
       series: [],
     };
   }
 
-  componentWillMount(){
-    const { req} = this.props
+  componentWillMount() {
+    const { req } = this.props
     this.ws.emit(`${req} chart init`, `${this.props.coin_id}`)
   }
 
   componentDidMount() {
     const { req } = this.props
-    this.ws.on(`${req} chart reply`, (reply)=>{
+    this.ws.on(`${req} chart reply`, (reply) => {
       this.setState({
-        series : reply.data
+        series: reply.data
       })
     })
   }

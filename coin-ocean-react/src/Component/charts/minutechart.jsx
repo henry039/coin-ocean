@@ -74,15 +74,6 @@ export default class RealTimeChart extends React.Component {
         axios.get(url).then(res => {
             this.setState({ series: res.data.hourCoin })
         })
-        this.interval = setInterval(() => {
-            axios.get(url).then(res => {
-                this.setState({ series: res.data.hourCoin })
-            })
-        }, 1000 * 60 * 5);
-    }
-
-    componentWillUnmount() {
-        clearInterval(this.interval);
     }
 
     render() {

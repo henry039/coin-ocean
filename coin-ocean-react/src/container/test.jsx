@@ -18,7 +18,7 @@ class Test extends React.Component{
         // this.props.createWallet_DB('test5', {rest : 2345})
         // this.props.getTradeHistory_DB('test1')
         // this.props.addTradeHistory_DB('test1', {action : { 'eth' : ['sell', 40, 345]}})
-        // this.props.getCoinComments_DB('bitcoin')
+        this.props.getCoinComments_DB('BTC')
         // this.props.getUserComments_DB('test1')
         // this.props.addComments_DB('test1', {context : 'hey there', tag : 'eth234'})
     }

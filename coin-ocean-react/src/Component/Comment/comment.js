@@ -10,21 +10,21 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 export class RecipeReviewCard extends React.Component {
 
-  state = {
-    open: false,
-  };
+  // state = {
+  //   open: false,
+  // };
 
-  handleOpen = () => {
-    this.setState({ open: true });
-  };
+  // handleOpen = () => {
+  //   this.setState({ open: true });
+  // };
 
-  handleClose = () => {
-    this.setState({ open: false });
-  };
+  // handleClose = () => {
+  //   this.setState({ open: false });
+  // };
   
-  madalout() {
+  // madalout() {
     
-  }
+  // }
 
   render() {
     return (
@@ -61,6 +61,7 @@ export class RecipeReviewCard extends React.Component {
     );
   }
 }
+
 
 export class CommentInput extends React.Component {
   render() {

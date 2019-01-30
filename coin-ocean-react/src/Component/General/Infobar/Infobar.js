@@ -14,7 +14,7 @@ class Infobar extends Component{
         var api_key = process.env.API_KEY;
         axios.get(`https://min-api.cryptocompare.com/data/top/volumes?tsym=BTC&api_key=${api_key}`)
             .then(response => {
-                console.log(response);
+                // console.log(response);
                 this.setState({
                     coin: response.data.Data[0]
                 })

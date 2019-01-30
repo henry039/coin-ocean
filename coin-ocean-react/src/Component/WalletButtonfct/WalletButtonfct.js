@@ -7,6 +7,7 @@ import Application from './Application/Application'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import './WalletButtonfct.css'
+import {cal_coin_assets} from '../../redux/selectors'
 
 class WalletButtonfct extends Component {
   constructor(props) {

@@ -11,7 +11,7 @@ class ChartHistory extends React.Component {
     constructor(props) {
         super(props);
         this.coin_id = 'bitcoin'
-        this.ws = openSocket('/')
+        this.ws = openSocket(process.env.REACT_APP_WS)
         this.state = {
             option_price: {
                 title: {
@@ -31,6 +31,7 @@ class ChartHistory extends React.Component {
                         },
                         minWidth: 100
                     },
+                    tickAmount: 3,
                 },
                 dataLabels: {
                     enabled: false
@@ -268,7 +269,7 @@ class ChartHistory extends React.Component {
                             <button className="btn btn-outline-danger" onClick={this.handleClick} value='1y'>1y</button>
                             {/* <button className="btn btn-outline-danger" onClick={this.handleClick} value='5y'>5y</button> */}
                         </div>
-                        <div className="chart">
+                        <div className="chart"  style={{maxHeight : 350}}>
                             <ReactApexChart
                                 options={this.state.option_price}
                                 series={this.state.price}
