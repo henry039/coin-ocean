@@ -4,7 +4,7 @@ import Titlebar from "../Component/General/Titlebar/Titlebar"
 import Infobar from "../Component/General/Infobar/Infobar"
 
 
-class Signup extends Component {
+class Signin extends Component {
   render() {
     return (
       <div>
@@ -18,4 +18,4 @@ class Signup extends Component {
 
 
 
-export default Signup;
+export default Signin;

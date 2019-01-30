@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./Signupform.css";
 import Easy_icon from "../../picture/easymoney_icon.png"
 import firebase from '../Firebase'
+import {Link} from 'react-router-dom';
 
 class Signupform extends Component {
     constructor(props) {
@@ -76,7 +77,7 @@ class Signupform extends Component {
                         <div className="signupseperation"></div>
 
                         <div>
-                            <p>Already have an account OR using soical meadia signing in? <a href="/"> Sign in</a></p>
+                            <p>Already have an account OR using soical meadia signing in? <Link to={`/signin`}><a href="/signup"> Sign in</a></Link></p>
                         </div>
                     </div>
                 </div>

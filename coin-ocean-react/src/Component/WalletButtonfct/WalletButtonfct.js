@@ -189,21 +189,30 @@ class WalletButtonfct extends Component {
               <p>Time</p>
             </div>
           </div>
-          <Trade />
-        </div>
-      );
-    } else if (this.state.MyComment) {
-      info = (
-        <div className="commentlist">
-          <MyComment />
-        </div>
-      );
-    } else if (this.state.Application) {
-      info = (
-        <div className="applist">
-          <Application />
-        </div>
-      );
+           <Trade 
+           coin="bitcoin"
+           symbol="(BTC)"
+           buy="$3000"
+           buyquantity="200"
+           sell="---"
+           sellquantity="---"
+           value="$60000"
+           time="2018-1-12:1530"
+           />
+          </div>
+        );
+    }else if (this.state.MyComment) {
+        info = (
+          <div className="commentlist">
+           <MyComment />
+          </div>
+        );
+    }else if (this.state.Application) {
+        info = (
+          <div className="applist">
+           <Application />
+          </div>
+        );
     }
 
     return (

@@ -22,12 +22,7 @@ class Wallet extends Component {
                                 <h4>Coinshu</h4>
                                 <h6>Member ID: 007</h6>
                                 <h6>Ranking: 1</h6>
-                                {Object.keys(wallet.coins).map((coin)=>{
-                                    return (
-                                        // <h6>EYN coin: 100</h6>
-                                        <h6>{coin} : {wallet.coins[coin]}</h6>
-                                    )
-                                })}
+                                <h6>EYN coin: 100</h6>
                             </div>
                         </div>
 

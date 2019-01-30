@@ -1,0 +1,11 @@
+.tradedata{
+    display:flex;
+    justify-content: center;
+}
+
+.tradecoin{
+    margin-left:40px;
+    margin-right: 40px;
+    width: 100px;
+    text-align: center;
+}

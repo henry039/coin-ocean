@@ -1,11 +1,12 @@
 import React,{Component} from 'react'
+import './TradeHistory.css'
 
 class Trade extends Component{
     constructor(props) {
         super(props);
         this.state = {
             tradehistory: ["Saab", "Volvo", "BMW"],
-            tradecontext: false
+            tradecontext: true
         };
       }
 
@@ -23,7 +24,26 @@ class Trade extends Component{
         }else{
         return(
         <div className="yestradelist">
-            <p>shit</p>
+           <div className="tradedata">
+                <div className="tradecoin">
+                    <a href="/"><p>{this.props.coin}</p></a>
+                    <small><p>{this.props.symbol}</p></small>
+                </div>
+                <div className="tradecoin">
+                    <p>{this.props.buy}</p>
+                    <small><p>{this.props.buyquantity}</p></small>
+                </div>
+                <div className="tradecoin">
+                    <p>{this.props.sell}</p>
+                    <small><p>{this.props.sellquantity}</p></small>
+                </div>
+                <div className="tradecoin">
+                    <p>{this.props.value}</p>
+                </div>
+                <div className="tradecoin">
+                    <p>{this.props.time}</p>
+                </div>
+            </div>
         </div>
         )
         }

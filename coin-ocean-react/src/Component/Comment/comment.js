@@ -1,5 +1,6 @@
 import React from "react";
 import CardActions from "@material-ui/core/CardActions";
+// import Form from 'react-router-form'
 import IconButton from "@material-ui/core/IconButton";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
@@ -64,13 +65,18 @@ export class RecipeReviewCard extends React.Component {
 
 
 export class CommentInput extends React.Component {
+  // handleAddPost= (nextState, replaceState) => {
+  //   console.log(nextState.location.state.method) // 'POST'
+  //   console.log(nextState.location.state.body) // {comment: '...'}
+  // }
+
   render() {
     return (
       <div className="commentwrite">
         <button type="button" className="btn commentwritebutton" data-toggle="modal" data-target="#exampleModalCenter">
           <p>Click to write down your comment..........</p>
         </button>
-          <form action="/comment" method="post">
+          {/* <Form to={"/coinpage/:id"} method="POST">
             <div className="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
               <div className="modal-dialog modal-dialog-centered" role="document">
                 <div className="modal-content">
@@ -83,12 +89,12 @@ export class CommentInput extends React.Component {
                   </div>
                   <div className="modal-footer">
                     <input type="button" className="btn btn-secondary" data-dismiss="modal" value="Close" />
-                    <input type="submit" className="btn btn-success" value="POST" />
+                    <input type="submit" className="btn btn-success" value="POST" onClick={this.handleAddPost}/>
                   </div>
                 </div>
               </div>
             </div>
-          </form>
+          </Form> */}
       </div>
     );
   }
