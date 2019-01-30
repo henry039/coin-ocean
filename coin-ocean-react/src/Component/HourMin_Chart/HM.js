@@ -5,7 +5,7 @@ import openSocket from 'socket.io-client'
 class Hourandmin extends React.Component {
   constructor(props) {
     super(props);
-    this.coin_id = 'bitcoin'
+    // this.coin_id = 'bitcoin'
     this.ws = openSocket('/')
     this.state = {
       options: {
@@ -74,7 +74,7 @@ class Hourandmin extends React.Component {
 
   componentWillMount(){
     const { req} = this.props
-    this.ws.emit(`${req} chart init`, `${this.coin_id}`)
+    this.ws.emit(`${req} chart init`, `${this.props.coin_id}`)
   }
 
   componentDidMount() {

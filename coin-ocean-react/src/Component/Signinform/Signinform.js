@@ -2,9 +2,26 @@ import React, { Component } from "react";
 import "./Signinform.css";
 import Easy_name from "../../picture/easymoney_name.png"
 import SoicalLogin from './auth.jsx'
+import { connect } from 'react-redux'
+import { userLogin } from '../../redux/actions'
 
 
 class Signinform extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            email : '',
+            password : ''
+        }
+    }
+
+    handleSubmit = (e) => {
+        e.preventDefault()
+        console.log(e)
+    }
+
+
+
   render() {
     return (
       <div className="signinform">
@@ -16,7 +33,8 @@ class Signinform extends Component {
             <div className="signinbacket">
             <h3>Sign In</h3>
             
-            <form action="/" method="post">
+            {/* <form action="/" method="post"> */}
+            <form onSubmit={this.handleSubmit}>
             <div className="form-group">
                 <label for="exampleInputEmail1">Email address</label>
                 <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" />
@@ -56,4 +74,4 @@ class Signinform extends Component {
   }
 }
 
-export default Signinform;
+export default connect((state)=> ({user : state.user}), {userLogin})(Signinform);

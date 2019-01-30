@@ -29,7 +29,7 @@ class SoicalLogin extends React.Component {
   componentWillMount = () => {
     firebase.auth().onAuthStateChanged(user => {
       this.setState({ isSignedIn: !!user })
-      console.log(firebase.auth().currentUser.uid)
+      // console.log(firebase.auth().currentUser.uid)
       // this.props.userTracking(firebase.auth().currentUser.uid, this.state.isSignedIn)
       this.props.userLogin(firebase.auth().currentUser.uid, this.state.isSignedIn)
     })

@@ -1,6 +1,5 @@
 const axios = require('axios');
 require('dotenv').config({ path: '../../.env' })
-const CronJob = require('cron').CronJob;
 const { market_common } = require('../dailyUpdate/symbol_in_common')
 
 let realtime_data = {};
@@ -36,8 +35,6 @@ async function realtimeOutput(){
 }
 
 realtime_price()
-const job = new CronJob('0 */1 * * * *', realtime_price)
-job.start()
 
 // realtimeOutput().then(res => console.log(res))
 module.exports = { realtimeOutput }

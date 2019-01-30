@@ -138,9 +138,9 @@ export default class extends React.Component {
             price: [],
             vol: []
         }
-        this.ws.on('reply', (msg) => {
-            this.setState({ res: msg })
-        })
+        // this.ws.on('reply', (msg) => {
+        //     this.setState({ res: msg })
+        // })
         // this.ws.on('hour chart reply', (obj) =>{
         //     console.log(obj.data)
         //     this.setState({
@@ -148,14 +148,17 @@ export default class extends React.Component {
         //         series : obj.data
         //     })
         // })
-        this.ws.on('history chart reply', (obj) => {
-            // console.log(obj)
-            this.setState(pre => ({
-                // option: obj.option,
-                // series: obj.data
-                price: obj.price,
-                vol: obj.vol
-            }))
+        // this.ws.on('history chart reply', (obj) => {
+        //     // console.log(obj)
+        //     this.setState(pre => ({
+        //         // option: obj.option,
+        //         // series: obj.data
+        //         price: obj.price,
+        //         vol: obj.vol
+        //     }))
+        // })
+        this.ws.on('realtime price', (reply)=>{
+            console.log(reply)
         })
     }
 

@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import ReactApexChart from "react-apexcharts";
 import Ind from "../CoinInfo/indivcoincard"
 import HM from "../HourMin_Chart/HM"
@@ -7,9 +6,7 @@ import './hischart.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import openSocket from 'socket.io-client'
-
-// const url = '/api/history/bitcoin'
-
+import { withRouter } from 'react-router-dom'
 class ChartHistory extends React.Component {
     constructor(props) {
         super(props);
@@ -18,7 +15,7 @@ class ChartHistory extends React.Component {
         this.state = {
             option_price: {
                 title: {
-                    text: `Bitcoin Price Movement`
+                    text: `${this.props.match.params.id} Price Movement`
                 },
                 chart: {
                     id: 'price',
@@ -142,66 +139,17 @@ class ChartHistory extends React.Component {
             price: [],
             vol: [],
             // =====================William add=====================
-            info: []
+            info: [],
+            pageid: `${this.props.match.params.id}`
             // =====================William add end=====================
         }
     }
-
-    // updateSeries = (rawData) => {
-    //     let updateData = this.normalizedData(rawData)
-    //     // console.log(updateData)
-    //     this.setState({ series: updateData })
-    // }
-
-    // extractPrice = (rawData) => {
-    //     // arr of { x: '05/06/2014', y: 54 }
-    //     // x(date) y(price)
-    //     let dataSet = []
-    //     for (let i in rawData) {
-    //         dataSet.push(Object.assign({}, {
-    //             x: rawData[i].date,
-    //             y: Number(rawData[i].price)
-    //         }))
-    //     }
-    //     return Object.assign({}, {
-    //         name: 'Price',
-    //         type: 'line',
-    //         data: dataSet
-    //     })
-    // }
-
-    // extractTxVol = (rawData) => {
-    //     // arr of { x: '05/06/2014', y: 54 }
-    //     // x(date) y(price)
-    //     let dataSet = []
-    //     for (let i in rawData) {
-    //         dataSet.push(Object.assign({}, {
-    //             x: rawData[i].date,
-    //             y: Number(rawData[i].txVol)
-    //         }))
-    //     }
-    //     return Object.assign({}, {
-    //         name: 'TxVol',
-    //         type: 'column',
-    //         data: dataSet
-    //     })
-    // }
-
-    // normalizedData = (input) => {
-    //     let price = this.extractPrice(input)
-    //     let txVol = this.extractTxVol(input)
-    //     return [price, txVol]
-    // }
 
     componentWillMount() {
         this.ws.emit('history chart init', `${this.coin_id}`)
     }
 
     componentDidMount() {
-        // axios.get(url).then(res => {
-        //     this.setState({ history: res.data })
-        //     this.updateSeries(res.data.slice(res.data.length - 365 * 5))
-        // })
         this.ws.on('history chart reply', (reply) => {
             this.setState({
                 price: reply.price,
@@ -211,12 +159,12 @@ class ChartHistory extends React.Component {
         })
 
         // =====================William add=====================
-        fetch("https://api.coinmarketcap.com/v1/ticker/?convert=USD&limit=1")
+        fetch("https://api.coinmarketcap.com/v1/ticker/?convert=USD&limit=100")
             .then(res => res.json())
             .then(
                 result => {
                     this.setState({
-                        info: result,
+                        info: result.filter(e => {return e.symbol === this.state.pageid.toUpperCase()}),
                     });
                 },
                 error => {
@@ -232,7 +180,6 @@ class ChartHistory extends React.Component {
         const price = this.state.history.price[0].data
         const vol = this.state.history.vol[0].data
         const total = price.length
-        // console.log(total)
         switch (e.target.value) {
             case '7d':
                 this.setState((pre) => ({
@@ -299,7 +246,7 @@ class ChartHistory extends React.Component {
                         return (
                             <div className="indivcoin">
                                 <Ind
-                                    name={info.name}
+                                    name={info.id}
                                     symbol={info.symbol}
                                     price_usd={Math.round((info.price_usd) * 100) / 100}
                                     price_btc={Math.round((info.price_btc) * 100) / 100}
@@ -340,10 +287,10 @@ class ChartHistory extends React.Component {
 
                 <div className="flex">
                     <div className="hmchart">
-                        <HM req='minute' />
+                        <HM req='minute' coin_id={this.props.match.params.id}/>
                     </div>
                     <div className="hmchart">
-                        <HM req='hour' />
+                        <HM req='hour' coin_id={this.props.match.params.id}/>
                     </div>
                 </div>
             </div>
@@ -352,4 +299,4 @@ class ChartHistory extends React.Component {
     // =====================William modified end=====================
 }
 
-export default ChartHistory;
+export default withRouter(ChartHistory);

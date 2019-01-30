@@ -62,5 +62,6 @@ const bitfinex_switch = { bitcoin: 'tBTCUSD', ripple: 'tXRPUSD', ethereum: 'tETH
 
 module.exports = {
     bitfinex_switch,
+    bitfinex_switch_temp,
     market_common
 }
