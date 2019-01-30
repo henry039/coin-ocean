@@ -6,11 +6,12 @@ module.exports = (app) => {
         let coinHistory = await db.getCoinHistory(req.params.coin)
         res.send(coinHistory)
     })
-    // app.get('/api/realtime/:coin', async (req, res) => {
-    //     // let coinRealtime = await db.getCoinMinute(req.params.coin)
-    //     let realTimeData = await db.getRealTimeCoin()()
-    //     res.send(realTimeData)
-    // })
+
+    // User
+    app.post('/api/add/user', async(req, res)=>{
+        let addUserProfile = await db.createUserProfile(req.body.uid, req.body.payload)
+        res.send(addUserProfile[0])
+    })
 
     // Wallet
     app.post('/api/get/wallet', async (req, res) => {
@@ -49,16 +50,6 @@ module.exports = (app) => {
         let comments = await db.addComments(req.body.uid, req.body.payload)
         res.send(formatCommentsOutput(comments))
     })
-
-    // meta Data
-    // app.get('/api/meta/:id', (req, res) => {
-    //     const ids = req.params.id
-    //     const urlapi = `https://pro-api.coinmarketcap.com/v1/cryptocurrency/info?id=${ids}`
-    //     const header = { 'X-CMC_PRO_API_KEY': process.env.COINAPI }
-    //     axios.get(urlapi, { headers: header }).then(response => {
-    //         res.send(response.data)
-    //     }).catch(err => console.error(err.response.data.status.error_message))
-    // })
 }
 
 function formatWalletOutput(input) {

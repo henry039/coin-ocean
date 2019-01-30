@@ -1,5 +1,18 @@
 import axios from 'axios';
 
+// user
+// export function getUserProfile_api(uid) {
+// 	return axios.post('/api/get/user', {uid})
+// 		.then(checkStatus)
+// 		.then(res => res)
+// }
+
+// export function addUserProfile_api(uid, payload){
+// 	return axios.post('/api/add/user', {uid, payload})
+// 		.then(checkStatus)
+// 		.then(res => res)
+// }
+
 // wallet
 export function createWallet_api(uid, payload) {
 	return axios.post('/api/create/wallet', { uid, payload })

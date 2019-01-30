@@ -6,7 +6,6 @@ export const initialState = {
     user : {
         // uid : undefined,
         uid : 'test1',
-        isSignedIn : false,
         // profile : {
         //     pic : 'www.....img',
         //     displayName : 'ggggg'
