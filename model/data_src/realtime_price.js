@@ -1,5 +1,5 @@
 const axios = require('axios');
-require('dotenv').config({ path: '../../.env' })
+require('dotenv').config({ path: __dirname + '../../.env' })
 
 function realtime_price() {
     return axios.get(process.env.APIs)
