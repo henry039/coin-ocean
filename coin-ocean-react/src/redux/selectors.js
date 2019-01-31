@@ -1,7 +1,5 @@
 let market_symbol = { BTC: 'Bitcoin', XRP: 'XRP', ETH: 'Ethereum', EOS: 'EOS', LTC: 'Litecoin', XLM: 'Stellar', TRX: 'TRON', BSV: 'Bitcoin SV', XMR: 'Monero', NEO: 'NEO', ETC: 'Ethereum Classic', MKR: 'Maker', ZEC: 'Zcash', XTZ: 'Tezos', VET: 'VeChain', BTG: 'Bitcoin Gold', ZIL: 'Zilliqa', OMG: 'OmiseGO', ZRX: '0x', BAT: 'Basic Attention Token', REP: 'Augur', PAX: 'Paxos Standard Token', HOT: 'Holo', DGB: 'DigiByte', XVG: 'Verge', DAI: 'Dai', SNT: 'Status', GNT: 'Golem', ODE: 'ODEM', LRC: 'Loopring', WTC: 'Waltonchain', PAI: 'Project Pai', BNT: 'Bancor', WAX: 'WAX' }
 
-// const {fake2} = require('../../../utils/fake_realtime')
-
 export const wallet = (state) => state.wallet
 export const trade_history = (state) => state.trade_history
 export const comments = (state) => state.comments

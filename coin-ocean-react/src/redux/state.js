@@ -10,7 +10,10 @@ export const initialState = {
         //     photourl : 'www.....img',
         //     displayname : 'ggggg'
         // },
-        profile : {}
+        profile : {
+            photourl: 'https://upload.wikimedia.org/wikipedia/commons/f/f4/User_Avatar_2.png',
+            displayname : 'SomeOne'
+        }
     },
     wallet : {
         // coins : [

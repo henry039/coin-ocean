@@ -165,11 +165,8 @@ class fetchDB {
         return await Promise.all(output)
     }
 
-    async getUserComments(uid) {
-        return {
-            comments : await knex('comment').where('uid', uid).orderBy('id', 'desc'),
-            profile : await knex('user_profile').where('uid', uid)
-        }
+    getUserComments(uid) {
+        return knex('comment').where('uid', uid).orderBy('id', 'desc')
     }
 
     addComments(uid, payload) {

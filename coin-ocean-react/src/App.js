@@ -8,10 +8,6 @@ import HomePage from './Page/HomePage'
 import Profile from './Page/Profile'
 import NoMatch from './Page/NoMatch'
 
-// import Auth from './Component/Signinform/auth'
-// import Test from './container/test'
-// import Chart from './Component/charts/pie'
-// import Ws from './container/ws'
 import { BrowserRouter as Router,
 Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -43,10 +39,6 @@ class App extends Component {
           <Route path="/profile" component={Profile} />
           <Route component={NoMatch} />
         </Switch>
-        {/* <Auth/> */}
-        {/* <Test /> */}
-        {/* <Chart /> */}
-        {/* <Ws /> */}
       </Router>
     );
   }

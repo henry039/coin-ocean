@@ -5,7 +5,8 @@ import Wallet from "../Component/Wallet/Wallet"
 import WalletButtonfct from "../Component/WalletButtonfct/WalletButtonfct"
 import PieChart from '../Component/charts/pie'
 import { connect } from 'react-redux'
-import { getWallet_DB, getTradeHistory_DB } from '../redux/actions'
+import { getWallet_DB, getTradeHistory_DB , getUserComments_DB} from '../redux/actions'
+import {wallet, trade_history, comments, user} from '../redux/selectors'
 
 
 class Profile extends Component {
@@ -13,6 +14,7 @@ class Profile extends Component {
     super(props);
     this.props.getWallet_DB(this.props.user.uid)
     this.props.getTradeHistory_DB(this.props.user.uid)
+    this.props.getUserComments_DB(this.props.user.uid)
   }
   render() {
     const {coins} = this.props.wallet;
@@ -21,7 +23,9 @@ class Profile extends Component {
         <Titlebar />
         <Infobar />
         <Wallet />
-        <PieChart coins={coins}/>
+        <div style={{display: 'flex', justifyContent: 'center'}}>
+          <PieChart coins={coins}/> 
+        </div>
         <WalletButtonfct />
       </div>
     )
@@ -30,4 +34,4 @@ class Profile extends Component {
 
 
 
-export default connect((state) => ({ wallet: state.wallet, user: state.user }), { getWallet_DB, getTradeHistory_DB })(Profile);
+export default connect((state) => ({ wallet: wallet(state), user: user(state), comments: comments(state), trade_history: trade_history(state) }), { getWallet_DB, getTradeHistory_DB, getUserComments_DB,  })(Profile);

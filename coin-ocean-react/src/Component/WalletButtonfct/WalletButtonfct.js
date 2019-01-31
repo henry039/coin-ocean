@@ -74,8 +74,8 @@ class WalletButtonfct extends Component {
 
   render() {
     let info = null;
-    const { wallet, prices} = this.props
-    // console.log(prices)
+    const { wallet, prices, history, comments, user} = this.props
+    // console.log(comments
     if (this.state.WatchList) {
       info = (
         <div>
@@ -189,7 +189,21 @@ class WalletButtonfct extends Component {
               <p>Time</p>
             </div>
           </div>
-           <Trade 
+          {history.map(track => {
+            return (
+              <Trade 
+                time={new Date(track.date).toDateString()}
+                coin={get_coin_name([track.action[0].tag])}
+                symbol={track.action[0]}
+                buy={(track.action[1] === 'buy')?track.action[3]:'---'}
+                buyquantity={(track.action[1] === 'buy')?track.action[2]:'---'}
+                sell={(track.action[1] === 'sell')?track.action[3]:'---'}
+                sellquantity={(track.action[1] === 'sell')?track.action[2]:'---'}
+                value={track.action[2] * track.action[3]}
+              />
+            )
+          })}
+           {/* <Trade 
            coin="bitcoin"
            symbol="(BTC)"
            buy="$3000"
@@ -198,13 +212,17 @@ class WalletButtonfct extends Component {
            sellquantity="---"
            value="$60000"
            time="2018-1-12:1530"
-           />
+           /> */}
           </div>
         );
     }else if (this.state.MyComment) {
         info = (
           <div className="commentlist">
-           <MyComment />
+            {comments.map(comment => {
+              return (
+                <MyComment comment={comment} user={user}/>
+              )
+            })}
           </div>
         );
     }else if (this.state.Application) {
@@ -232,4 +250,4 @@ class WalletButtonfct extends Component {
   }
 }
 
-export default connect((state)=>({ wallet : state.wallet, prices : state.prices}))(WalletButtonfct)
+export default connect((state)=>({ wallet : state.wallet, prices : state.prices, history : state.trade_history, comments : state.comments, user : state.user}))(WalletButtonfct)

@@ -20,7 +20,6 @@ export class RecipeReviewCard extends React.Component {
 
     componentWillMount(){
         this.props.getCoinComments_DB(`${this.props.coin}`)
-        // this.props.getCoinComments_DB('BTC')
     }
 
     render() {
