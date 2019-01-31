@@ -8,7 +8,7 @@ class NoMatch extends Component {
     return (
       <div>
         <Titlebar />
-        <Infobar />
+        {/* <Infobar /> */}
         <h1>The page cannot found!</h1>
         <h2>Please try again</h2>
       </div>

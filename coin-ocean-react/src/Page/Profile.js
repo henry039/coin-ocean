@@ -19,7 +19,7 @@ class Profile extends Component {
     return (
       <div>
         <Titlebar />
-        <Infobar />
+        {/* <Infobar /> */}
         <Wallet />
         <PieChart coins={coins}/>
         <WalletButtonfct />

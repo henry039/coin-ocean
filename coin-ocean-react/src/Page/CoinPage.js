@@ -9,7 +9,7 @@ class CoinPage extends Component {
     return (
       <div>
         <Titlebar />
-        <Infobar />
+        {/* <Infobar /> */}
         <Hischart />
         <NC />
       </div>

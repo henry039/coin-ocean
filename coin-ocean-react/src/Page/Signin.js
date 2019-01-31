@@ -9,7 +9,7 @@ class Signin extends Component {
     return (
       <div>
         <Titlebar />
-        <Infobar />
+        {/* <Infobar /> */}
         <Signinform />
       </div>
     )

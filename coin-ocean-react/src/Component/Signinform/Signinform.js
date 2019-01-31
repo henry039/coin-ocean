@@ -5,6 +5,7 @@ import SoicalLogin from './auth.jsx'
 import { connect } from 'react-redux'
 import { userLogin } from '../../redux/actions'
 import firebase from '../Firebase'
+
 class Signinform extends Component {
     constructor(props) {
         super(props);
@@ -62,8 +63,8 @@ class Signinform extends Component {
                             <button type="submit" className="btn btn-warning">Sign in EasyMoney</button>
                         </form>
                         <div className="gotosoicalmedia">
-                            <SoicalLogin />
                             <small><p>Using Soical Media Login?</p></small>
+                            <SoicalLogin />
                         </div>
 
                         <div className="signinseperation"></div>
