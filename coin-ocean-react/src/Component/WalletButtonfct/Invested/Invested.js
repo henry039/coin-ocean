@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import './invested.css'
-import { connect } from 'react-redux'
-import {cal_coin_assets} from '../../../redux/selectors'
 
 class Invested extends Component {
     constructor(props) {
@@ -13,6 +11,7 @@ class Invested extends Component {
     }
 
     render() {
+        const {coin_money} = this.props
         if (!this.state.investcontext) {
             return (
                 <div className="noliststate">
@@ -56,4 +55,4 @@ class Invested extends Component {
 
 }
 
-export default connect((state)=>({coin_money : cal_coin_assets(state)}))(Invested);
+export default Invested;

@@ -7,7 +7,8 @@ import Application from './Application/Application'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import './WalletButtonfct.css'
-import {cal_coin_assets} from '../../redux/selectors'
+import { cal_coin_assets } from '../../redux/selectors'
+import { connect } from 'react-redux'
 
 class WalletButtonfct extends Component {
   constructor(props) {
@@ -23,159 +24,169 @@ class WalletButtonfct extends Component {
 
   buttonwatchClick = () => {
     this.setState({
-        WatchList: true,
-        Invested: false,
-        Trade: false,
-        MyComment: false,
-        Application: false,
+      WatchList: true,
+      Invested: false,
+      Trade: false,
+      MyComment: false,
+      Application: false,
     });
   };
 
   buttoninvestClick = () => {
     this.setState({
-        WatchList: false,
-        Invested: true,
-        Trade: false,
-        MyComment: false,
-        Application: false,
+      WatchList: false,
+      Invested: true,
+      Trade: false,
+      MyComment: false,
+      Application: false,
     });
   };
 
   buttontradeClick = () => {
     this.setState({
-        WatchList: false,
-        Invested: false,
-        Trade: true,
-        MyComment: false,
-        Application: false,
+      WatchList: false,
+      Invested: false,
+      Trade: true,
+      MyComment: false,
+      Application: false,
     });
   };
 
   buttoncommnetClick = () => {
     this.setState({
-        WatchList: false,
-        Invested: false,
-        Trade: false,
-        MyComment: true,
-        Application: false,
+      WatchList: false,
+      Invested: false,
+      Trade: false,
+      MyComment: true,
+      Application: false,
     });
   };
 
   buttonsettingClick = () => {
     this.setState({
-        WatchList: false,
-        Invested: false,
-        Trade: false,
-        MyComment: false,
-        Application: true,
+      WatchList: false,
+      Invested: false,
+      Trade: false,
+      MyComment: false,
+      Application: true,
     });
   };
 
   render() {
     let info = null;
-
+    const {coin_money, wallet, prices} = this.props
     if (this.state.WatchList) {
       info = (
         <div>
           <div className="yeswatchlist">
             <div className="watchlistbar">
-                  <p>Rank</p>
-                  <p>Name</p>
-                  <p>MarketCap</p>
-                  <p>Price</p>
-                  <p>Change(24h)</p>
+              <p>Rank</p>
+              <p>Name</p>
+              <p>MarketCap</p>
+              <p>Price</p>
+              <p>Change(24h)</p>
             </div>
           </div>
-          <WatchList 
-          rank="rank"
-          name="bitcoin"
-          marketcap="marketcap"
-          price="$4000"
-          change="+3.78%"
-          keyid="#btc"
-          re_keyid="btc"
+          <WatchList
+            rank="rank"
+            name="bitcoin"
+            marketcap="marketcap"
+            price="$4000"
+            change="+3.78%"
+            keyid="#btc"
+            re_keyid="btc"
           />
-          <WatchList 
-          rank="rank"
-          name="bitcoin"
-          marketcap="marketcap"
-          price="$4000"
-          change="+3.78%"
-          keyid="#xrp"
-          re_keyid="xrp"
+          <WatchList
+            rank="rank"
+            name="bitcoin"
+            marketcap="marketcap"
+            price="$4000"
+            change="+3.78%"
+            keyid="#xrp"
+            re_keyid="xrp"
           />
-          <WatchList 
-          rank="rank"
-          name="bitcoin"
-          marketcap="marketcap"
-          price="$4000"
-          change="+3.78%"
-          keyid="#eth"
-          re_keyid="eth"
+          <WatchList
+            rank="rank"
+            name="bitcoin"
+            marketcap="marketcap"
+            price="$4000"
+            change="+3.78%"
+            keyid="#eth"
+            re_keyid="eth"
           />
         </div>
       );
-    }else if (this.state.Invested) {
+    } else if (this.state.Invested) {
       info = (
         <div className="investlist">
           <div className="yesinvestlist">
             <div className="listbar">
-                  <p>Coin</p>
-                  <p>Assets/Quantity</p>
-                  <p>Price/Cost</p>
-                  <p>Today Earn</p>
-                  <p>Total Earn</p>
-                  <p>Invest %</p>
+              <p>Coin</p>
+              <p>Assets/Quantity</p>
+              <p>Price/Cost</p>
+              <p>Today Earn</p>
+              <p>Total Earn</p>
+              <p>Invest %</p>
             </div>
           </div>
-         <Invested 
-         coin="bitcoin"
-         symbol="(BTC)"
-         assets="$34567"
-         quantity="200"
-         price="$567"
-         cost="$345"
-         tdyearn="$567"
-         tdypercent="4%"
-         totearn="$5678"
-         totpercent="5%"
-         invest="40%"/>
-         <Invested 
-         coin="bitcoin"
-         symbol="(BTC)"
-         assets="$34567"
-         quantity="200"
-         price="$567"
-         cost="$345"
-         tdyearn="$567"
-         tdypercent="4%"
-         totearn="$5678"
-         totpercent="5%"
-         invest="40%"/>
-         <Invested 
-         coin="bitcoin"
-         symbol="(BTC)"
-         assets="$34567"
-         quantity="200"
-         price="$567"
-         cost="$345"
-         tdyearn="$567"
-         tdypercent="4%"
-         totearn="$5678"
-         totpercent="5%"
-         invest="40%"/>
+          {Object.keys(wallet.coins).map((coin, index)=>{
+            return (
+              <Invested
+                key={index}
+                // coin="bitcoin"
+                coin={coin}
+                // symbol="(BTC)"
+                symbol={coin}
+                // assets="$34567"
+                assets={coin_money[index].price}
+                // quantity="200"
+                quantity={wallet.coins[coin]}
+                // price="$567"
+                price={Number(prices['BTC'].price).toFixed(2)}
+                cost="$345"
+                tdyearn="$567"
+                tdypercent="4%"
+                totearn="$5678"
+                totpercent="5%"
+                invest="40%" />
+            )
+          })}
+          {/* <Invested
+            coin="bitcoin"
+            symbol="(BTC)"
+            assets="$34567"
+            quantity="200"
+            price="$567"
+            cost="$345"
+            tdyearn="$567"
+            tdypercent="4%"
+            totearn="$5678"
+            totpercent="5%"
+            invest="40%" />
+          <Invested
+            coin="bitcoin"
+            symbol="(BTC)"
+            assets="$34567"
+            quantity="200"
+            price="$567"
+            cost="$345"
+            tdyearn="$567"
+            tdypercent="4%"
+            totearn="$5678"
+            totpercent="5%"
+            invest="40%" /> */}
         </div>
       );
-    }else if (this.state.Trade) {
-        info = (
-          <div className="tradelist">
+    } else if (this.state.Trade) {
+      info = (
+        <div className="tradelist">
           <div className="yesinvestlist">
             <div className="listbar">
-                  <p>Coin</p>
-                  <p>Buy/Quantity</p>
-                  <p>Sell/Quantity</p>
-                  <p>Value</p>
-                  <p>Time</p>
+              <p>Coin</p>
+              <p>Buy/Quantity</p>
+              <p>Sell/Quantity</p>
+              <p>Value</p>
+              <p>Time</p>
             </div>
           </div>
            <Trade 
@@ -221,4 +232,4 @@ class WalletButtonfct extends Component {
   }
 }
 
-export default WalletButtonfct
+export default connect((state)=>({coin_money : cal_coin_assets(state), wallet : state.wallet, prices : state.prices}))(WalletButtonfct)
