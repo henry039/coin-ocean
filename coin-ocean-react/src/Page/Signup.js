@@ -9,7 +9,7 @@ class Signup extends Component {
     return (
       <div>
         <Titlebar />
-        <Infobar />
+        {/* <Infobar /> */}
         <Signupform />
       </div>
     )

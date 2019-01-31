@@ -21,7 +21,7 @@ class Profile extends Component {
     return (
       <div>
         <Titlebar />
-        <Infobar />
+        {/* <Infobar /> */}
         <Wallet />
         <div style={{display: 'flex', justifyContent: 'center'}}>
           <PieChart coins={coins}/> 

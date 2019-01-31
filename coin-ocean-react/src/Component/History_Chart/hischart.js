@@ -141,7 +141,8 @@ class ChartHistory extends React.Component {
             vol: [],
             // =====================William add=====================
             info: [],
-            pageid: `${this.props.match.params.id}`
+            pageid: `${this.props.match.params.id}`,
+            icon: []
             // =====================William add end=====================
         }
     }
@@ -165,7 +166,7 @@ class ChartHistory extends React.Component {
             .then(
                 result => {
                     this.setState({
-                        info: result.filter(e => {return e.symbol === this.state.pageid.toUpperCase()}),
+                        info: result.filter(e => {return e.symbol === this.state.pageid.toUpperCase()})
                     });
                 },
                 error => {
@@ -173,10 +174,9 @@ class ChartHistory extends React.Component {
                         error
                     });
                 }
-            );
+            )
         // =====================William add end=====================
     }
-
     handleClick = (e) => {
         const price = this.state.history.price[0].data
         const vol = this.state.history.vol[0].data
@@ -243,7 +243,7 @@ class ChartHistory extends React.Component {
         return (
             <div>
                 <div className="coininfo">
-                    {this.state.info.map((info, index) => {
+                    {this.state.info.map((info,index) => {
                         return (
                             <div className="indivcoin">
                                 <Ind
@@ -256,6 +256,7 @@ class ChartHistory extends React.Component {
                                     volume={Math.round(info['24h_volume_usd'])}
                                     total={Math.round(info.total_supply)}
                                     max={Math.round(info.max_supply)}
+                                    iconimg={this.props.match.params.id.toLowerCase()}
                                 />
                             </div>
                         );

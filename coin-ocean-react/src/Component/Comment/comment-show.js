@@ -24,24 +24,21 @@ export class RecipeReviewCard extends React.Component {
 
     render() {
         return (
-            <div style={{
-                display: 'flex',
-                justifyContent: 'center'
-            }}>
+            <div>
                 {this.props.comments.map((comment) => {
                     return (
                         <div className="combackground" key={Math.random()}>
                             <div className="commentheader">
                                 <img src="" alt="userimg" />
                                 <div>
-                                    <h3>username</h3>
+                                    <h3>Username</h3>
                                     <h6>Time</h6>
                                 </div>
                             </div>
 
                             <div className="comcontext">
                                 <p>{`#${comment.tag}`}</p>
-                                <p>===============context============ {comment.context}</p>
+                                <p>{comment.context}</p>
                             </div>
 
                             <div>

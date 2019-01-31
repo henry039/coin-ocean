@@ -37,8 +37,8 @@ export class CommentInput extends React.Component {
                         <div className="modal-dialog modal-dialog-centered" role="document">
                             <div className="modal-content">
                                 <div className="modal-header">
-                                    <h5 className="modal-title" id="exampleModalCenterTitle">======Name {`${user.uid}`}</h5>
-                                    <h6> ====== Time{`${new Date().getDate()} - ${new Date().getMonth()+1} - ${new Date().getFullYear()} ${new Date().getHours()} : ${new Date().getMinutes()}`}</h6>
+                                    <h5 className="modal-title" id="exampleModalCenterTitle">UserName: {`${user.uid}`}</h5>
+                                    <h6> Time: {`${new Date().getDate()} - ${new Date().getMonth()+1} - ${new Date().getFullYear()} ${new Date().getHours()} : ${new Date().getMinutes()}`}</h6>
                                 </div>
                                 <div className="modal-body">
                                     <textarea name="comments" id="comments" className="commenttextarea" placeholder="write down your comment here" onChange={this.handleChange}></textarea>

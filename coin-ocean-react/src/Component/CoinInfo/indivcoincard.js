@@ -3,11 +3,13 @@ import "./indivcoincard.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 
+
+
 const Ind = props => {
   return (
     <div>
       <div className="cointitle">
-        <h2 className="coinname">(--icon--) {props.name}</h2>
+        <h2 className="coinname"><img src={require(`../../picture/color/${props.iconimg}.png`)} alt="coinimg"/>{props.name}</h2>
         <p className="coinsymbol">({props.symbol})</p>
       </div>
       <p className="time">Time</p>
@@ -36,19 +38,22 @@ const Ind = props => {
       <div class="modal fade" id="trader" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
+          <form>
             <div class="modal-header">
-              <h5 class="modal-title" id="trader">Modal title</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+              <h5 class="modal-title" id="trader">Coin Trading: {props.name}</h5>
             </div>
             <div class="modal-body">
-              ...
+              Price: ${props.price_usd}
+              <div>
+              <input placeholder="Enter quantity, e.g 10"></input>
+              </div>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer">   
+              <button type="button" class="btn btn-success">Buy</button>         
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
+              <button type="button" class="btn btn-danger">Sell</button>
             </div>
+          </form>  
           </div>
         </div>
       </div>
