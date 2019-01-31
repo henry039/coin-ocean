@@ -185,7 +185,7 @@ class fetchDB {
                     .where('uid', uid)
                     .then(trx.commit)
                     .catch(trx.rollback)
-            }).then(() => knex('comment').where('uid', uid))
+            }).then(() => knex('comment').where('tag', tag))
         } else {
             return Promise.reject(new Error('Payload missing'))
         }

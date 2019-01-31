@@ -14,6 +14,7 @@ class Invested extends Component {
 
     render() {
         const {coin_money, symbol, quantity, coin_cost} = this.props
+        console.log(coin_cost)
         const coin_assets = cal_coin_assets(coin_money, symbol, quantity)
         if (!this.state.investcontext) {
             return (
@@ -39,7 +40,7 @@ class Invested extends Component {
                         </div>
                         <div>
                             <p>{this.props.price}</p>
-                            <small><p>{Number(this.props.coin_cost[symbol]).toFixed(2)}</p></small>
+                            <small><p>{Number(coin_cost[symbol]).toFixed(2)}</p></small>
                         </div>
                         <div>
                             <p>{this.props.tdyearn}</p>
