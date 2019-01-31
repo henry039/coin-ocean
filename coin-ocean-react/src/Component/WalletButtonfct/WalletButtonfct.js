@@ -7,7 +7,7 @@ import Application from './Application/Application'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import './WalletButtonfct.css'
-import { cal_coin_assets } from '../../redux/selectors'
+import { get_coin_name } from '../../redux/selectors'
 import { connect } from 'react-redux'
 
 class WalletButtonfct extends Component {
@@ -74,7 +74,8 @@ class WalletButtonfct extends Component {
 
   render() {
     let info = null;
-    const {coin_money, wallet, prices} = this.props
+    const { wallet, prices} = this.props
+    // console.log(prices)
     if (this.state.WatchList) {
       info = (
         <div>
@@ -129,20 +130,19 @@ class WalletButtonfct extends Component {
               <p>Invest %</p>
             </div>
           </div>
-          {Object.keys(wallet.coins).map((coin, index)=>{
+          {wallet.coins.map((coin, index)=>{
             return (
               <Invested
                 key={index}
                 // coin="bitcoin"
-                coin={coin}
+                coin={get_coin_name(coin[0])}
                 // symbol="(BTC)"
-                symbol={coin}
+                symbol={coin[0]}
                 // assets="$34567"
-                assets={coin_money[index].price}
                 // quantity="200"
-                quantity={wallet.coins[coin]}
+                quantity={coin[1]}
                 // price="$567"
-                price={Number(prices['BTC'].price).toFixed(2)}
+                price={Number(prices[coin[0]].price).toFixed(2)}
                 cost="$345"
                 tdyearn="$567"
                 tdypercent="4%"
@@ -232,4 +232,4 @@ class WalletButtonfct extends Component {
   }
 }
 
-export default connect((state)=>({coin_money : cal_coin_assets(state), wallet : state.wallet, prices : state.prices}))(WalletButtonfct)
+export default connect((state)=>({ wallet : state.wallet, prices : state.prices}))(WalletButtonfct)

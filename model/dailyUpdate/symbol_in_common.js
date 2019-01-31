@@ -55,6 +55,7 @@ const market_common = {
 
 let a = Object.keys(market_common)
 let b = Object.values(market_common)
+let market_symbol = { BTC: 'Bitcoin', XRP: 'XRP', ETH: 'Ethereum', EOS: 'EOS', LTC: 'Litecoin', XLM: 'Stellar', TRX: 'TRON', BSV: 'Bitcoin SV', XMR: 'Monero', NEO: 'NEO', ETC: 'Ethereum Classic', MKR: 'Maker', ZEC: 'Zcash', XTZ: 'Tezos', VET: 'VeChain', BTG: 'Bitcoin Gold', ZIL: 'Zilliqa', OMG: 'OmiseGO', ZRX: '0x', BAT: 'Basic Attention Token', REP: 'Augur', PAX: 'Paxos Standard Token', HOT: 'Holo', DGB: 'DigiByte', XVG: 'Verge', DAI: 'Dai', SNT: 'Status', GNT: 'Golem', ODE: 'ODEM', LRC: 'Loopring', WTC: 'Waltonchain', PAI: 'Project Pai', BNT: 'Bancor', WAX: 'WAX' }
 
 // final switch
 const bitfinex_switch = { bitcoin: 'tBTCUSD', ripple: 'tXRPUSD', ethereum: 'tETHUSD', eos: 'tEOSUSD', litecoin: 'tLTCUSD', stellar: 'tXLMUSD', tron: 'tTRXUSD', 'bitcoin-sv': 'tBSVUSD', monero: 'tXMRUSD', neo: 'tNEOUSD', 'ethereum-classic': 'tETCUSD', maker: 'tMKRUSD', zcash: 'tZECUSD', tezos: 'tXTZUSD', vechain: 'tVETUSD', 'bitcoin-gold': 'tBTGUSD', zilliqa: 'tZILUSD', omisego: 'tOMGUSD', '0x': 'tZRXUSD', 'basic-attention-token': 'tBATUSD', augur: 'tREPUSD', 'paxos-standard-token': 'tPAXUSD', holo: 'tHOTUSD', digibyte: 'tDGBUSD', verge: 'tXVGUSD', dai: 'tDAIUSD', status: 'tSNTUSD', 'golem-network-tokens': 'tGNTUSD', odem: 'tODEUSD', loopring: 'tLRCUSD', waltonchain: 'tWTCUSD', 'project-pai': 'tPAIUSD', bancor: 'tBNTUSD', wax: 'tWAXUSD' }

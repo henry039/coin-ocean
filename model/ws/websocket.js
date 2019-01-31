@@ -8,7 +8,7 @@ module.exports = (server) => {
     let io = webSocket().listen(server);
 
     io.on('connection', (socket) => {
-        const job = new CronJob('0 */1 * * * *', async()=>{
+        const job = new CronJob('0 */5 * * * *', async()=>{
             socket.emit('realtime price', await realtime_price())
         })
         job.start()

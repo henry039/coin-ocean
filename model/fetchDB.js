@@ -1,4 +1,4 @@
-require('dotenv').config({path: '../.env'});
+require('dotenv').config({path : __dirname+'/../.env'});
 const knex = require('knex')({
     client: 'postgresql',
     connection: {
@@ -7,24 +7,25 @@ const knex = require('knex')({
         password: process.env.DATABASE_PASSWORD
     }
 })
+
 // fake seed import
 const fakeData = require('../utils/fakeSeed')
 
 class fetchDB {
     // User Profile
     createUserProfile(uid, payload){
-        let {photoURL, displayName} = payload
-        if(photoURL !== undefined && displayName !== undefined){
+        let {photourl, displayname} = payload
+        if(photourl !== undefined && displayname !== undefined){
             return knex.transaction((trx)=> {
-                trx('user')
+                trx('user_profile')
                     .insert({
-                        photoURL,
-                        displayName,
+                        photourl,
+                        displayname,
                         uid
                     })
                     .then(trx.commit)
                     .catch(trx.rollback)
-            }).then(()=> knex('user').where('uid', uid))
+            }).then(()=> knex('user_profile').where('uid', uid))
         }else{
             return Promise.reject(new Error('payload missing'))
         }
@@ -193,10 +194,10 @@ class fetchDB {
 // let a = new fetchDB()
 // a.createWallet('test1', {rest: 1000}).then(console.log)
 // a.getWallet('test1').then(console.log)
-// a.updateWallet('test1', {coins: [{name: 'BTC', quantity: 10}], rest:7500}).then(console.log).catch(err => console.error(err))
+// a.updateWallet('test1', {coins: [['BTC' ,49],["ETH", 500]], rest:7500}).then(console.log).catch(err => console.error(err))
 // a.dailyUpdateWallet('test1', {dailyPL: [17640]}).then(console.log).catch(err => console.error(err))
 
-// a.insertTradeHistory('test1', {action : ['BTC','buy', 20, 4000]}).then(console.log).catch(err => console.error(err))
+// a.insertTradeHistory('test1', {action : ['BTC','buy', 13, 3750]}).then(console.log).catch(err => console.error(err))
 // a.getTradeHistory('test1').then(console.log)
 
 // a.addComments('test1',{ context: 'From DB', tag: 'BTC'}).then(console.log)

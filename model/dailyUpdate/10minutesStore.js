@@ -1,24 +1,24 @@
+require('dotenv').config({path : __dirname+'../../.env'});
+// console.dir(process.env)
 const axios = require('axios')
-require('dotenv').config({ path: __dirname + '../../.env' })
 const { bitfinex_switch_temp } = require('./symbol_in_common')
 
 console.log(process.env.MINUTE_PRE)
 
 function fiveMinFetch(coin_id) {
     return axios.get(`${process.env.MINUTE_PRE}${bitfinex_switch_temp[coin_id]}${process.env.MINUTE_SUF}`)
-        .then(res => extractPrice(res.data, coin_id))
+        .then(res => extractPrice(res.data))
         .catch(err => console.error(err))
 }
-
 function hourFetch(coin_id) {
     return axios.get(`${process.env.HOUR_PRE}${bitfinex_switch_temp[coin_id]}${process.env.HOUR_SUF}`)
-        .then(res => extractPrice(res.data, coin_id))
+        .then(res => extractPrice(res.data))
         .catch(err => console.error(err))
 }
 
 // an array return[ MTS, OPEN, CLOSE, HIGH, LOW	,VOLUME]
 // form in a obj { x : 0th, y : 2th}
-function extractPrice(rawData, coin) {
+function extractPrice(rawData) {
     // arr of { x: '05/06/2014', y: 54 }
     // x(date) y(price)
     let dataSet = []
