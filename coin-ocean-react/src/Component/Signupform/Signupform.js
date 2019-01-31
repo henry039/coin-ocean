@@ -2,22 +2,30 @@ import React, { Component } from "react";
 import "./Signupform.css";
 import Easy_icon from "../../picture/easymoney_icon.png"
 import firebase from '../Firebase'
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import axios from 'axios'
 
 class Signupform extends Component {
     constructor(props) {
         super(props);
         this.state = {
             email: '',
-            password: ''
+            password: '',
+            fname: '',
+            lname: '',
         }
     }
 
     handleSubmit = (e) => {
         e.preventDefault()
         firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
-            .then((u) => { 
+            .then((u) => {
                 // redirect usage
+                const user = firebase.auth().currentUser
+                user.updateProfile({
+                    displayName: `${this.state.fname} ${this.state.lname}`,
+                    photoURL: "https://upload.wikimedia.org/wikipedia/commons/f/f4/User_Avatar_2.png"
+                }).then(axios.post('/api/add/user', {uid : firebase.auth().currentUser.uid, payload : {photourl : firebase.auth().currentUser.photoURL, displayname: firebase.auth().currentUser.displayName}}))
             })
             .then((u) => { console.log(u) })
             .catch((error) => {
@@ -27,7 +35,7 @@ class Signupform extends Component {
 
     handleChange = (e) => {
         this.setState({
-            [e.target.type]: e.target.value
+            [e.target.name]: e.target.value
         })
     }
     render() {
@@ -47,22 +55,22 @@ class Signupform extends Component {
 
                             <div className="form-row">
                                 <div className="col">
-                                    <input type="text" id='exampleInputName1' className="form-control" placeholder="First name" />
+                                    <input type="text" name='fname' id='exampleInputName1' className="form-control" placeholder="First name" onChange={this.handleChange} />
                                 </div>
                                 <div className="col">
-                                    <input type="text" className="form-control" placeholder="Last name" />
+                                    <input type="text" name='lname' className="form-control" placeholder="Last name" onChange={this.handleChange} />
                                 </div>
                             </div>
 
                             <div className="form-group">
                                 <label for="exampleInputEmail1">Email address</label>
-                                <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" onChange={this.handleChange} />
+                                <input type="email" name='email' className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" onChange={this.handleChange} />
                                 <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
                             </div>
 
                             <div className="form-group">
                                 <label for="exampleInputpassword">Password</label>
-                                <input type="password" className="form-control" id="exampleInputpassword" placeholder="Password" onChange={this.handleChange} />
+                                <input type="password" name='password' className="form-control" id="exampleInputpassword" placeholder="Password" onChange={this.handleChange} />
                                 <small className="form-text text-muted">Passwords must be at least 6 characters.</small>
                             </div>
 

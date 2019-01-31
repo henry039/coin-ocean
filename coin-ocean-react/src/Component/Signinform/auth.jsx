@@ -3,6 +3,7 @@ import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth"
 import { connect } from 'react-redux'
 import { userLogin, userLogout } from '../../redux/actions'
 import firebase from '../Firebase'
+import axios from 'axios'
 
 class SoicalLogin extends React.Component {
   state = { isSignedIn: false }
@@ -21,18 +22,27 @@ class SoicalLogin extends React.Component {
   }
 
   componentWillMount = () => {
+    firebase.auth().onAuthStateChanged(user => {
+      if(user){
+        this.setState({isSignedIn : !!user})
+        this.props.userLogin(firebase.auth().currentUser.uid, {photourl : firebase.auth().currentUser.photoURL, displayname: firebase.auth().currentUser.displayName})
+      }else{
+        this.setState({isSignedIn : !!user})
+      }
+    })
+  }
+
+  componentDidMount(){
     let user = firebase.auth().currentUser
     if(user){
-      this.setState({isSignedIn : !!user})
-    }else{
-      this.setState({isSignedIn : !!user})
+      this.isNewUser()
     }
-    // firebase.auth().onAuthStateChanged(user => {
-    //   this.setState({ isSignedIn: !!user })
-    //   console.log(firebase.auth().currentUser)
-    //   // console.log(firebase.auth().currentUser.uid)
-    //   // this.props.userLogin(firebase.auth().currentUser.uid, this.state.isSignedIn)
-    // })
+  }
+
+  isNewUser = () => {
+    if(firebase.auth().currentUser.metadata.creationTime === firebase.auth().currentUser.metadata.lastSignInTime){
+      axios.post('/api/add/user', {uid : firebase.auth().currentUser.uid, payload : {photourl : firebase.auth().currentUser.photoURL, displayname: firebase.auth().currentUser.displayName}})
+    }
   }
 
   // handle = () => {
@@ -40,16 +50,17 @@ class SoicalLogin extends React.Component {
   // }
 
   render() {
+    const {photourl, displayname} = this.props.user.profile
     return (
       <div className="App">
         {this.state.isSignedIn ? (
           <span>
             <div>Signed In!</div>
             <button onClick={() => {firebase.auth().signOut();  this.props.userLogout()}}>Sign out!</button>
-            <h1>Welcome {firebase.auth().currentUser.displayName}</h1>
+            <h1>Welcome {displayname}</h1>
             <img
               alt="profile pic"
-              src={firebase.auth().currentUser.photoURL}
+              src={photourl}
             />
             {/* <button onClick={this.handle}>Click on me</button> */}
           </span>

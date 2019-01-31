@@ -7,17 +7,17 @@ export const initialState = {
         // uid : undefined,
         uid : 'test1',
         // profile : {
-        //     pic : 'www.....img',
-        //     displayName : 'ggggg'
+        //     photourl : 'www.....img',
+        //     displayname : 'ggggg'
         // },
         profile : {}
     },
     wallet : {
-        // coins : {
-        //     'bitcoin' : 40,
-        //     'eth' : 70
-        // },
-        coins : {},
+        // coins : [
+        //     ['BTC', 10],
+        //     ['ETH', 70]
+        // ],
+        coins : [],
         rest : null,
         // dailyPL : [
         //     {date : '2019-1-1', asset : 123487},
@@ -26,13 +26,13 @@ export const initialState = {
         dailyPL : []
     },
     // trade_history : [
-    //     {date : '2019-1-1', 'bitcoin' : ['buy', 20, 4082]},
-    //     {date : '2019-1-2', 'bitcoin' : ['sell', 10, 4109]}
+    //     {date : '2019-1-1', action: ['BTC','buy', 20, 4082]},
+    //     {date : '2019-1-2', action: ['BTC','sell', 10, 4109]}
     // ],
     trade_history : [],
     // comment : [
-    //     {date : '2019-1-1', context : 'First time to trade', tag : 'bitcoin'},
-    //     {date : '2019-1-2', context : 'Second time to trade', tag : 'bitcoin'},
+    //     {date : '2019-1-1', context : 'First time to trade', tag : 'BTC'},
+    //     {date : '2019-1-2', context : 'Second time to trade', tag : 'BTC'},
     // ],
     comments : [],
     error : {

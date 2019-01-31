@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import './invested.css'
+import {connect} from 'react-redux';
+import {cal_coin_assets, latest_price_meta, coinsss_cost_from_history} from '../../../redux/selectors'
 
 class Invested extends Component {
     constructor(props) {
@@ -11,7 +13,8 @@ class Invested extends Component {
     }
 
     render() {
-        const {coin_money} = this.props
+        const {coin_money, symbol, quantity, coin_cost} = this.props
+        const coin_assets = cal_coin_assets(coin_money, symbol, quantity)
         if (!this.state.investcontext) {
             return (
                 <div className="noliststate">
@@ -31,12 +34,12 @@ class Invested extends Component {
                             <small><p>{this.props.symbol}</p></small>
                         </div>
                         <div>
-                            <p>{this.props.assets}</p>
+                            <p>{coin_assets}</p>
                             <small><p>{this.props.quantity}</p></small>
                         </div>
                         <div>
                             <p>{this.props.price}</p>
-                            <small><p>{this.props.cost}</p></small>
+                            <small><p>{Number(this.props.coin_cost[symbol]).toFixed(2)}</p></small>
                         </div>
                         <div>
                             <p>{this.props.tdyearn}</p>
@@ -55,4 +58,4 @@ class Invested extends Component {
 
 }
 
-export default Invested;
+export default connect((state)=>({coin_money : latest_price_meta(state), coin_cost : coinsss_cost_from_history(state.trade_history)}))(Invested);
