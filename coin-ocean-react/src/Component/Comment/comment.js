@@ -65,11 +65,6 @@ export class RecipeReviewCard extends React.Component {
 
 
 export class CommentInput extends React.Component {
-  // handleAddPost= (nextState, replaceState) => {
-  //   console.log(nextState.location.state.method) // 'POST'
-  //   console.log(nextState.location.state.body) // {comment: '...'}
-  // }
-
   render() {
     return (
       <div className="commentwrite">

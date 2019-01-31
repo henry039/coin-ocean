@@ -161,7 +161,7 @@ class fetchDB {
         }
     }
 }
-let a = new fetchDB()
+// let a = new fetchDB()
 // a.createWallet('test1', {rest: 1000}).then(console.log)
 // a.getWallet('test245').then(console.log)
 // a.updateWallet('test1', {coins: [{name: 'bitcoin', quantity: 10}], rest:7500}).then(console.log).catch(err => console.error(err))
