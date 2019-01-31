@@ -85,15 +85,15 @@ export function coin_cost_from_history (data){
     return coin_price_sum / coin_total_quantity
 }
 
-export function total_earn_lost(wallet, data, state){
-    let coin_key = wallet.coins.map(track => {
+export function total_earn_lost(state){
+    let coin_key = state.wallet.coins.map(track => {
         return track[0]
     })
-    let coin_quantity = wallet.coins.map(track => {
+    let coin_quantity = state.wallet.coins.map(track => {
         return track[1]
     })
 
-    let coinss_cost = coinsss_cost_from_history(data)
+    let coinss_cost = coinsss_cost_from_history(state.trade_history)
 
     let output = {}
     for(let i in coin_key){
@@ -102,7 +102,7 @@ export function total_earn_lost(wallet, data, state){
         const price = latest_price_meta(state)[coin_key[i]].price * coin_quantity[i]
         const cost = coinss_cost[coin_key[i]] * coin_quantity[i]
         output[`${coin_key[i]}-earn`] = (price - cost)
-        output[`${coin_key[i]}-'earn%'`] = (price - cost) / cost * 100
+        output[`${coin_key[i]}-earn%`] = (price - cost) / cost * 100
     }
     return output
 }

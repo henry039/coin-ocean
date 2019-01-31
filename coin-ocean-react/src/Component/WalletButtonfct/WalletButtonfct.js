@@ -125,7 +125,7 @@ class WalletButtonfct extends Component {
               <p>Coin</p>
               <p>Assets/Quantity</p>
               <p>Price/Cost</p>
-              <p>Today Earn</p>
+              {/* <p>Today Earn</p> */}
               <p>Total Earn</p>
               <p>Invest %</p>
             </div>

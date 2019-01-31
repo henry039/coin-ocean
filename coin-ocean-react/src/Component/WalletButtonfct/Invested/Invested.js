@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './invested.css'
 import {connect} from 'react-redux';
-import {cal_coin_assets, latest_price_meta, coinsss_cost_from_history} from '../../../redux/selectors'
+import {cal_coin_assets, latest_price_meta, coinsss_cost_from_history, total_earn_lost} from '../../../redux/selectors'
 
 class Invested extends Component {
     constructor(props) {
@@ -13,9 +13,10 @@ class Invested extends Component {
     }
 
     render() {
-        const {coin_money, symbol, quantity, coin_cost} = this.props
-        console.log(coin_cost)
+        const {coin_money, symbol, quantity, coin_cost, state} = this.props
         const coin_assets = cal_coin_assets(coin_money, symbol, quantity)
+        // const earn = total_earn_lost(state.wallet, state.trade_history, state)
+        const earn = total_earn_lost(state)
         if (!this.state.investcontext) {
             return (
                 <div className="noliststate">
@@ -42,13 +43,15 @@ class Invested extends Component {
                             <p>{this.props.price}</p>
                             <small><p>{Number(coin_cost[symbol]).toFixed(2)}</p></small>
                         </div>
-                        <div>
+                        {/* <div>
                             <p>{this.props.tdyearn}</p>
                             <small><p>{this.props.tdypercent}</p></small>
-                        </div>
+                        </div> */}
                         <div>
-                            <p>{this.props.totearn}</p>
-                            <small><p>{this.props.totpercent}</p></small>
+                            {/* <p>{this.props.totearn}</p>
+                            <small><p>{this.props.totpercent}</p></small> */}
+                            <p>{earn[`${symbol}-earn`].toFixed(2)}</p>
+                            <small><p>{earn[`${symbol}-earn%`].toFixed(2)}</p></small>
                         </div>
                         <p>{this.props.invest}</p>
                     </div>
@@ -59,4 +62,8 @@ class Invested extends Component {
 
 }
 
-export default connect((state)=>({coin_money : latest_price_meta(state), coin_cost : coinsss_cost_from_history(state.trade_history)}))(Invested);
+export default connect((state)=>({
+    coin_money : latest_price_meta(state),
+    coin_cost : coinsss_cost_from_history(state.trade_history),
+    state
+}))(Invested);
