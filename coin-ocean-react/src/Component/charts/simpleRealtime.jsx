@@ -84,7 +84,7 @@ export class RealTimeChart extends React.Component {
         this.ws.emit('hour chart init', `${this.props.coin}`)
     }
 
-    componentDidUpdate() {
+    componentWillMount() {
         const {prices} = this.props
         this.ws.on('hour chart reply', (reply)=>{
             this.setState((pre)=>({

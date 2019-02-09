@@ -25,7 +25,8 @@ function realtime_price() {
                 masterNameObj[`${data.symbol}`] = {
                     name: data.name,
                     symbol: data.id,
-                    price : data['price_usd']
+                    price : Number(data['price_usd']),
+                    dayChange : data.percent_change_24h
                 }
             })
             return masterNameObj

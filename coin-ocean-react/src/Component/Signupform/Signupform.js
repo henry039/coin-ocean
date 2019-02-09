@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./Signupform.css";
 import Easy_icon from "../../picture/easymoney_icon.png"
 import firebase from '../Firebase'
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import axios from 'axios'
 
 class Signupform extends Component {
@@ -25,9 +25,9 @@ class Signupform extends Component {
                 user.updateProfile({
                     displayName: `${this.state.fname} ${this.state.lname}`,
                     photoURL: "https://upload.wikimedia.org/wikipedia/commons/f/f4/User_Avatar_2.png"
-                }).then(axios.post('/api/add/user', {uid : firebase.auth().currentUser.uid, payload : {photourl : firebase.auth().currentUser.photoURL, displayname: firebase.auth().currentUser.displayName}}))
+                }).then(axios.post('http://localhost:5000/api/add/user', {uid : firebase.auth().currentUser.uid, payload : {photourl : firebase.auth().currentUser.photoURL, displayname: firebase.auth().currentUser.displayName}}))
             })
-            .then((u) => { console.log(u) })
+            .then((u) => { console.log(u); this.props.history.push('/profile') })
             .catch((error) => {
                 console.log(error);
             })
@@ -48,7 +48,6 @@ class Signupform extends Component {
 
                     <div className="signupbacket">
                         <h3>Create Account</h3>
-                        {/* <form action="/" method="post"> */}
                         <form onSubmit={this.handleSubmit} >
 
                             <label for="exampleInputName1">Your name</label>
@@ -94,4 +93,4 @@ class Signupform extends Component {
     }
 }
 
-export default Signupform;
+export default withRouter(Signupform);

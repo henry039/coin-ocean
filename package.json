@@ -23,10 +23,10 @@
   },
   "devDependencies": {},
   "scripts": {
-    "client-install": "cd coin-ocean-react && yarn install",
+    "client-install": "cd coin-ocean-react && npm install",
     "start": "nodemon app.js",
-    "client": "cd coin-ocean-react && yarn start",
-    "dev": "concurrently \"yarn run start\" \"yarn run client\""
+    "client": "cd coin-ocean-react && npm run start",
+    "dev": "concurrently \"npm run start\" \"npm run client\""
   },
   "repository": {
     "type": "git",

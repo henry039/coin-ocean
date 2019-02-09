@@ -39,7 +39,7 @@ class WatchList extends Component{
 
             <div class="collapse" id={this.re_keyid}>
                 <div class="card card-body chartcontrol">
-                    <HM />
+                    <HM req='minute' coin_id={this.props.symbol}/>
                 </div>
             </div>
         </div>

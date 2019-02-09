@@ -2,7 +2,7 @@ import * as React from 'react';
 import axios from 'axios';
 import ReactApexChart from "react-apexcharts";
 
-const url = '/api/realtime/bitcoin'
+const url = 'http://localhost:5000/api/realtime/bitcoin'
 
 export default class RealTimeChart extends React.Component {
     constructor(props) {

@@ -1,9 +1,10 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import "./Signinform.css";
 import Easy_name from "../../picture/easymoney_name.png"
 import SoicalLogin from './auth.jsx'
 import { connect } from 'react-redux'
 import { userLogin } from '../../redux/actions'
+import { withRouter } from "react-router-dom";
 import firebase from '../Firebase'
 
 class Signinform extends Component {
@@ -11,13 +12,14 @@ class Signinform extends Component {
         super(props);
         this.state = {
             email: '',
-            password: ''
+            password: '',
         }
     }
 
     handleSubmit = (e) => {
         e.preventDefault()
         firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then((u) => {
+            this.props.history.push('/profile')
         }).catch((error) => {
             console.log(error);
         });
@@ -31,54 +33,55 @@ class Signinform extends Component {
 
     render() {
         return (
-            <div className="signinform">
-                <div className="signincontainer">
-                    <div className="signinicon">
-                        <img src={Easy_name} alt="icon" />
-                    </div>
+            <Fragment>
+                <div className="signinform">
+                    <div className="signincontainer">
+                        <div className="signinicon">
+                            <img src={Easy_name} alt="icon" />
+                        </div>
 
-                    <div className="signinbacket">
-                        <h3>Sign In</h3>
+                        <div className="signinbacket">
+                            <h3>Sign In</h3>
 
-                        {/* <form action="/" method="post"> */}
-                        <form onSubmit={this.handleSubmit}>
-                            <div className="form-group">
-                                <label for="exampleInputEmail1">Email address</label>
-                                <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" onChange={this.handleChange} />
-                            </div>
-
-                            <div className="form-group">
-                                <label for="exampleInputPassword1">Password</label>
-                                <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password" onChange={this.handleChange} />
-
-                            </div>
-
-                            <div className="form-group">
-                                <div className="form-check">
-                                    <input className="form-check-input" type="checkbox" id="gridCheck" />
-                                    <label className="form-check-label" for="gridCheck">Remember me</label>
+                            <form onSubmit={this.handleSubmit}>
+                                <div className="form-group">
+                                    <label for="exampleInputEmail1">Email address</label>
+                                    <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" onChange={this.handleChange} />
                                 </div>
+
+                                <div className="form-group">
+                                    <label for="exampleInputPassword1">Password</label>
+                                    <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password" onChange={this.handleChange} />
+
+                                </div>
+
+                                <div className="form-group">
+                                    <div className="form-check">
+                                        <input className="form-check-input" type="checkbox" id="gridCheck" />
+                                        <label className="form-check-label" for="gridCheck">Remember me</label>
+                                    </div>
+                                </div>
+
+                                <button type="submit" className="btn btn-warning">Sign in EasyMoney</button>
+                            </form>
+                            <div className="gotosoicalmedia">
+                                <small><p>Using Soical Media Login?</p></small>
+                                <SoicalLogin />
                             </div>
 
-                            <button type="submit" className="btn btn-warning">Sign in EasyMoney</button>
-                        </form>
-                        <div className="gotosoicalmedia">
-                            <small><p>Using Soical Media Login?</p></small>
-                            <SoicalLogin />
+                            <div className="signinseperation"></div>
+
+                            <div className="gotosignup">
+                                <small><p>New to EasyMoney?</p></small>
+                                <button type="submit" className="btn btn-info"><a href="/">Create your EasyMoney account</a></button>
+                            </div>
+
                         </div>
-
-                        <div className="signinseperation"></div>
-
-                        <div className="gotosignup">
-                            <small><p>New to EasyMoney?</p></small>
-                            <button type="submit" className="btn btn-info"><a href="/">Create your EasyMoney account</a></button>
-                        </div>
-
                     </div>
                 </div>
-            </div>
+            </Fragment>
         );
     }
 }
 
-export default connect((state) => ({ user: state.user }), { userLogin })(Signinform);
+export default withRouter(connect(null, { userLogin })(Signinform));

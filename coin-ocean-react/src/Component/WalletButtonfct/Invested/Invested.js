@@ -1,23 +1,38 @@
 import React, { Component } from 'react';
 import './invested.css'
-import {connect} from 'react-redux';
-import {cal_coin_assets, latest_price_meta, coinsss_cost_from_history, total_earn_lost} from '../../../redux/selectors'
 
-class Invested extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            investlist: ["Saab", "Volvo", "BMW"],
-            investcontext: true
-        };
-    }
-
+export default class Invested extends Component {
     render() {
-        const {coin_money, symbol, quantity, coin_cost, state} = this.props
-        const coin_assets = cal_coin_assets(coin_money, symbol, quantity)
-        // const earn = total_earn_lost(state.wallet, state.trade_history, state)
-        const earn = total_earn_lost(state)
-        if (!this.state.investcontext) {
+        if (this.props.assets !== undefined) {
+            const { assets, coin, symbol, quantity, price, cost, totearn, totpercent, tdyearn, tdypercent, invest } = this.props
+            return (
+                <div className="yesinvestlist">
+                    <div className="investlistdata">
+                        <div className="investcoin">
+                            <a href="/"><p>{coin}</p></a>
+                            <small><p>{symbol}</p></small>
+                        </div>
+                        <div>
+                            <p>{assets}</p>
+                            <small><p>{quantity}</p></small>
+                        </div>
+                        <div>
+                            <p>{price}</p>
+                            <small><p>{cost}</p></small>
+                        </div>
+                        <div>
+                            <p>{tdyearn}</p>
+                            <small><p>{tdypercent}</p></small>
+                        </div>
+                        <div>
+                            <p>{totearn}</p>
+                            <small><p>{totpercent} </p></small>
+                        </div>
+                        <p>{invest}</p>
+                    </div>
+                </div>
+            )
+        } else {
             return (
                 <div className="noliststate">
                     <div className="nolist">
@@ -27,43 +42,6 @@ class Invested extends Component {
                     <small><a href='/'>Learn more</a></small>
                 </div>
             )
-        } else {
-            return (
-                <div className="yesinvestlist">
-                    <div className="investlistdata">
-                        <div className="investcoin">
-                            <a href="/"><p>{this.props.coin}</p></a>
-                            <small><p>{this.props.symbol}</p></small>
-                        </div>
-                        <div>
-                            <p>{coin_assets}</p>
-                            <small><p>{this.props.quantity}</p></small>
-                        </div>
-                        <div>
-                            <p>{this.props.price}</p>
-                            <small><p>{Number(coin_cost[symbol]).toFixed(2)}</p></small>
-                        </div>
-                        {/* <div>
-                            <p>{this.props.tdyearn}</p>
-                            <small><p>{this.props.tdypercent}</p></small>
-                        </div> */}
-                        <div>
-                            {/* <p>{this.props.totearn}</p>
-                            <small><p>{this.props.totpercent}</p></small> */}
-                            <p>{earn[`${symbol}-earn`].toFixed(2)}</p>
-                            <small><p>{earn[`${symbol}-earn%`].toFixed(2)}</p></small>
-                        </div>
-                        <p>{this.props.invest}</p>
-                    </div>
-                </div>
-            )
         }
     }
-
 }
-
-export default connect((state)=>({
-    coin_money : latest_price_meta(state),
-    coin_cost : coinsss_cost_from_history(state.trade_history),
-    state
-}))(Invested);

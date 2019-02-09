@@ -1,8 +1,5 @@
 import * as React from 'react';
 import ReactApexChart from "react-apexcharts";
-import { pie_data } from '../../redux/selectors'
-// import { connect } from 'react-redux'
-// import { cal_coin_assets } from '../../redux/selectors'
 
 export default class RealTimeChart extends React.Component {
     constructor(props) {
@@ -12,7 +9,7 @@ export default class RealTimeChart extends React.Component {
                 // labels: ['Bitcoin', 'eth', 'rest', 'ripple', 'CON'],
                 labels: [],
                 responsive: [{
-                    // breakpoint: 480,
+                    breakpoint: 480,
                     options: {
                         chart: {
                             width: 200
@@ -33,13 +30,13 @@ export default class RealTimeChart extends React.Component {
         }
     }
 
-    componentWillReceiveProps() {
-        // console.log(pie_data(this.props.coins))
+    componentWillMount() {
+        const {labels, series} = this.props.pie
         this.setState(pre => ({
-            series: pie_data(this.props.coins).series,
+            series: series,
             options: {
                 ...pre.options,
-                labels: pie_data(this.props.coins).labels
+                labels: labels
             }
         }))
     }

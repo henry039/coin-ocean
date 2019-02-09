@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import moment from 'moment';
 import WatchList from './Watchlist/Watchlist'
 import Invested from './Invested/Invested'
 import MyComment from './MyComment/MyComment'
@@ -7,10 +8,25 @@ import Application from './Application/Application'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import './WalletButtonfct.css'
-import { get_coin_name } from '../../redux/selectors'
-import { connect } from 'react-redux'
+import { 
+  trade_history,
+  get_coin_name, 
+  comments, 
+  trade_history_coinsss_cost, 
+  wallet_total_coin_earn_lost, 
+  wallet_total_coin_earn_lost_percent, 
+  formatter, 
+  latest_price, 
+  trade_history_coin_earn_lost, 
+  trade_history_coin_earn_lost_percent, 
+  wallet_coins_name,
+  wallet_coins_quantity,
+  wallet_coins_asset, 
+  total_asset,
+  user_profile
+} from '../../redux/selectors'
 
-class WalletButtonfct extends Component {
+export default class WalletButtonfct extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -74,163 +90,247 @@ class WalletButtonfct extends Component {
 
   render() {
     let info = null;
-    const { wallet, prices, history, comments, user} = this.props
-    // console.log(comments
-    if (this.state.WatchList) {
-      info = (
-        <div>
-          <div className="yeswatchlist">
-            <div className="watchlistbar">
-              <p>Rank</p>
-              <p>Name</p>
-              <p>MarketCap</p>
-              <p>Price</p>
-              <p>Change(24h)</p>
+    const { state } = this.props
+    if(trade_history(state)[0] !== undefined){
+      const history = trade_history(state)
+      const commentsss = comments(state)
+      const profile = user_profile(state)
+      const wallet_coins = wallet_coins_name(state)
+      const wallet_coins_on_hold = wallet_coins_quantity(state)
+      const totalAsset = total_asset(state)
+      const coins_asset = wallet_coins_asset(state)
+      const coinsss_cost = trade_history_coinsss_cost(state)
+      const coinsss_earnLost = wallet_total_coin_earn_lost(state)
+      const coinsss_earnLost_percent = wallet_total_coin_earn_lost_percent(state)
+      const today_earn = trade_history_coin_earn_lost(state)
+      console.log(typeof today_earn[0])
+      const today_earn_percent = trade_history_coin_earn_lost_percent(state)
+      if (this.state.WatchList) {
+        info = (
+          <div>
+            <div className="yeswatchlist">
+              <div className="watchlistbar">
+                <p>Rank</p>
+                <p>Name</p>
+                <p>MarketCap</p>
+                <p>Price</p>
+                <p>Change(24h)</p>
+              </div>
             </div>
-          </div>
-          <WatchList
-            rank="rank"
-            name="bitcoin"
-            marketcap="marketcap"
-            price="$4000"
-            change="+3.78%"
-            keyid="#btc"
-            re_keyid="btc"
-          />
-          <WatchList
-            rank="rank"
-            name="bitcoin"
-            marketcap="marketcap"
-            price="$4000"
-            change="+3.78%"
-            keyid="#xrp"
-            re_keyid="xrp"
-          />
-          <WatchList
-            rank="rank"
-            name="bitcoin"
-            marketcap="marketcap"
-            price="$4000"
-            change="+3.78%"
-            keyid="#eth"
-            re_keyid="eth"
-          />
-        </div>
-      );
-    } else if (this.state.Invested) {
-      info = (
-        <div className="investlist">
-          <div className="yesinvestlist">
-            <div className="listbar">
-              <p>Coin</p>
-              <p>Assets/Quantity</p>
-              <p>Price/Cost</p>
-              {/* <p>Today Earn</p> */}
-              <p>Total Earn</p>
-              <p>Invest %</p>
-            </div>
-          </div>
-          {wallet.coins.map((coin, index)=>{
-            return (
-              <Invested
-                key={index}
-                // coin="bitcoin"
-                coin={get_coin_name(coin[0])}
-                // symbol="(BTC)"
-                symbol={coin[0]}
-                // assets="$34567"
-                // quantity="200"
-                quantity={coin[1]}
-                // price="$567"
-                price={Number(prices[coin[0]].price).toFixed(2)}
-                cost="$345"
-                tdyearn="$567"
-                tdypercent="4%"
-                totearn="$5678"
-                totpercent="5%"
-                invest="40%" />
-            )
-          })}
-          {/* <Invested
-            coin="bitcoin"
-            symbol="(BTC)"
-            assets="$34567"
-            quantity="200"
-            price="$567"
-            cost="$345"
-            tdyearn="$567"
-            tdypercent="4%"
-            totearn="$5678"
-            totpercent="5%"
-            invest="40%" />
-          <Invested
-            coin="bitcoin"
-            symbol="(BTC)"
-            assets="$34567"
-            quantity="200"
-            price="$567"
-            cost="$345"
-            tdyearn="$567"
-            tdypercent="4%"
-            totearn="$5678"
-            totpercent="5%"
-            invest="40%" /> */}
-        </div>
-      );
-    } else if (this.state.Trade) {
-      info = (
-        <div className="tradelist">
-          <div className="yesinvestlist">
-            <div className="listbar">
-              <p>Coin</p>
-              <p>Buy/Quantity</p>
-              <p>Sell/Quantity</p>
-              <p>Value</p>
-              <p>Time</p>
-            </div>
-          </div>
-          {history.map(track => {
-            return (
-              <Trade 
-                time={new Date(track.date).toDateString()}
-                coin={get_coin_name([track.action[0].tag])}
-                symbol={track.action[0]}
-                buy={(track.action[1] === 'buy')?track.action[3]:'---'}
-                buyquantity={(track.action[1] === 'buy')?track.action[2]:'---'}
-                sell={(track.action[1] === 'sell')?track.action[3]:'---'}
-                sellquantity={(track.action[1] === 'sell')?track.action[2]:'---'}
-                value={track.action[2] * track.action[3]}
-              />
-            )
-          })}
-           {/* <Trade 
-           coin="bitcoin"
-           symbol="(BTC)"
-           buy="$3000"
-           buyquantity="200"
-           sell="---"
-           sellquantity="---"
-           value="$60000"
-           time="2018-1-12:1530"
-           /> */}
+            <WatchList
+              rank="rank"
+              name="bitcoin"
+              marketcap="marketcap"
+              price="$4000"
+              change="+3.78%"
+              keyid="#btc"
+              re_keyid="btc"
+              symbol='BTC'
+            />
+            <WatchList
+              rank="rank"
+              name="bitcoin"
+              marketcap="marketcap"
+              price="$4000"
+              change="+3.78%"
+              keyid="#xrp"
+              re_keyid="xrp"
+              symbol='XRP'
+            />
+            <WatchList
+              rank="rank"
+              name="bitcoin"
+              marketcap="marketcap"
+              price="$4000"
+              change="+3.78%"
+              keyid="#eth"
+              re_keyid="eth"
+              symbol='ETH'
+            />
           </div>
         );
-    }else if (this.state.MyComment) {
+      } else if (this.state.Invested) {
         info = (
-          <div className="commentlist">
-            {comments.map(comment => {
+          <div className="investlist">
+            <div className="yesinvestlist">
+              <div className="listbar">
+                <p>Coin</p>
+                <p>Assets/Quantity</p>
+                <p>Price/Cost</p>
+                <p>Today Earn</p>
+                <p>Total Earn</p>
+                <p>Invest %</p>
+              </div>
+            </div>
+            {wallet_coins.map((coin_id, index) => {
               return (
-                <MyComment comment={comment} user={user}/>
+                <Invested
+                  key={index}
+                  // coin="bitcoin"
+                  coin={get_coin_name(coin_id)}
+                  // symbol="(BTC)"
+                  symbol={coin_id}
+                  // assets="$34567"
+                  assets={formatter.format(coins_asset[index])}
+                  // quantity="200"
+                  quantity={wallet_coins_on_hold[index]}
+                  // price="$567"
+                  price={formatter.format(latest_price(state, coin_id))}
+                  cost={formatter.format(coinsss_cost[index])}
+                  tdyearn={formatter.format(today_earn[index])}
+                  tdypercent={`${(today_earn_percent[index]).toFixed(2)}%`}
+                  // tdyearn="$567"
+                  // tdypercent="4%"
+                  totearn={formatter.format(coinsss_earnLost[index])}
+                  totpercent={`${(coinsss_earnLost_percent[index]).toFixed(2)}%`}
+                  invest={`${(coins_asset[index]/totalAsset).toFixed(2)}%`} />
               )
             })}
           </div>
         );
-    }else if (this.state.Application) {
+      } else if (this.state.Trade) {
         info = (
-          <div className="applist">
-           <Application />
+          <div className="tradelist">
+            <div className="yesinvestlist">
+              <div className="listbar">
+                <p>Coin</p>
+                <p>Buy/Quantity</p>
+                <p>Sell/Quantity</p>
+                <p>Value</p>
+                <p>Time</p>
+              </div>
+            </div>
+            {history.map((track) => {
+              return (
+                <Trade
+                  // coin="bitcoin"
+                  // symbol="(BTC)"
+                  // buy="$3000"
+                  // buyquantity="200"
+                  // sell="---"
+                  // sellquantity="---"
+                  // value="$60000"
+                  // time="2018-1-12:1530"
+                  // time={new Date(track.date).toDateString()}
+                  time={moment(track.date).format('lll')}
+                  coin={get_coin_name(track.action[0])}
+                  symbol={track.action[0]}
+                  buy={(track.action[1] === 'buy') ? Number(track.action[3]) : '---'}
+                  buyquantity={(track.action[1] === 'buy') ? Number(track.action[2]) : '---'}
+                  sell={(track.action[1] === 'sell') ? Number(track.action[3]) : '---'}
+                  sellquantity={(track.action[1] === 'sell') ? Number(track.action[2]) : '---'}
+                  value={track.action[2] * track.action[3]}
+                />
+              )
+            })}
           </div>
         );
+      } else if (this.state.MyComment) {
+        info = (
+          <div className="commentlist">
+            {commentsss.map((comment) => {
+              return (
+                <MyComment comment={comment} profile={profile} />
+              )
+            })}
+          </div>
+        );
+      } else if (this.state.Application) {
+        info = (
+          <div className="applist">
+            <Application />
+          </div>
+        );
+      }
+    }else {
+      if (this.state.WatchList) {
+        info = (
+          <div>
+            <div className="yeswatchlist">
+              <div className="watchlistbar">
+                <p>Rank</p>
+                <p>Name</p>
+                <p>MarketCap</p>
+                <p>Price</p>
+                <p>Change(24h)</p>
+              </div>
+            </div>
+            <WatchList
+              rank="rank"
+              name="bitcoin"
+              marketcap="marketcap"
+              price="$4000"
+              change="+3.78%"
+              keyid="#btc"
+              re_keyid="btc"
+              symbol='BTC'
+            />
+            <WatchList
+              rank="rank"
+              name="bitcoin"
+              marketcap="marketcap"
+              price="$4000"
+              change="+3.78%"
+              keyid="#xrp"
+              re_keyid="xrp"
+              symbol='XRP'
+            />
+            <WatchList
+              rank="rank"
+              name="bitcoin"
+              marketcap="marketcap"
+              price="$4000"
+              change="+3.78%"
+              keyid="#eth"
+              re_keyid="eth"
+              symbol='ETH'
+            />
+          </div>
+        );
+      } else if (this.state.Invested) {
+        info = (
+          <div className="investlist">
+            <div className="yesinvestlist">
+              <div className="listbar">
+                <p>Coin</p>
+                <p>Assets/Quantity</p>
+                <p>Price/Cost</p>
+                <p>Today Earn</p>
+                <p>Total Earn</p>
+                <p>Invest %</p>
+              </div>
+            </div>
+            <Invested/>
+          </div>
+        );
+      } else if (this.state.Trade) {
+        info = (
+          <div className="tradelist">
+            <div className="yesinvestlist">
+              <div className="listbar">
+                <p>Coin</p>
+                <p>Buy/Quantity</p>
+                <p>Sell/Quantity</p>
+                <p>Value</p>
+                <p>Time</p>
+              </div>
+            </div>
+            <Trade/>
+          </div>
+        );
+      } else if (this.state.MyComment) {
+        info = (
+          <div className="commentlist">
+              <MyComment />
+          </div>
+        );
+      } else if (this.state.Application) {
+        info = (
+          <div className="applist">
+            <Application />
+          </div>
+        );
+      }
     }
 
     return (
@@ -249,5 +349,3 @@ class WalletButtonfct extends Component {
     );
   }
 }
-
-export default connect((state)=>({ wallet : state.wallet, prices : state.prices, history : state.trade_history, comments : state.comments, user : state.user}))(WalletButtonfct)

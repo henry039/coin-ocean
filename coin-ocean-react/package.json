@@ -17,6 +17,7 @@
     "firebase": "^5.8.0",
     "history": "^4.7.2",
     "jquery": "^3.3.1",
+    "moment": "^2.24.0",
     "react": "^16.7.0",
     "react-apexcharts": "^1.2.1",
     "react-dom": "^16.7.0",
@@ -47,6 +48,5 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ],
-  "proxy": "http://localhost:5000"
+  ]
 }

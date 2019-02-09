@@ -11,14 +11,10 @@ class SoicalLogin extends React.Component {
     signInFlow: "popup",
     signInOptions: [
       firebase.firebase_.auth.GoogleAuthProvider.PROVIDER_ID,
-      //   firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-      //   firebase.auth.TwitterAuthProvider.PROVIDER_ID,
       firebase.firebase_.auth.GithubAuthProvider.PROVIDER_ID,
       firebase.firebase_.auth.EmailAuthProvider.PROVIDER_ID
     ],
-    callbacks: {
-      signInSuccessWithAuthResult : () => false
-    }
+    signInSuccessUrl: '/profile',
   }
 
   componentWillMount = () => {
@@ -41,13 +37,15 @@ class SoicalLogin extends React.Component {
 
   isNewUser = () => {
     if(firebase.auth().currentUser.metadata.creationTime === firebase.auth().currentUser.metadata.lastSignInTime){
-      axios.post('/api/add/user', {uid : firebase.auth().currentUser.uid, payload : {photourl : firebase.auth().currentUser.photoURL, displayname: firebase.auth().currentUser.displayName}})
+      axios.post('http://localhost:5000/api/add/user', {
+        uid : firebase.auth().currentUser.uid, 
+        payload : {
+          photourl : firebase.auth().currentUser.photoURL, 
+          displayname: firebase.auth().currentUser.displayName
+        }
+      })
     }
   }
-
-  // handle = () => {
-  //   console.log(this.props.user)
-  // }
 
   render() {
     const {photourl, displayname} = this.props.user.profile
@@ -62,7 +60,6 @@ class SoicalLogin extends React.Component {
               alt="profile pic"
               src={photourl}
             />
-            {/* <button onClick={this.handle}>Click on me</button> */}
           </span>
         ) : (
             <div>
@@ -70,7 +67,6 @@ class SoicalLogin extends React.Component {
                 uiConfig={this.uiConfig}
                 firebaseAuth={firebase.auth()}
               />
-              {/* <button onClick={this.handle}>Click on me</button> */}
             </div>
           )}
       </div>

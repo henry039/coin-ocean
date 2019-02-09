@@ -7,11 +7,13 @@ import Signin from './Page/Signin'
 import HomePage from './Page/HomePage'
 import Profile from './Page/Profile'
 import NoMatch from './Page/NoMatch'
+import firebase from './Component/Firebase'
+// import Test from './container/test'
 
 import { BrowserRouter as Router,
 Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { getPrice } from './redux/actions'
+import { getPrice, userLogin } from './redux/actions'
 class App extends Component {
   constructor(props){
     super(props);
@@ -19,7 +21,11 @@ class App extends Component {
     this.ws.on('realtime price', (reply)=>{
       this.props.getPrice(reply)
     })
-    
+    firebase.auth().onAuthStateChanged((user) => {
+      if(user){
+        this.props.userLogin(firebase.auth().currentUser.uid, {photourl : firebase.auth().currentUser.photoURL, displayname: firebase.auth().currentUser.displayName})
+      }
+    })
   }
   componentWillMount(){
     this.ws.emit('realtime price init')
@@ -40,8 +46,9 @@ class App extends Component {
           <Route component={NoMatch} />
         </Switch>
       </Router>
+      // <Test/>
     );
   }
 }
 
-export default connect((state)=>({prices : state.prices}), {getPrice})(App);
+export default connect((state)=>({prices : state.prices}), {getPrice, userLogin})(App);

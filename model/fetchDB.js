@@ -192,7 +192,7 @@ class fetchDB {
 // a.createWallet('test1', {rest: 1000}).then(console.log)
 // a.getWallet('test1').then(console.log)
 // a.updateWallet('test1', {coins: [['BTC' ,49],["ETH", 500]], rest:7500}).then(console.log).catch(err => console.error(err))
-// a.dailyUpdateWallet('test1', {dailyPL: [17640]}).then(console.log).catch(err => console.error(err))
+// a.dailyUpdateWallet('test1', {dailyPL: [17640, 19870]}).then(console.log).catch(err => console.error(err))
 
 // a.insertTradeHistory('test1', {action : ['BTC','buy', 13, 3750]}).then(console.log).catch(err => console.error(err))
 // a.getTradeHistory('test1').then(console.log)

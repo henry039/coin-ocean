@@ -4,16 +4,16 @@ export const initialState = {
     //     isSignedIn : true
     // },
     user : {
-        // uid : undefined,
-        uid : 'test1',
-        // profile : {
-        //     photourl : 'www.....img',
-        //     displayname : 'ggggg'
-        // },
+        uid : undefined,
+        // uid : 'test1',
         profile : {
-            photourl: 'https://upload.wikimedia.org/wikipedia/commons/f/f4/User_Avatar_2.png',
-            displayname : 'SomeOne'
+            photourl: undefined,
+            displayname : undefined
         }
+        // profile : {
+        //     photourl: 'https://upload.wikimedia.org/wikipedia/commons/f/f4/User_Avatar_2.png',
+        //     displayname : 'SomeOne'
+        // }
     },
     wallet : {
         // coins : [
