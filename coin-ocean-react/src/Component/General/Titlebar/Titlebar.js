@@ -63,7 +63,7 @@ class Titlebar extends Component {
                             <Fragment>
                                 <div className="form-inline my-2 my-lg-0">
                                     <Link className='nav-link' to='/profile'>
-                                        <img src={profile.photourl} alt="title" className="titleimg" />
+                                        <img src={profile.photourl} alt="title" className="profileicon" />
                                     </Link>
                                 </div>
                                 <div className="form-inline my-2 my-lg-0">
