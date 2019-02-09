@@ -183,7 +183,7 @@ export default class WalletButtonfct extends Component {
                   // tdypercent="4%"
                   totearn={formatter.format(coinsss_earnLost[index])}
                   totpercent={`${(coinsss_earnLost_percent[index]).toFixed(2)}%`}
-                  invest={`${(coins_asset[index]/totalAsset).toFixed(2)}%`} />
+                  invest={`${(coins_asset[index]/totalAsset * 100).toFixed(2)}%`} />
               )
             })}
           </div>

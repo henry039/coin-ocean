@@ -6,6 +6,8 @@ import icon from '../../../picture/easymoney.png'
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { user_uid, user_profile } from '../../../redux/selectors'
+import { userLogout } from '../../../redux/actions'
+import firebase from '../../Firebase'
 import Profile from "../../../Page/Profile";
 
 class Titlebar extends Component {
@@ -16,6 +18,10 @@ class Titlebar extends Component {
         };
     }
 
+    logout = () => {
+        this.props.userLogout()
+        firebase.auth().signOut()
+    }
 
     render() {
         const {uid, profile} = this.props
@@ -67,7 +73,7 @@ class Titlebar extends Component {
                                     </Link>
                                 </div>
                                 <div className="form-inline my-2 my-lg-0">
-                                    <Link to="/"><button className="btn borderlogin my-2 my-sm-0" type="submit">LogOut</button></Link>
+                                    <Link to="/"><button className="btn borderlogin my-2 my-sm-0" type="submit" onClick={this.logout}>LogOut</button></Link>
                                 </div>
                             </Fragment>
                         ) : (
@@ -93,4 +99,4 @@ const mapStateToProps = (state) => ({
     profile: user_profile(state)
 })
 
-export default connect(mapStateToProps)(Titlebar);
+export default connect(mapStateToProps, {userLogout})(Titlebar);

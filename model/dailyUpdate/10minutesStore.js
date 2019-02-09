@@ -6,11 +6,25 @@ function fiveMinFetch(coin_id) {
     return axios.get(`${process.env.MINUTE_PRE}${bitfinex_switch_temp[coin_id]}${process.env.MINUTE_SUF}`)
         .then(res => extractPrice(res.data))
         .catch(err => console.error(err))
+    // return Promise.resolve([Object.assign({}, {
+    //     name : 'Price',
+    //     data :[{
+    //         x : undefined,
+    //         y: undefined
+    //     }]
+    // })])
 }
 function hourFetch(coin_id) {
     return axios.get(`${process.env.HOUR_PRE}${bitfinex_switch_temp[coin_id]}${process.env.HOUR_SUF}`)
         .then(res => extractPrice(res.data))
         .catch(err => console.error(err))
+    // return Promise.resolve([Object.assign({}, {
+    //     name : 'Price',
+    //     data :[{
+    //         x: undefined,
+    //         y : undefined
+    //     }]
+    // })])
 }
 
 // an array return[ MTS, OPEN, CLOSE, HIGH, LOW	,VOLUME]

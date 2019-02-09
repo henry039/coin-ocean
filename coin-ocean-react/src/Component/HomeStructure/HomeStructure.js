@@ -39,9 +39,9 @@ class HomeStructure extends Component {
 
             <div className="hsmaincontainer">
                 <div className="hsflex">
-                    <div className="justdemo"><Chart coin='BTC'/></div>
+                    {/* <div className="justdemo"><Chart coin='BTC'/></div>
                     <div className="justdemo"><Chart coin='XRP'/></div>
-                    <div className="justdemo"><Chart coin='ETH'/></div>
+                    <div className="justdemo"><Chart coin='ETH'/></div> */}
                 </div>
 
                 <div>

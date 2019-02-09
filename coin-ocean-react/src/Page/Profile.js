@@ -14,37 +14,46 @@ class Profile extends Component {
   constructor(props) {
     super(props);
   }
-  componentWillMount(){
-    if(this.props.uid !== undefined){
+  componentWillMount() {
+    console.log('will', this.props.uid)
+    if (this.props.uid !== undefined) {
       this.props.getWallet_DB(this.props.uid)
       this.props.getTradeHistory_DB(this.props.uid)
       this.props.getUserComments_DB(this.props.uid)
     }
   }
+
   render() {
     const { state } = this.props;
+    console.log('render', wallet(state).rest)
     return (
       <Fragment>
-        {((wallet(state).coins[0] !== undefined || wallet(state).coins[0] !== null) &&
-          (comments(state)[0] !== undefined || comments(state)[0] !== null) &&
-          (trade_history(state)[0] !== undefined || trade_history(state)[0] !== null)) ? (
-          <Fragment>
-            <Titlebar />
-            <Wallet state={state} />
-            {(pie_data(state) !== undefined) ? (
-              <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <PieChart pie={pie_data(state)} />
-              </div>
-            ) : (<Fragment></Fragment>)}
-            <WalletButtonfct state={state} />
-          </Fragment>
-        ) : (
-          <Loading/>
-        )}
+        {(wallet(state).rest !== null &&
+          comments(state)[0] === undefined &&
+          trade_history(state)[0] === undefined) ? (
+            <Fragment>
+              <Titlebar />
+              <Wallet state={state} />
+              <WalletButtonfct state={state} />
+            </Fragment>
+          ) : (wallet(state).coins[0] !== undefined &&
+              comments(state)[0] !== undefined &&
+              trade_history(state)[0] !== undefined) ? (
+              <Fragment>
+                <Titlebar />
+                <Wallet state={state} />
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                  <PieChart pie={pie_data(state)} />
+                </div>
+                <WalletButtonfct state={state} />
+              </Fragment>
+            ) : (
+              <Loading />
+            )}
       </Fragment>
     )
   }
 }
 
-export default connect((state)=>({state, uid : user_uid(state)}), { getWallet_DB, getTradeHistory_DB, getUserComments_DB })(Profile);
+export default connect((state) => ({ state, uid: user_uid(state) }), { getWallet_DB, getTradeHistory_DB, getUserComments_DB })(Profile);
 

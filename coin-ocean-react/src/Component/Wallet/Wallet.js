@@ -4,14 +4,14 @@ import './Wallet.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faStickyNote } from '@fortawesome/free-solid-svg-icons'
-import { user_profile, total_asset, formatter, wallet_today_earn_lost, wallet_today_earn_lost_percent, wallet_coins_name, wallet_rest} from '../../redux/selectors'
+import { user_profile, total_asset, formatter, wallet_today_earn_lost, wallet_today_earn_lost_percent, wallet_coins_name, wallet_rest, wallet} from '../../redux/selectors'
 library.add(faStickyNote);
 
 export default class Wallet extends Component {
     render() {
         const { state } = this.props
         const profile = user_profile(state)
-        if(wallet_coins_name(state)[0] !== undefined){
+        if(wallet(state).coins !== null){
             const totalAsset = total_asset(state)
             const toEarn = wallet_today_earn_lost(state)
             const toEarn_percent = wallet_today_earn_lost_percent(state)
