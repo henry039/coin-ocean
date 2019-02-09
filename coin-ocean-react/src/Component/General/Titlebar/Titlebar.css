@@ -86,11 +86,15 @@
 }
 
 .titleimg{
-    width: 158px;
     height: 55px;
     margin: 0px 25px 0px 0px;
     display: flex;
     align-items: center;
+}
+
+.profileicon{
+    height: 55px;
+    border-radius: 10px;
 }
 
 .searchbox{
