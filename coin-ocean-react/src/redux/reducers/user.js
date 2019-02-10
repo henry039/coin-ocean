@@ -8,7 +8,7 @@ export const user = handleActions({
     }),
 
     USER_LOGOUT : (state, action) => ({
-        uid : null,
+        uid : undefined,
         profile : {}
     })
 }, initialState.user)

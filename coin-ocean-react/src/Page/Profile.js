@@ -7,15 +7,15 @@ import PieChart from '../Component/charts/pie'
 import Loading from '../Component/Loading'
 import { connect } from 'react-redux'
 import { getWallet_DB, getTradeHistory_DB, getUserComments_DB } from '../redux/actions'
-import { wallet, trade_history, comments, pie_data, user_uid, wallet_rest } from '../redux/selectors'
+import { wallet, trade_history, comments, pie_data, user_uid } from '../redux/selectors'
 
 
 class Profile extends Component {
   constructor(props) {
     super(props);
   }
-  componentWillMount() {
-    console.log('will', this.props.uid)
+
+  componentDidMount() {
     if (this.props.uid !== undefined) {
       this.props.getWallet_DB(this.props.uid)
       this.props.getTradeHistory_DB(this.props.uid)
@@ -23,35 +23,56 @@ class Profile extends Component {
     }
   }
 
+
+  componentDidUpdate(){
+    // if (this.props.uid !== undefined) {
+    //   this.props.getWallet_DB(this.props.uid)
+    //   this.props.getTradeHistory_DB(this.props.uid)
+    //   this.props.getUserComments_DB(this.props.uid)
+    // }
+  }
+  
+  // componentWillReceiveProps(){
+  //   if (this.props.uid !== undefined) {
+  //     this.props.getWallet_DB(this.props.uid)
+  //     this.props.getTradeHistory_DB(this.props.uid)
+  //     this.props.getUserComments_DB(this.props.uid)
+  //   }
+  // }
+
   render() {
     const { state } = this.props;
-    console.log('render', wallet(state).rest)
-    return (
-      <Fragment>
-        {(wallet(state).rest !== null &&
-          comments(state)[0] === undefined &&
-          trade_history(state)[0] === undefined) ? (
-            <Fragment>
-              <Titlebar />
-              <Wallet state={state} />
-              <WalletButtonfct state={state} />
-            </Fragment>
-          ) : (wallet(state).coins[0] !== undefined &&
-              comments(state)[0] !== undefined &&
-              trade_history(state)[0] !== undefined) ? (
+    if(this.props.uid !== undefined){
+      return (
+        <Fragment>
+          {(//wallet(state).rest !== null &&
+            comments(state).length === 0 &&
+            trade_history(state).length === 0) ? (
               <Fragment>
                 <Titlebar />
                 <Wallet state={state} />
-                <div style={{ display: 'flex', justifyContent: 'center' }}>
-                  <PieChart pie={pie_data(state)} />
-                </div>
                 <WalletButtonfct state={state} />
               </Fragment>
-            ) : (
-              <Loading />
-            )}
-      </Fragment>
-    )
+            ) : (wallet(state).coins.length !== 0 &&
+              trade_history(state)[0].length !== 0) ? (
+                <Fragment>
+                  <Titlebar />
+                  <Wallet state={state} />
+                  <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <PieChart pie={pie_data(state)} />
+                  </div>
+                  <WalletButtonfct state={state} />
+                </Fragment>
+              ) : (
+                <Fragment/>
+              )}
+        </Fragment>
+      )
+    }else{
+      return (
+        <Loading />
+      )
+    }
   }
 }
 

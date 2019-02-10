@@ -289,10 +289,10 @@ class ChartHistory extends React.Component {
 
                 <div className="flex">
                     <div className="hmchart">
-                        {/* <HM req='minute' coin_id={this.props.match.params.id}/> */}
+                        <HM req='minute' coin_id={this.props.match.params.id}/>
                     </div>
                     <div className="hmchart">
-                        {/* <HM req='hour' coin_id={this.props.match.params.id}/> */}
+                        <HM req='hour' coin_id={this.props.match.params.id}/>
                     </div>
                 </div>
             </div>

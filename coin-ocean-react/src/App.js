@@ -7,13 +7,13 @@ import Signin from './Page/Signin'
 import HomePage from './Page/HomePage'
 import Profile from './Page/Profile'
 import NoMatch from './Page/NoMatch'
-import firebase from './Component/Firebase'
 // import Test from './container/test'
+import firebase from './Component/Firebase'
 
 import { BrowserRouter as Router,
 Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { getPrice, userLogin } from './redux/actions'
+import { getPrice, userLogin, getWallet_DB } from './redux/actions'
 class App extends Component {
   constructor(props){
     super(props);
@@ -23,7 +23,8 @@ class App extends Component {
     })
     firebase.auth().onAuthStateChanged((user) => {
       if(user){
-        this.props.userLogin(firebase.auth().currentUser.uid, {photourl : firebase.auth().currentUser.photoURL, displayname: firebase.auth().currentUser.displayName})
+        this.props.userLogin(user.uid, {photourl : user.photoURL, displayname: user.displayName})
+        this.props.getWallet_DB(user.uid)
       }
     })
   }
@@ -51,4 +52,4 @@ class App extends Component {
   }
 }
 
-export default connect((state)=>({prices : state.prices}), {getPrice, userLogin})(App);
+export default connect((state)=>({prices : state.prices}), {getPrice, userLogin, getWallet_DB})(App);

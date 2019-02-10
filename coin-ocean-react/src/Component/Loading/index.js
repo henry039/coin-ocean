@@ -14,7 +14,7 @@ class Loading extends React.Component {
     }
     render(){
         return (
-            <CircularProgress className={this.props.classes.progress} color="black"/>
+            <CircularProgress className={this.props.classes.progress} />
         )
     }
 }

@@ -115,34 +115,48 @@ export const trade_history_making = (state, action) => {
     const { quantity, symbol, type } = action;
     const rest = wallet_rest(state);
     const coin_payment = latest_price(state, symbol) * quantity;
-    const coin_match_index_wallet = (wallet_coins_name(state).indexOf(symbol) >= 0) ? wallet_coins_name(state).indexOf(symbol) : undefined;
-    const coin_on_hold = wallet_coins_quantity(state)[coin_match_index_wallet]
-
-    if (type === 'buy' && rest > coin_payment) {
-        return {
-            coins: [
-                ...wallet(state).coins.filter((track) => track[0] !== symbol),
-                [symbol, (coin_on_hold + quantity)]
-            ],
-            rest: (rest - coin_payment).toFixed(3)
+    // seperate first time trade
+    if(wallet(state).coins.length !== 0){
+        const coin_match_index_wallet = (wallet_coins_name(state).indexOf(symbol) >= 0) ? wallet_coins_name(state).indexOf(symbol) : undefined;
+        const coin_on_hold = wallet_coins_quantity(state)[coin_match_index_wallet]
+    
+        if (type === 'buy' && rest > coin_payment) {
+            return {
+                coins: [
+                    ...wallet(state).coins.filter((track) => track[0] !== symbol),
+                    [symbol, (coin_on_hold + quantity)]
+                ],
+                rest: (rest - coin_payment).toFixed(3)
+            }
+        } else if (type === 'sell' && coin_on_hold > quantity) {
+            return {
+                coins: [
+                    ...wallet(state).coins.filter((track) => track[0] !== symbol),
+                    [symbol, (coin_on_hold - quantity)]
+                ],
+                rest: (rest + coin_payment).toFixed(3)
+            }
+        } else if (type === 'sell' && coin_on_hold === quantity) {
+            return {
+                coins: [
+                    ...wallet(state).coins.filter((track) => track[0] !== symbol)
+                ],
+                rest: (rest + coin_payment).toFixed(3)
+            }
+        } else {
+            return 'Invalid Trade';
         }
-    } else if (type === 'sell' && coin_on_hold > quantity) {
-        return {
-            coins: [
-                ...wallet(state).coins.filter((track) => track[0] !== symbol),
-                [symbol, (coin_on_hold - quantity)]
-            ],
-            rest: (rest + coin_payment).toFixed(3)
+    }else{
+        if (type === 'buy' && rest > coin_payment) {
+            return {
+                coins: [
+                    [symbol, quantity]
+                ],
+                rest: (rest - coin_payment).toFixed(3)
+            }
+        } else {
+            return 'Invalid Trade';
         }
-    } else if (type === 'sell' && coin_on_hold === quantity) {
-        return {
-            coins: [
-                ...wallet(state).coins.filter((track) => track[0] !== symbol)
-            ],
-            rest: (rest + coin_payment).toFixed(3)
-        }
-    } else {
-        return 'Invalid Trade';
     }
 }
 

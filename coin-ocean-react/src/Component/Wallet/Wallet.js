@@ -11,7 +11,7 @@ export default class Wallet extends Component {
     render() {
         const { state } = this.props
         const profile = user_profile(state)
-        if(wallet(state).coins !== null){
+        if(wallet(state).coins.length !== 0){
             const totalAsset = total_asset(state)
             const toEarn = wallet_today_earn_lost(state)
             const toEarn_percent = wallet_today_earn_lost_percent(state)

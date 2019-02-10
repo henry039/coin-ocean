@@ -2,8 +2,11 @@ import * as React from 'react';
 import "./comment.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
+import "./comment.css";
+import moment from 'moment'
 import { connect } from 'react-redux'
 import { addComments_DB } from '../../redux/actions'
+import { user_profile, user_uid } from '../../redux/selectors'
 
 export class CommentInput extends React.Component {
     constructor(props) {
@@ -15,8 +18,8 @@ export class CommentInput extends React.Component {
 
     handleSubmit = (e) => {
         e.preventDefault()
-        const { user, addComments_DB } = this.props
-        addComments_DB(user.uid, {context : this.state.context, tag : this.props.coin})
+        const { uid, addComments_DB } = this.props
+        addComments_DB(uid, {context : this.state.context, tag : this.props.coin})
     }
 
     handleChange = (e) => {
@@ -26,7 +29,7 @@ export class CommentInput extends React.Component {
     }
 
     render() {
-        const { user } = this.props
+        const { profile } = this.props
         return (
             <div className="commentwrite">
                 <button type="button" className="btn commentwritebutton" data-toggle="modal" data-target="#exampleModalCenter">
@@ -37,8 +40,8 @@ export class CommentInput extends React.Component {
                         <div className="modal-dialog modal-dialog-centered" role="document">
                             <div className="modal-content">
                                 <div className="modal-header">
-                                    <h5 className="modal-title" id="exampleModalCenterTitle">UserName: {`${user.uid}`}</h5>
-                                    <h6> Time: {`${new Date().getDate()} - ${new Date().getMonth()+1} - ${new Date().getFullYear()} ${new Date().getHours()} : ${new Date().getMinutes()}`}</h6>
+                                    <h5 className="modal-title" id="exampleModalCenterTitle">UserName: {`${profile.displayname}`}</h5>
+                                    <h6> Time: {moment(new Date()).format('lll')}</h6>
                                 </div>
                                 <div className="modal-body">
                                     <textarea name="comments" id="comments" className="commenttextarea" placeholder="write down your comment here" onChange={this.handleChange}></textarea>
@@ -56,4 +59,4 @@ export class CommentInput extends React.Component {
     }
 }
 
-export default connect((state) => ({ user: state.user }), { addComments_DB })(CommentInput)
+export default connect((state) => ({ profile: user_profile(state), uid :user_uid(state)}), { addComments_DB })(CommentInput)
