@@ -1,4 +1,4 @@
-require('dotenv').config({path : __dirname+'../../.env'});
+require('dotenv').config({path : __dirname+'/../../.env'});
 const axios = require('axios')
 const { bitfinex_switch_temp } = require('./symbol_in_common')
 

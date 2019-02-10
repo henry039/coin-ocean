@@ -1,4 +1,4 @@
-require('dotenv').config({path : __dirname+'/../.env'});
+require('dotenv').config({ path: __dirname + '/../.env' });
 const knex = require('knex')({
     client: 'postgresql',
     connection: {
@@ -13,53 +13,88 @@ const fakeData = require('../utils/fakeSeed')
 
 class fetchDB {
     // User Profile
-    createUserProfile(uid, payload){
-        let {photourl, displayname} = payload
-        if(photourl !== undefined && displayname !== undefined){
-            return knex.transaction((trx)=> {
+    createUserProfile(uid, payload) {
+        let { photourl, displayname, email } = payload
+        if (photourl !== undefined && displayname !== undefined) {
+            return knex.transaction((trx) => {
                 trx('user_profile')
                     .insert({
                         photourl,
                         displayname,
-                        uid
+                        uid,
+                        email
                     })
                     .then(trx.commit)
                     .catch(trx.rollback)
-            }).then(()=> knex('user_profile').where('uid', uid))
-        }else{
+            }).then(() => knex('user_profile').where('uid', uid))
+        } else {
             return Promise.reject(new Error('payload missing'))
         }
     }
-    getUserProfile(uid){
+    getUserProfile(uid) {
         return knex('user_profile').where('uid', uid)
             .catch(err => Promise.reject(new Error('No Such User')))
     }
-    // Chart Data Section
-    getCoinHistory(coin) {
-        // return knex(coin)
-        return fakeData
+
+    // subscribe & reminder
+    getSubscribeCoin(uid){
+        return knex('user_profile').where('uid', uid).select('subscribe')
+            .catch(err => Promise.reject(new Error('No Such User')))
     }
 
-    dailyUpdate(coin, payload) {
-        let { date, price, txVol, marketCap } = payload
-        if (price !== undefined && txVol !== undefined && marketCap !== undefined) {
-            return knex.transaction(trx => {
-                trx(`${coin}`)
-                    .insert({
-                        date,
-                        price,
-                        txVol,
-                        marketCap
-                    })
-                    .returning('id')
-                    .then(trx.commit)
-                    .catch(trx.rollback)
-            })
-            .then((id) => knex(`${coin}`).where('id', ...id))
-        } else {
-            return Promise.reject(new Error('Payload missing'))
-        }
+    updateSubscribeCoin(uid, coinList) {
+        return knex.transaction(trx => {
+            trx('user_profile')
+                .update({
+                    subscribe: JSON.stringify(coinList)
+                })
+                .where('uid', uid)
+                .then(trx.commit)
+                .catch(trx.rollback)
+        }).then(() => knex('user_profile').select('subscribe').where('uid', uid))
     }
+
+    getReminder(uid){
+        return knex('user_profile').where('uid', uid).select('reminder')
+    }
+
+    updateReminder(uid, remind) {
+        return knex.transaction(trx => {
+            trx('user_profile')
+                .update({
+                    reminder: JSON.stringify(remind)
+                })
+                .where('uid', uid)
+                .then(trx.commit)
+                .catch(trx.rollback)
+        }).then(() => knex('user_profile').select('reminder').where('uid', uid))
+    }
+    // Chart Data Section
+    // getCoinHistory(coin) {
+    //     // return knex(coin)
+    //     return fakeData
+    // }
+
+    // dailyUpdate(coin, payload) {
+    //     let { date, price, txVol, marketCap } = payload
+    //     if (price !== undefined && txVol !== undefined && marketCap !== undefined) {
+    //         return knex.transaction(trx => {
+    //             trx(`${coin}`)
+    //                 .insert({
+    //                     date,
+    //                     price,
+    //                     txVol,
+    //                     marketCap
+    //                 })
+    //                 .returning('id')
+    //                 .then(trx.commit)
+    //                 .catch(trx.rollback)
+    //         })
+    //         .then((id) => knex(`${coin}`).where('id', ...id))
+    //     } else {
+    //         return Promise.reject(new Error('Payload missing'))
+    //     }
+    // }
 
     // Wallet Section
     createWallet(uid, payload) {
@@ -82,9 +117,9 @@ class fetchDB {
     getWallet(uid) {
         return knex('wallet').where('uid', uid)
             .then(reply => {
-                if(reply[0] === undefined){
-                    return this.createWallet(uid, {rest : 100000000})
-                }else{
+                if (reply[0] === undefined) {
+                    return this.createWallet(uid, { rest: 100000000 })
+                } else {
                     return reply
                 }
             })
@@ -151,15 +186,15 @@ class fetchDB {
     // Comment Section
     async getAllComments(tag) {
         let comments = await knex('comment').where('tag', tag).orderBy('id', 'desc')
-        let output = comments.map(async(comment) => {
+        let output = comments.map(async (comment) => {
             const query = await knex('user_profile').where('uid', comment.uid)
-            const {displayname, photourl} = query[0]
+            const { displayname, photourl } = query[0]
             return {
-                date : comment.date,
-                context : comment.context,
-                tag : comment.tag,
-                displayName : displayname,
-                photoURL : photourl
+                date: comment.date,
+                context: comment.context,
+                tag: comment.tag,
+                displayName: displayname,
+                photoURL: photourl
             }
         })
         return await Promise.all(output)
@@ -182,14 +217,13 @@ class fetchDB {
                     .where('uid', uid)
                     .then(trx.commit)
                     .catch(trx.rollback)
-            }).then(() => knex('comment').where('tag', tag))
+            }).then(() => this.getAllComments(tag))
         } else {
             return Promise.reject(new Error('Payload missing'))
         }
     }
 }
-// let a = new fetchDB()
-// a.createWallet('test1', {rest: 1000}).then(console.log)
+let a = new fetchDB()
 // a.getWallet('test1').then(console.log)
 // a.updateWallet('test1', {coins: [['BTC' ,49],["ETH", 500]], rest:7500}).then(console.log).catch(err => console.error(err))
 // a.dailyUpdateWallet('test1', {dailyPL: [17640, 19870]}).then(console.log).catch(err => console.error(err))
@@ -202,7 +236,10 @@ class fetchDB {
 // a.getAllComments('BTC').then(console.log)
 
 // a.getUserProfile('test1').then(console.log)
-
-// a.dailyUpdate('bitcoin',{ date:"2009-01-03",price:0,txVol:0,marketCap:0}).then(console.log).catch(err=>console.error(err))
+// a.createUserProfile('test1', {photourl : 'https://upload.wikimedia.org/wikipedia/commons/f/f4/User_Avatar_2.png', displayname: 'jojo chan', email: 'jojo@gmail.com'})
+// a.updateSubscribeCoin('test1', ['ETH', 'BTC']).then(console.log)
+// a.updateReminder('test1', [['BTC', 'sell', 4100]]).then(console.log)
+// a.getReminder('test1').then(console.log)
+// a.getSubscribeCoin('test1').then(console.log)
 
 module.exports = fetchDB

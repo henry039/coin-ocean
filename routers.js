@@ -2,15 +2,30 @@ const fetchDB = require('./model/fetchDB')
 const db = new fetchDB()
 
 module.exports = (app) => {
-    app.get('/api/history/:coin', async (req, res) => {
-        let coinHistory = await db.getCoinHistory(req.params.coin)
-        res.send(coinHistory)
-    })
-
     // User
     app.post('/api/add/user', async(req, res)=>{
         let addUserProfile = await db.createUserProfile(req.body.uid, req.body.payload)
         res.send(addUserProfile[0])
+    })
+
+    app.post('/api/get/subscribe', async(req, res)=>{
+        let subscribe = await db.getSubscribeCoin(req.body.uid)
+        res.send(subscribe[0].subscribe)
+    })
+
+    app.post('/api/update/subscribe', async(req, res)=>{
+        let subscribe = await db.updateSubscribeCoin(req.body.uid, req.body.coinList)
+        res.send(subscribe[0].subscribe)
+    })
+
+    app.post('/api/get/reminder', async(req, res)=>{
+        let reminder = await db.getReminder(req.body.uid)
+        res.send(reminder[0].reminder)
+    })
+
+    app.post('/api/update/reminder', async(req, res)=> {
+        let reminder = await db.updateReminder(req.body.uid, req.body.reminder)
+        res.send(reminder[0].reminder)
     })
 
     // Wallet
@@ -38,7 +53,7 @@ module.exports = (app) => {
     // Comment
     app.get('/api/allComments/:coin', async (req, res) => {
         let comments = await db.getAllComments(req.params.coin)
-        res.send(allCommentsOutput(comments))
+        res.send(formatCommentsOutput(comments))
     })
 
     app.post('/api/get/comments', async (req, res) => {
@@ -76,17 +91,6 @@ function formatCommentsOutput(input) {
         return {
             date: data.date,
             context: data.context,
-            tag: data.tag
-        }
-    })
-    return { body }
-}
-
-function allCommentsOutput(input) {
-    const body = input.map((data) => {
-        return {
-            date: data.date,
-            context: data.context,
             tag: data.tag,
             displayname : data.displayName,
             photourl : data.photoURL
@@ -94,6 +98,7 @@ function allCommentsOutput(input) {
     })
     return { body }
 }
+
 // wallet
 // "uid" : "test1"
 // "payload" : {

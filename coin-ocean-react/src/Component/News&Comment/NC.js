@@ -29,7 +29,6 @@ class NC extends Component {
             this.setState({
                 info: result.filter(e => {return e.symbol === this.state.pageid2.toUpperCase()}),
             });
-            
             let getname = this.state.info[0].id.toString()
             const Api = new CryptoNewsApi("40d4452688001be85d8a40dd3fd5de35");
             Api.getTopNewsByCoin(getname)

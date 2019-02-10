@@ -1,4 +1,7 @@
-const fake = require('../../utils/fakeSeed')
+// const fake = require('../../utils/fakeSeed')
+require('dotenv').config({path : __dirname+'/../../.env'});
+const axios = require('axios')
+const { bitfinex_switch_temp } = require('./symbol_in_common')
 // const fetchDB = require('../fetchDB')
 // const db = new fetchDB()
 // const { market_common } = require('./symbol_in_common')
@@ -130,16 +133,16 @@ const fake = require('../../utils/fakeSeed')
 //     },
 // }
 
+
 function extractPrice(rawData) {
     // arr of { x: '05/06/2014', y: 54 }
     // x(date) y(price)
     let dataSet = []
     for (let i in rawData) {
         dataSet.push(Object.assign({}, {
-            x: rawData[i].date,
-            y: Number(rawData[i].price)
+            x: rawData[i][0],
+            y: Number(rawData[i][2])
         }))
-        // dataSet.push([new Date(rawData[i].date).getTime(), Number(rawData[i].price)])
     }
     return [Object.assign({}, {
         name: 'Price',
@@ -154,10 +157,9 @@ function extractTxVol(rawData) {
     let dataSet = []
     for (let i in rawData) {
         dataSet.push(Object.assign({}, {
-            x: rawData[i].date,
-            y: Number(rawData[i].txVol)
+            x: rawData[i][0],
+            y: Number(rawData[i][5])
         }))
-        // dataSet.push([new Date(rawData[i].date).getTime(), Number(rawData[i].txVol)])
     }
     return [Object.assign({}, {
         name: 'TxVol',
@@ -165,19 +167,29 @@ function extractTxVol(rawData) {
     })]
 }
 
-function price(coin){
-    // let rawData = db.getCoinHistory(coin)
-    let rawData = fake
-    return extractPrice(rawData)
-}
+// function price(coin){
+//     // let rawData = db.getCoinHistory(coin)
+//     let rawData = fake
+//     return extractPrice(rawData)
+// }
 
-function vol(coin){
-    // let rawData = db.getCoinHistory(coin)
-    let rawData = fake
-    return extractTxVol(rawData)
+// function vol(coin){
+//     // let rawData = db.getCoinHistory(coin)
+//     let rawData = fake
+//     return extractTxVol(rawData)
+// }
+
+function combine(coin_id){
+    return axios.get(`${process.env.DAY_PRE}${bitfinex_switch_temp[coin_id]}${process.env.DAY_SUF}`)
+        .then(res => ({
+            price : extractPrice(res.data),
+            vol : extractTxVol(res.data)
+        }))
+        .catch(err => console.error(err))
 }
 
 module.exports = {
-    price,
-    vol
+    // price,
+    // vol,
+    combine
 }
