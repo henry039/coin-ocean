@@ -23,12 +23,16 @@ class Ind extends Component {
       const action = {
         quantity: this.state.quantity, symbol, type
       }
-      updateWallet_DB(uid, trade_history_making(state, action))
-      addTradeHistory_DB(uid, {
-        action: [
-          symbol, type, this.state.quantity, this.props.price_usd
-        ]
-      })
+      if(trade_history_making(state, action) !== 'Invalid Trade'){
+        updateWallet_DB(uid, trade_history_making(state, action))
+        addTradeHistory_DB(uid, {
+          action: [
+            symbol, type, this.state.quantity, this.props.price_usd
+          ]
+        })
+      }else{
+        alert('Invalid Trade')
+      }
     } else {
       alert('Damn You')
     }

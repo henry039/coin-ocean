@@ -1,6 +1,6 @@
 const webSocket = require('socket.io');
-const { minute, hour } = require('../dailyUpdate/10minutesStore')
-const { price, vol } = require('../dailyUpdate/history')
+const { minute, hour } = require('../data_src/10minutesStore')
+const { combine } = require('../fata_src/history')
 const { realtime_price } = require('../data_src/realtime_price')
 const CronJob = require('cron').CronJob
 
@@ -29,8 +29,7 @@ module.exports = (server) => {
         })
         socket.on('history chart init', async (coin_id)=>{
             socket.emit('history chart reply', {
-                price : price(coin_id),
-                vol: vol(coin_id)
+                data : await combine(coin_id),
             })
         })
     })

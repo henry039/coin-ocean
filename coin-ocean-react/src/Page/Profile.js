@@ -15,7 +15,7 @@ class Profile extends Component {
     super(props);
   }
 
-  componentDidMount() {
+  componentWillMount() {
     if (this.props.uid !== undefined) {
       this.props.getWallet_DB(this.props.uid)
       this.props.getTradeHistory_DB(this.props.uid)
@@ -23,38 +23,27 @@ class Profile extends Component {
     }
   }
 
-
-  componentDidUpdate(){
-    // if (this.props.uid !== undefined) {
-    //   this.props.getWallet_DB(this.props.uid)
-    //   this.props.getTradeHistory_DB(this.props.uid)
-    //   this.props.getUserComments_DB(this.props.uid)
-    // }
-  }
-  
-  // componentWillReceiveProps(){
-  //   if (this.props.uid !== undefined) {
-  //     this.props.getWallet_DB(this.props.uid)
-  //     this.props.getTradeHistory_DB(this.props.uid)
-  //     this.props.getUserComments_DB(this.props.uid)
-  //   }
-  // }
-
   render() {
-    const { state } = this.props;
-    if(this.props.uid !== undefined){
+    const { state, uid, wallet, history } = this.props;
+    if(uid !== undefined){
       return (
         <Fragment>
-          {(//wallet(state).rest !== null &&
-            comments(state).length === 0 &&
-            trade_history(state).length === 0) ? (
+          {/* (wallet(state).coins.length === 0 &&
+          comments(state).length === 0 &&
+          trade_history(state).length === 0)
+          
+          trade at least once
+          (wallet(state).coins.length !== 0 &&
+              trade_history(state).length !== 0) */}
+          {(wallet.coins.length === 0 &&
+            // comments(state).length === 0 &&
+            history.length === 0) ? (
               <Fragment>
                 <Titlebar />
                 <Wallet state={state} />
                 <WalletButtonfct state={state} />
               </Fragment>
-            ) : (wallet(state).coins.length !== 0 &&
-              trade_history(state)[0].length !== 0) ? (
+            ) : (
                 <Fragment>
                   <Titlebar />
                   <Wallet state={state} />
@@ -63,8 +52,6 @@ class Profile extends Component {
                   </div>
                   <WalletButtonfct state={state} />
                 </Fragment>
-              ) : (
-                <Fragment/>
               )}
         </Fragment>
       )
@@ -76,5 +63,5 @@ class Profile extends Component {
   }
 }
 
-export default connect((state) => ({ state, uid: user_uid(state) }), { getWallet_DB, getTradeHistory_DB, getUserComments_DB })(Profile);
+export default connect((state) => ({ state, uid: user_uid(state), wallet : wallet(state), history : trade_history(state) }), { getWallet_DB, getTradeHistory_DB, getUserComments_DB })(Profile);
 

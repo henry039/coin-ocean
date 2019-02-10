@@ -30,6 +30,10 @@ export const wallet_coins_asset = (state) => {
     return wallet_coins_quantity(state).map((coin_on_hold, index) => coin_on_hold * wallet_coins_price(state)[index])
 }
 
+export const total_coins_asset = (state) => {
+    return wallet_coins_asset(state).reduce((acc, current) => acc + current)
+}
+
 export const total_asset = (state) => {
     const total_asset = wallet_coins_asset(state).reduce((acc, current) => acc + current) + wallet_rest(state)
     return total_asset

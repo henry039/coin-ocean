@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import moment from 'moment';
 import WatchList from './Watchlist/Watchlist'
 import Invested from './Invested/Invested'
@@ -8,22 +8,23 @@ import Application from './Application/Application'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import './WalletButtonfct.css'
-import { 
+import {
   trade_history,
-  get_coin_name, 
-  comments, 
-  trade_history_coinsss_cost, 
-  wallet_total_coin_earn_lost, 
-  wallet_total_coin_earn_lost_percent, 
-  formatter, 
-  latest_price, 
-  trade_history_coin_earn_lost, 
-  trade_history_coin_earn_lost_percent, 
+  get_coin_name,
+  comments,
+  trade_history_coinsss_cost,
+  wallet_total_coin_earn_lost,
+  wallet_total_coin_earn_lost_percent,
+  formatter,
+  latest_price,
+  trade_history_coin_earn_lost,
+  trade_history_coin_earn_lost_percent,
   wallet_coins_name,
   wallet_coins_quantity,
-  wallet_coins_asset, 
+  wallet_coins_asset,
   total_asset,
-  user_profile
+  user_profile,
+  total_coins_asset
 } from '../../redux/selectors'
 
 export default class WalletButtonfct extends Component {
@@ -91,13 +92,13 @@ export default class WalletButtonfct extends Component {
   render() {
     let info = null;
     const { state } = this.props
-    if(trade_history(state)[0] !== undefined){
+    if (trade_history(state)[0] !== undefined) {
       const history = trade_history(state)
       const commentsss = comments(state)
       const profile = user_profile(state)
       const wallet_coins = wallet_coins_name(state)
       const wallet_coins_on_hold = wallet_coins_quantity(state)
-      const totalAsset = total_asset(state)
+      const totalCoinAsset = total_coins_asset(state)
       const coins_asset = wallet_coins_asset(state)
       const coinsss_cost = trade_history_coinsss_cost(state)
       const coinsss_earnLost = wallet_total_coin_earn_lost(state)
@@ -182,7 +183,7 @@ export default class WalletButtonfct extends Component {
                   // tdypercent="4%"
                   totearn={formatter.format(coinsss_earnLost[index])}
                   totpercent={`${(coinsss_earnLost_percent[index]).toFixed(2)}%`}
-                  invest={`${(coins_asset[index]/totalAsset * 100).toFixed(2)}%`} />
+                  invest={`${(coins_asset[index] / totalCoinAsset * 100).toFixed(2)}%`} />
               )
             })}
           </div>
@@ -225,15 +226,21 @@ export default class WalletButtonfct extends Component {
           </div>
         );
       } else if (this.state.MyComment) {
-        info = (
-          <div className="commentlist">
-            {commentsss.map((comment) => {
-              return (
-                <MyComment comment={comment} profile={profile} />
-              )
-            })}
-          </div>
-        );
+        if(commentsss.length > 0){
+          info = (
+            <Fragment>
+              {commentsss.map((comment) => {
+                return <MyComment comment = { comment } profile = { profile } />
+              })}
+            </Fragment>
+          )
+        }else {
+          info = (
+            <Fragment>
+              <MyComment/>
+            </Fragment>
+          )
+        }
       } else if (this.state.Application) {
         info = (
           <div className="applist">
@@ -241,7 +248,7 @@ export default class WalletButtonfct extends Component {
           </div>
         );
       }
-    }else {
+    } else {
       if (this.state.WatchList) {
         info = (
           <div>
@@ -299,7 +306,7 @@ export default class WalletButtonfct extends Component {
                 <p>Invest %</p>
               </div>
             </div>
-            <Invested/>
+            <Invested />
           </div>
         );
       } else if (this.state.Trade) {
@@ -314,13 +321,13 @@ export default class WalletButtonfct extends Component {
                 <p>Time</p>
               </div>
             </div>
-            <Trade/>
+            <Trade />
           </div>
         );
       } else if (this.state.MyComment) {
         info = (
           <div className="commentlist">
-              <MyComment />
+            <MyComment />
           </div>
         );
       } else if (this.state.Application) {

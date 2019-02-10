@@ -148,15 +148,17 @@ class ChartHistory extends React.Component {
     }
 
     componentWillMount() {
-        this.ws.emit('history chart init', `${this.coin_id}`)
+        this.ws.emit('history chart init', `${this.state.pageid}`)
     }
 
     componentDidMount() {
         this.ws.on('history chart reply', (reply) => {
+            const {price, vol} = reply.data
             this.setState({
-                price: reply.price,
-                vol: reply.vol,
-                history: reply
+                // price: reply.price,
+                // vol: reply.vol,
+                price, vol,
+                history: reply.data
             })
         })
 
@@ -181,6 +183,7 @@ class ChartHistory extends React.Component {
         const price = this.state.history.price[0].data
         const vol = this.state.history.vol[0].data
         const total = price.length
+        const history = this.state.history
         switch (e.target.value) {
             case '7d':
                 this.setState((pre) => ({
@@ -230,10 +233,18 @@ class ChartHistory extends React.Component {
                     }],
                 }))
                 break;
-            // case '5y':
-            //     this.updateSeries(history.slice((total - 365 * 5)))
-            //     this.updateSeries(history.slice((total - 365 * 5)))
-            //     break;
+            case '3y':
+                this.setState((pre) => ({
+                    price: [{
+                        ...pre.price.name,
+                        data: history.price[0].data
+                    }],
+                    vol: [{
+                        ...pre.vol.name,
+                        data: history.vol[0].data
+                    }],
+                }))
+                break;
             default:
             // this.updateSeries(history)
         }
@@ -268,7 +279,7 @@ class ChartHistory extends React.Component {
                             <button className="btn btn-outline-danger" onClick={this.handleClick} value='1m'>1m</button>
                             <button className="btn btn-outline-danger" onClick={this.handleClick} value='3m'>3m</button>
                             <button className="btn btn-outline-danger" onClick={this.handleClick} value='1y'>1y</button>
-                            {/* <button className="btn btn-outline-danger" onClick={this.handleClick} value='5y'>5y</button> */}
+                            <button className="btn btn-outline-danger" onClick={this.handleClick} value='3y'>3y</button>
                         </div>
                         <div className="chart"  style={{maxHeight : 350}}>
                             <ReactApexChart

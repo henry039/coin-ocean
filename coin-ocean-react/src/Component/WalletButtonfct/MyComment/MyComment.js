@@ -52,7 +52,12 @@ class MyComment extends React.Component {
             );
         }else {
             return (
-                <React.Fragment></React.Fragment>
+                <div className="noliststate">
+                    <div className="nolist">
+                        <h3>You have not leave any comment yet!</h3>
+                    </div>
+                    <small><a href='/'>Learn more</a></small>
+                </div>
             )
         }
     }

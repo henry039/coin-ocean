@@ -33,7 +33,8 @@ class SoicalLogin extends React.Component {
         uid: firebase.auth().currentUser.uid,
         payload: {
           photourl: firebase.auth().currentUser.photoURL,
-          displayname: firebase.auth().currentUser.displayName
+          displayname: firebase.auth().currentUser.displayName,
+          email : firebase.auth().currentUser.email
         }
       })
     }
