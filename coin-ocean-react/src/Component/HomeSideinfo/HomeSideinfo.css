@@ -69,35 +69,28 @@
   background-color: #333333;
   color: #ffffff;
   padding: 5px;
-  margin-bottom: 3px;
+  margin-bottom: 5px;
   width: 90%;
   display: flex;
 }
 
 .hsname {
-  width: 100px;
-  display: flex;
-  justify-items: flex-start;
+  width: 33%;
   margin-right: 10px;
   cursor: pointer;
   font-weight: bold;
 }
 
 .hsprice {
-  width: 130px;
+  width: 33%;
   margin-right: 10px;
+  margin-left: 30px;
+  display: flex;
 }
 
 .hschange {
-  width: 130px;
+  width: 33%;
   display: flex;
   justify-content: center;
   margin-right: 40px;
-}
-
-.hsvol {
-  width: 130px;
-  display: flex;
-  justify-items: flex-start;
-  margin-right: 10px;
 }

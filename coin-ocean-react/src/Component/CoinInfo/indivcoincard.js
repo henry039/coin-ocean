@@ -11,7 +11,8 @@ class Ind extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      quantity: 0
+      quantity: 0,
+      targetprice: []
     }
   }
 
@@ -48,7 +49,10 @@ class Ind extends Component {
         </div>
         <p className="time">Time</p>
         <p className="font-weight">Latest Price:</p>
-        <p className="priceusd">{'$' + props.price_usd} {props.change + '%'}</p>
+        <div className="priceusd" style={{color: props.change >= '0' ? "#00e600" : "#ff3333"}}>
+        <p>{props.price_usd} USD</p>
+        <p className="pricechange">{props.change + '%'}</p>
+        </div>
         <p className="pricebtc">{props.price_btc} BTC</p>
         <div className="infoset">
           <p className="font-weight">MarketCap :</p>
@@ -69,25 +73,56 @@ class Ind extends Component {
 
         {(user_uid(state) !== undefined) ? (
           <Fragment>
-            <button class="btn btn-outline-info" type="button" data-toggle="modal" data-target="#trader">Trade</button>
+            <button className="btn btn-outline-info" type="button" data-toggle="modal" data-target="#trader">Trade</button>
+            <button className="btn btn-outline-primary" type="button" data-toggle="modal" data-target="#remind">Price Remind</button>
+            <button className="btn btn-outline-danger">Favorite</button>
 
-            <div class="modal fade" id="trader" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
+            <div className="modal fade" id="trader" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div className="modal-dialog" role="document">
+                <div className="modal-content">
                   <form>
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="trader">Coin Trading: {props.name}</h5>
+                    <div className="modal-header">
+                      <h5 className="modal-title" id="trader">Coin Trading: {props.name}</h5>
                     </div>
-                    <div class="modal-body">
+                    <div className="modal-body">
                       Price: ${props.price_usd}
                       <div>
                         <input name='quantity' onChange={this.handleChange} placeholder="Enter quantity, e.g 10" />
                       </div>
                     </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-success" data-dismiss="modal" name='buy' onClick={this.handleClick}>Buy</button>
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-danger" data-dismiss="modal" name='sell' onClick={this.handleClick}>Sell</button>
+                    <div className="modal-footer">
+                      <button type="button" className="btn btn-success" data-dismiss="modal" name='buy' onClick={this.handleClick}>Buy</button>
+                      <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="button" className="btn btn-danger" data-dismiss="modal" name='sell' onClick={this.handleClick}>Sell</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+            <div className="modal fade" id="remind" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div className="modal-dialog" role="document">
+                <div className="modal-content">
+                  <form>
+                    <div className="modal-header">
+                      <h5 className="modal-title" id="remind">Target Price Remind: {props.name}</h5>
+                    </div>
+                    <div className="modal-body">
+                      <div>
+                        <input name='targetprice' onChange={this.handleChange} placeholder="Target buying price remind e.g 30" />
+                        <button type="button" className="btn btn-info" data-dismiss="modal" name='buy' onClick={this.handleClick}>Buy Reminder</button>
+                      </div>
+                    </div>
+
+                    <div className="modal-body">
+                      <div>
+                        <input name='targetprice' onChange={this.handleChange} placeholder="Target selling price remind e.g 30" />
+                        <button type="button" className="btn btn-warning" data-dismiss="modal" name='sell' onClick={this.handleClick}>Sell Reminder</button>
+                      </div>
+                    </div>
+
+                    <div className="modal-footer ">
+                      <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                   </form>
                 </div>

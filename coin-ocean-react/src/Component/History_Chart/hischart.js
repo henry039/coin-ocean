@@ -250,7 +250,7 @@ class ChartHistory extends React.Component {
                                     name={info.id}
                                     symbol={info.symbol}
                                     price_usd={Math.round((info.price_usd) * 100) / 100}
-                                    price_btc={Math.round((info.price_btc) * 100) / 100}
+                                    price_btc={Math.round((info.price_btc) * 100000000000) / 100000000000}
                                     change={Math.round((info.percent_change_24h) * 100) / 100}
                                     marketcap={Math.round(info.market_cap_usd)}
                                     volume={Math.round(info['24h_volume_usd'])}
