@@ -55,9 +55,9 @@ module.exports = (app) => {
 function formatWalletOutput(input) {
     const { coins, rest, dailyPL } = input[0]
     return {
-        coins: JSON.parse(coins),
+        coins: ((coins === null) ? ([]) : (JSON.parse(coins))),
         rest: JSON.parse(rest),
-        dailyPL: JSON.parse(dailyPL)
+        dailyPL: ((dailyPL === null) ? ([]) : (JSON.parse(dailyPL)))
     }
 }
 
@@ -87,7 +87,9 @@ function allCommentsOutput(input) {
         return {
             date: data.date,
             context: data.context,
-            tag: data.tag
+            tag: data.tag,
+            displayname : data.displayName,
+            photourl : data.photoURL
         }
     })
     return { body }

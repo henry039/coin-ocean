@@ -103,7 +103,6 @@ export default class WalletButtonfct extends Component {
       const coinsss_earnLost = wallet_total_coin_earn_lost(state)
       const coinsss_earnLost_percent = wallet_total_coin_earn_lost_percent(state)
       const today_earn = trade_history_coin_earn_lost(state)
-      console.log(typeof today_earn[0])
       const today_earn_percent = trade_history_coin_earn_lost_percent(state)
       if (this.state.WatchList) {
         info = (

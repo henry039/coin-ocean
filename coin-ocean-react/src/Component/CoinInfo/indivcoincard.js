@@ -17,18 +17,22 @@ class Ind extends Component {
   }
 
   handleClick = (e) => {
-    const { state, symbol, addTradeHistory_DB, updateWallet_DB } = this.props
-    const uid = user_uid(state)
-    const type = e.target.name
-    const action = {
-      quantity: this.state.quantity, symbol, type
+    if (this.state.quantity > 0) {
+      const { state, symbol, addTradeHistory_DB, updateWallet_DB } = this.props
+      const uid = user_uid(state)
+      const type = e.target.name
+      const action = {
+        quantity: this.state.quantity, symbol, type
+      }
+      updateWallet_DB(uid, trade_history_making(state, action))
+      addTradeHistory_DB(uid, {
+        action: [
+          symbol, type, this.state.quantity, this.props.price_usd
+        ]
+      })
+    } else {
+      alert('Damn You')
     }
-    updateWallet_DB(uid, trade_history_making(state, action))
-    addTradeHistory_DB(uid, {
-      action: [
-        symbol, type, this.state.quantity, this.props.price_usd
-      ]
-    })
   }
 
   handleChange = (e) => {
@@ -39,7 +43,7 @@ class Ind extends Component {
 
   render() {
     const props = this.props
-    const {state} = this.props
+    const { state } = this.props
 
     return (
       <div>
@@ -130,8 +134,8 @@ class Ind extends Component {
             </div>
           </Fragment>
         ) : (
-          <Fragment></Fragment>
-        )}
+            <Fragment></Fragment>
+          )}
       </div>
     );
   }

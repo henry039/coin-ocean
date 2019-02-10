@@ -18,7 +18,11 @@ class Signinform extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault()
-        firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then((u) => {
+        firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then((user) => {
+            this.props.userLogin(user.uid, {
+                photourl : user.photoURL,
+                displayname : user.displayName
+            })
             this.props.history.push('/profile')
         }).catch((error) => {
             console.log(error);

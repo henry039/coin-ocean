@@ -3,14 +3,12 @@ import './Titlebar.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import icon from '../../../picture/easymoney.png'
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { user_uid, user_profile } from '../../../redux/selectors'
 import { userLogout } from '../../../redux/actions'
 import { withRouter } from "react-router-dom";
 import firebase from '../../Firebase'
-import Profile from "../../../Page/Profile";
-import Ind from "../../CoinInfo/indivcoincard"
 
 class Titlebar extends Component {
     constructor() {
