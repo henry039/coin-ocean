@@ -7,6 +7,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { user_uid, user_profile } from '../../../redux/selectors'
 import { userLogout } from '../../../redux/actions'
+import { withRouter } from "react-router-dom";
 import firebase from '../../Firebase'
 
 class Titlebar extends Component {
@@ -20,6 +21,10 @@ class Titlebar extends Component {
     logout = () => {
         this.props.userLogout()
         firebase.auth().signOut()
+    }
+
+    Search = () => {
+        this.props.history.push(`/coinpage/${this.state.inputValue}`);
     }
 
     render() {
@@ -52,12 +57,9 @@ class Titlebar extends Component {
                                     Contact
                             </Link>
                             </li>
-                            <form className="form-inline my-2 my-lg-0 searchbox">
-
+                            <form className="form-inline my-2 my-lg-0 searchbox" onSubmit={this.Search}>
                                 <input className="form-control mr-sm-2" value={this.state.inputValue} onChange={(e) => this.setState({ inputValue: e.target.value })} type="search" placeholder="Search Coin" aria-label="Search" />
-                                <Link to={`/coinpage/${this.state.inputValue}`}>
                                     <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                                </Link>
                             </form>
 
                         </ul>
@@ -98,4 +100,4 @@ const mapStateToProps = (state) => ({
     profile: user_profile(state)
 })
 
-export default connect(mapStateToProps, {userLogout})(Titlebar);
+export default withRouter(connect(mapStateToProps, {userLogout})(Titlebar));

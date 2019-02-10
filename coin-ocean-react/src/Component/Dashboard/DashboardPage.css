@@ -36,9 +36,9 @@
     font-weight: bold;
     display: flex;
     justify-items: flex-start;
-    margin-right: 10px;
+    margin-right: 30px;
   }
-  
+
   .appmarketcap{
     font-weight: bold;
     width: 130px;
@@ -95,13 +95,13 @@
 
   .coinlist{
     border: 1px solid #ffffff;
-    background-color:#004080;
+    background-color:#4d4d4d;
     color: #ffffff;
     padding: 5px;
     margin-bottom: 13px;
     width: 90%;
     display: flex;
-    box-shadow: 8px 8px #ff8000;
+    box-shadow: 5px 5px #ff8000;
 }
 
 
@@ -114,9 +114,10 @@
     width: 100px;
     display: flex;
     justify-items: flex-start;
-    margin-right: 10px;
+    margin-right: 30px; 
     cursor: pointer;
     font-weight: bold;
+    color: #ccf2ff;
 }
 
 .name:hover{

@@ -51,8 +51,8 @@ class DashboardPage extends Component {
             <p className='rank'>{props.rank}</p>
             <Link to={`/coinpage/${props.symbol}`}><p className='name'>{props.name}</p></Link>
             <p className='marketcap'>{props.marketcap}</p>
-            <p className='price'>{props.price}</p>
-            <p className='change'>{props.change}</p>
+            <p className='price' style={{color: props.change >= '0' ? "#4dff4d" : "#ff3333"}}>{props.price}</p>
+            <p className='change' style={{backgroundColor: props.change >= '0' ? "#00e600" : "#ff3333"}}>{props.change}</p>
             <p className='vol'>{props.vol}</p>
             <p className='supply'>{props.supply}</p>
             <p className="maxsupply">{props.maxsupply}</p>

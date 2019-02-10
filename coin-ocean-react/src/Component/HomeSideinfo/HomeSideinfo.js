@@ -14,7 +14,7 @@ class HomeSideinfo extends Component {
   }
 
   componentDidMount() {
-    fetch("https://api.coinmarketcap.com/v1/ticker/?convert=USD&limit=5")
+    fetch("https://api.coinmarketcap.com/v1/ticker/?convert=USD&limit=10")
       .then(res => res.json())
       .then(
         result => {
@@ -46,13 +46,10 @@ class HomeSideinfo extends Component {
 
     const Dashboard = props => {
       return (
-          <div className="hscoinlist">
-
+          <div className="hscoinlist" style={{backgroundColor: props.change > '0' ? "rgba(77, 255, 77,0.8)" : "rgba(255, 51, 51, 0.6)"}}>
             <p className='hsname'>{props.name}</p>
             <p className='hsprice'>{props.price}</p>
             <p className='hschange'>{props.change}</p>
-            <p className='hsvol'>{props.vol}</p>
-
           </div>
       );
     };
