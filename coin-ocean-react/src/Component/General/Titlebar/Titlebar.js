@@ -7,7 +7,6 @@ import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { user_uid, user_profile } from '../../../redux/selectors'
 import { userLogout } from '../../../redux/actions'
-import { withRouter } from "react-router-dom";
 import firebase from '../../Firebase'
 
 class Titlebar extends Component {
