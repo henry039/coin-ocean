@@ -1,6 +1,6 @@
 const webSocket = require('socket.io');
 const { minute, hour } = require('../data_src/10minutesStore')
-const { combine } = require('../fata_src/history')
+const { combine } = require('../data_src/history')
 const { realtime_price } = require('../data_src/realtime_price')
 const CronJob = require('cron').CronJob
 
