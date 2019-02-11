@@ -10,6 +10,7 @@ import NoMatch from './Page/NoMatch'
 // import Test from './container/test'
 import firebase from './Component/Firebase'
 import RankPage from './Page/RankPage'
+import AboutPage from './Page/AboutPage'
 
 import { BrowserRouter as Router,
 Route, Switch } from 'react-router-dom'
@@ -46,6 +47,7 @@ class App extends Component {
           <Route path="/signin" component={Signin} />
           <Route path="/profile" component={Profile} />
           <Route path="/ranking" component={RankPage} />
+          <Route path="/about" component={AboutPage} />
           <Route component={NoMatch} />
         </Switch>
       </Router>

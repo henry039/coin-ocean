@@ -42,7 +42,7 @@ class Titlebar extends Component {
                             </Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to="/">
+                                <Link className="nav-link" to="/about">
                                     About
                             </Link>
                             </li>
@@ -52,8 +52,8 @@ class Titlebar extends Component {
                             </Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to="/">
-                                    Contact
+                                <Link className="nav-link" to="/ranking">
+                                    Ranking
                             </Link>
                             </li>
                             <form className="form-inline my-2 my-lg-0 searchbox" onSubmit={this.Search}>

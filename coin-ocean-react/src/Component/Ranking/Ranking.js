@@ -7,9 +7,10 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 class Ranking extends Component {
     render() {
         return (
-            <div>
-                <table class="table">
-                <thead class="thead-dark">
+            <div className="ranktocenter">
+                <div className="titlerank"> The top 10 Investors Rank</div>
+                <table className="table">
+                <thead className="thead-dark">
                     <tr>
                     <th scope="col">Rank #</th>
                     <th scope="col">User</th>
