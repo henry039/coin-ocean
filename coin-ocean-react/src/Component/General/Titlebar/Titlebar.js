@@ -23,7 +23,7 @@ class Titlebar extends Component {
     }
 
     Search = () => {
-        this.props.history.push(`/coinpage/${this.state.inputValue}`);
+        this.props.history.push(`/coinpage/${this.state.inputValue.toUpperCase()}`);
     }
 
     render() {

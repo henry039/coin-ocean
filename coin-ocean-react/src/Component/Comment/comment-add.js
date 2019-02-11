@@ -2,11 +2,11 @@ import * as React from 'react';
 import "./comment.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
-import "./comment.css";
 import moment from 'moment'
 import { connect } from 'react-redux'
 import { addComments_DB } from '../../redux/actions'
 import { user_profile, user_uid } from '../../redux/selectors'
+import { withRouter } from "react-router-dom";
 
 export class CommentInput extends React.Component {
     constructor(props) {
@@ -59,4 +59,4 @@ export class CommentInput extends React.Component {
     }
 }
 
-export default connect((state) => ({ profile: user_profile(state), uid :user_uid(state)}), { addComments_DB })(CommentInput)
+export default withRouter(connect((state) => ({ profile: user_profile(state), uid :user_uid(state)}), { addComments_DB })(CommentInput))

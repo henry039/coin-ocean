@@ -1,10 +1,4 @@
 import * as React from 'react';
-import CardActions from "@material-ui/core/CardActions";
-import IconButton from "@material-ui/core/IconButton";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import ShareIcon from "@material-ui/icons/Share";
-import Reply from "@material-ui/icons/Reply";
-import "./comment.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import { connect } from 'react-redux'
@@ -46,7 +40,7 @@ export class RecipeReviewCard extends React.Component {
                                     <p>{comment.context}</p>
                                 </div>
 
-                                <div>
+                                {/* <div>
                                     <CardActions className="actions felxtoright" disableActionSpacing>
                                         <IconButton aria-label="Add to favorites">
                                             <FavoriteIcon />
@@ -60,7 +54,7 @@ export class RecipeReviewCard extends React.Component {
                                             <Reply />
                                         </IconButton>
                                     </CardActions>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     )
