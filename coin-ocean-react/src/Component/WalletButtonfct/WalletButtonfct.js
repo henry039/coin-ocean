@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 import moment from 'moment';
+import axios from 'axios'
 import WatchList from './Watchlist/Watchlist'
 import Invested from './Invested/Invested'
 import MyComment from './MyComment/MyComment'
@@ -22,9 +23,9 @@ import {
   wallet_coins_name,
   wallet_coins_quantity,
   wallet_coins_asset,
-  total_asset,
   user_profile,
-  total_coins_asset
+  total_coins_asset,
+  user_uid
 } from '../../redux/selectors'
 
 export default class WalletButtonfct extends Component {
@@ -36,6 +37,8 @@ export default class WalletButtonfct extends Component {
       Trade: false,
       MyComment: false,
       Application: false,
+      coin_detail : [],
+      coin_list : []
     };
   }
 
@@ -89,9 +92,21 @@ export default class WalletButtonfct extends Component {
     });
   };
 
+  componentDidMount() {
+    const uid = user_uid(this.props.state)
+    axios.get("https://api.coinmarketcap.com/v1/ticker/?convert=USD&limit=100")
+      .then((res) => this.setState({coin_detail : res.data}))
+      .catch((err) => console.log(err))
+    
+    axios.post('http://localhost:5000/api/get/subscribe', {uid})
+      .then((res) => this.setState({coin_list : res.data}))
+      .catch((err) => console.log(err))
+  }
+
   render() {
     let info = null;
     const { state } = this.props
+    // trade at least one
     if (trade_history(state)[0] !== undefined) {
       const history = trade_history(state)
       const commentsss = comments(state)
@@ -106,49 +121,38 @@ export default class WalletButtonfct extends Component {
       const today_earn = trade_history_coin_earn_lost(state)
       const today_earn_percent = trade_history_coin_earn_lost_percent(state)
       if (this.state.WatchList) {
-        info = (
-          <div>
-            <div className="yeswatchlist">
-              <div className="watchlistbar">
-                <p>Rank</p>
-                <p>Name</p>
-                <p>MarketCap</p>
-                <p>Price</p>
-                <p>Change(24h)</p>
+        if(this.state.coin_list.length > 0){
+          info = (
+            <div>
+              <div className="yeswatchlist">
+                <div className="watchlistbar">
+                  <p>Rank</p>
+                  <p>Name</p>
+                  <p>MarketCap</p>
+                  <p>Price</p>
+                  <p>Change(24h)</p>
+                </div>
               </div>
+              {(this.state.coin_list.map((coin) => {
+                const detail = this.state.coin_detail.filter((data) => data['symbol'] === coin)
+                return (
+                  <WatchList
+                    rank={detail[0].rank}
+                    name={detail[0].name}
+                    marketcap={detail[0].market_cap_usd}
+                    price={detail[0].price_usd}
+                    change={detail[0].percent_change_24h}
+                    re_keyid={detail[0].id}
+                    keyid={`#${detail[0].id}`}
+                    symbol={detail[0].symbol}
+                  />
+                )
+              }))}
             </div>
-            <WatchList
-              rank="rank"
-              name="bitcoin"
-              marketcap="marketcap"
-              price="$4000"
-              change="+3.78%"
-              keyid="#btc"
-              re_keyid="btc"
-              symbol='BTC'
-            />
-            <WatchList
-              rank="rank"
-              name="bitcoin"
-              marketcap="marketcap"
-              price="$4000"
-              change="+3.78%"
-              keyid="#xrp"
-              re_keyid="xrp"
-              symbol='XRP'
-            />
-            <WatchList
-              rank="rank"
-              name="bitcoin"
-              marketcap="marketcap"
-              price="$4000"
-              change="+3.78%"
-              keyid="#eth"
-              re_keyid="eth"
-              symbol='ETH'
-            />
-          </div>
-        );
+          );
+        } else {
+          info = (<WatchList/>)
+        }
       } else if (this.state.Invested) {
         info = (
           <div className="investlist">
@@ -248,51 +252,41 @@ export default class WalletButtonfct extends Component {
           </div>
         );
       }
+      // not trade record
     } else {
       if (this.state.WatchList) {
-        info = (
-          <div>
-            <div className="yeswatchlist">
-              <div className="watchlistbar">
-                <p>Rank</p>
-                <p>Name</p>
-                <p>MarketCap</p>
-                <p>Price</p>
-                <p>Change(24h)</p>
+        if(this.state.coin_list.length > 0){
+          info = (
+            <div>
+              <div className="yeswatchlist">
+                <div className="watchlistbar">
+                  <p>Rank</p>
+                  <p>Name</p>
+                  <p>MarketCap</p>
+                  <p>Price</p>
+                  <p>Change(24h)</p>
+                </div>
               </div>
+              {(this.state.coin_list.map((coin) => {
+                const detail = this.state.coin_detail.filter((data) => data['symbol'] === coin)
+                return (
+                  <WatchList
+                    rank={detail.rank}
+                    name={detail.name}
+                    marketcap={detail.market_cap_usd}
+                    price={detail.price_usd}
+                    change={detail.percent_change_24h}
+                    re_keyid={detail.id}
+                    keyid={`#${detail.id}`}
+                    symbol={detail.symbol}
+                  />
+                )
+              }))}
             </div>
-            <WatchList
-              rank="rank"
-              name="bitcoin"
-              marketcap="marketcap"
-              price="$4000"
-              change="+3.78%"
-              keyid="#btc"
-              re_keyid="btc"
-              symbol='BTC'
-            />
-            <WatchList
-              rank="rank"
-              name="bitcoin"
-              marketcap="marketcap"
-              price="$4000"
-              change="+3.78%"
-              keyid="#xrp"
-              re_keyid="xrp"
-              symbol='XRP'
-            />
-            <WatchList
-              rank="rank"
-              name="bitcoin"
-              marketcap="marketcap"
-              price="$4000"
-              change="+3.78%"
-              keyid="#eth"
-              re_keyid="eth"
-              symbol='ETH'
-            />
-          </div>
-        );
+          );
+        } else {
+          info = (<WatchList/>)
+        }
       } else if (this.state.Invested) {
         info = (
           <div className="investlist">

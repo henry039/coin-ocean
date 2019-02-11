@@ -20,6 +20,7 @@ export class CommentInput extends React.Component {
         e.preventDefault()
         const { uid, addComments_DB } = this.props
         addComments_DB(uid, {context : this.state.context, tag : this.props.coin})
+        this.Close.click()
     }
 
     handleChange = (e) => {
@@ -40,14 +41,14 @@ export class CommentInput extends React.Component {
                         <div className="modal-dialog modal-dialog-centered" role="document">
                             <div className="modal-content">
                                 <div className="modal-header">
-                                    <h5 className="modal-title" id="exampleModalCenterTitle">UserName: {`${profile.displayname}`}</h5>
-                                    <h6> Time: {moment(new Date()).format('lll')}</h6>
+                                    <h5 className="modal-title" id="exampleModalCenterTitle">{`${profile.displayname}`}</h5>
+                                    <h6>{moment(new Date()).format('lll')}</h6>
                                 </div>
                                 <div className="modal-body">
                                     <textarea name="comments" id="comments" className="commenttextarea" placeholder="write down your comment here" onChange={this.handleChange}></textarea>
                                 </div>
                                 <div className="modal-footer">
-                                    <input type="button" className="btn btn-secondary" data-dismiss="modal" value="Close" />
+                                    <input type="button" className="btn btn-secondary" data-dismiss="modal" value="Close" ref={input => {this.Close = input}}/>
                                     <input type="submit" className="btn btn-success" value="POST" />
                                 </div>
                             </div>

@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import axios from 'axios'
 import "./indivcoincard.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
@@ -12,11 +13,11 @@ class Ind extends Component {
     super(props);
     this.state = {
       quantity: 0,
-      targetprice: []
+      targetprice: 0
     }
   }
 
-  handleClick = (e) => {
+  handleTrade = (e) => {
     if (this.state.quantity > 0) {
       const { state, symbol, addTradeHistory_DB, updateWallet_DB } = this.props
       const uid = user_uid(state)
@@ -30,13 +31,50 @@ class Ind extends Component {
           action: [
             symbol, type, this.state.quantity, this.props.price_usd
           ]
-        })
+        }).then(() => this.closeTrade.click())
       }else{
         alert('Invalid Trade')
       }
     } else {
       alert('Damn You')
     }
+  }
+  
+  handleRemind = (e) => {
+    if (this.state.targetprice > 0) {
+      const { state, symbol  } = this.props
+      const uid = user_uid(state)
+      const type = e.target.name
+      const reminder = [symbol, type, this.state.targetprice]
+      axios.post('http://localhost:5000/api/get/reminder', {uid})
+        .then((res) => {
+          if(res.data.length === 0 ){
+            axios.post('http://localhost:5000/api/update/reminder', {uid, reminder : [reminder]})
+              .then(()=> this.closeRemind.click())
+            } else {
+            axios.post('http://localhost:5000/api/update/reminder', {uid, reminder : [...res.data, reminder]})
+              .then(()=> this.closeRemind.click())
+          }
+        })
+        .catch((err) => console.log(err))
+    } else {
+      alert('Invalid Remind')
+    }
+  }
+
+  handleSubscribe = () => {
+    const uid = user_uid(this.props.state)
+    const symbol = this.props.symbol
+    axios.post('http://localhost:5000/api/get/subscribe', {uid})
+      .then((res) => res.data)
+      .then((data) => {
+        if(data.length > 0){
+          const coinList = [...new Set([...data, symbol])]
+          axios.post('http://localhost:5000/api/update/subscribe', {uid, coinList})
+        }else{
+          axios.post('http://localhost:5000/api/update/subscribe', {uid, coinList : [symbol]})
+        }
+      })
   }
 
   handleChange = (e) => {
@@ -83,7 +121,7 @@ class Ind extends Component {
           <Fragment>
             <button className="btn btn-outline-info" type="button" data-toggle="modal" data-target="#trader">Trade</button>
             <button className="btn btn-outline-primary" type="button" data-toggle="modal" data-target="#remind">Price Remind</button>
-            <button className="btn btn-outline-danger">Favorite</button>
+            <button className="btn btn-outline-danger" onClick={this.handleSubscribe}>Favorite</button>
 
             <div className="modal fade" id="trader" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div className="modal-dialog" role="document">
@@ -99,9 +137,9 @@ class Ind extends Component {
                       </div>
                     </div>
                     <div className="modal-footer">
-                      <button type="button" className="btn btn-success" data-dismiss="modal" name='buy' onClick={this.handleClick}>Buy</button>
-                      <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <button type="button" className="btn btn-danger" data-dismiss="modal" name='sell' onClick={this.handleClick}>Sell</button>
+                      <button type="button" className="btn btn-success" name='buy' onClick={this.handleTrade}>Buy</button>
+                      <button type="button" className="btn btn-secondary" data-dismiss="modal" ref={input => {this.closeTrade = input}}>Close</button>
+                      <button type="button" className="btn btn-danger" name='sell' onClick={this.handleTrade}>Sell</button>
                     </div>
                   </form>
                 </div>
@@ -118,19 +156,19 @@ class Ind extends Component {
                     <div className="modal-body">
                       <div>
                         <input name='targetprice' onChange={this.handleChange} placeholder="Target buying price remind e.g 30" />
-                        <button type="button" className="btn btn-info" data-dismiss="modal" name='buy' onClick={this.handleClick}>Buy Reminder</button>
+                        <button type="button" className="btn btn-info" name='buy' onClick={this.handleRemind}>Buy Reminder</button>
                       </div>
                     </div>
 
                     <div className="modal-body">
                       <div>
                         <input name='targetprice' onChange={this.handleChange} placeholder="Target selling price remind e.g 30" />
-                        <button type="button" className="btn btn-warning" data-dismiss="modal" name='sell' onClick={this.handleClick}>Sell Reminder</button>
+                        <button type="button" className="btn btn-warning" name='sell' onClick={this.handleRemind}>Sell Reminder</button>
                       </div>
                     </div>
 
                     <div className="modal-footer ">
-                      <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="button" className="btn btn-secondary" data-dismiss="modal" ref={input => {this.closeRemind = input}}>Close</button>
                     </div>
                   </form>
                 </div>
