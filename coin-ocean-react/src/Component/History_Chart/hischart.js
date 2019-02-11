@@ -2,6 +2,7 @@ import React from 'react';
 import ReactApexChart from "react-apexcharts";
 import Ind from "../CoinInfo/indivcoincard"
 import HM from "../HourMin_Chart/HM"
+import { formatter } from '../../redux/selectors'
 import './hischart.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
@@ -27,7 +28,7 @@ class ChartHistory extends React.Component {
                     },
                     labels: {
                         formatter: function (val) {
-                            return `${val} USD`
+                            return `${formatter.format(val)}`
                         },
                         minWidth: 100
                     },
@@ -89,9 +90,12 @@ class ChartHistory extends React.Component {
                     },
                     labels: {
                         formatter: function (val) {
-                            const million = 100000000
-                            let BillionBase = (val / million)
-                            return `${BillionBase.toFixed(0)}B`
+                            if(val > 1000000){
+                                let million = 1000000
+                                return `${formatter.format(val / million)}M`
+                            }
+                            let thousand = 1000
+                            return `${formatter.format(val / thousand)}K`
                         },
                         minWidth: 100,
                     },

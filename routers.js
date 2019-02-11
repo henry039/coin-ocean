@@ -10,7 +10,7 @@ module.exports = (app) => {
 
     app.post('/api/get/subscribe', async(req, res)=>{
         let subscribe = await db.getSubscribeCoin(req.body.uid)
-        res.send(subscribe[0].subscribe)
+        res.send(formatLike(subscribe[0].subscribe))
     })
 
     app.post('/api/update/subscribe', async(req, res)=>{
@@ -20,7 +20,7 @@ module.exports = (app) => {
 
     app.post('/api/get/reminder', async(req, res)=>{
         let reminder = await db.getReminder(req.body.uid)
-        res.send(reminder[0].reminder)
+        res.send(formatRemind(reminder[0].reminder))
     })
 
     app.post('/api/update/reminder', async(req, res)=> {
@@ -98,6 +98,13 @@ function formatCommentsOutput(input) {
     })
     return { body }
 }
+
+function formatLike(input){
+    return ((input !== null ) ? input : [])
+} 
+function formatRemind(input){
+    return ((input !== '' ) ? input : [])
+} 
 
 // wallet
 // "uid" : "test1"
