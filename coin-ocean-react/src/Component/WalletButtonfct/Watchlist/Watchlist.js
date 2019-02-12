@@ -6,16 +6,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 class WatchList extends Component {
-    constructor(props) {
-        super(props);
-        // this.state = {
-        //     watchlist: [],
-        //     watchlistcontext: true
-        // };
-        // this.keyid = props.keyid.toString();
-        // this.re_keyid = props.re_keyid.toString();
-    }
-
     render() {
         if (!this.props.hasOwnProperty("marketcap")) {
             return (

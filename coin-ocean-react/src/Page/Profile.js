@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from "react";
 import Titlebar from "../Component/General/Titlebar/Titlebar"
-import Infobar from "../Component/General/Infobar/Infobar"
 import Wallet from "../Component/Wallet/Wallet"
 import WalletButtonfct from "../Component/WalletButtonfct/WalletButtonfct"
 import PieChart from '../Component/charts/pie'
@@ -11,10 +10,6 @@ import { wallet, trade_history, comments, pie_data, user_uid } from '../redux/se
 
 
 class Profile extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentWillMount() {
     if (this.props.uid !== undefined) {
       this.props.getWallet_DB(this.props.uid)

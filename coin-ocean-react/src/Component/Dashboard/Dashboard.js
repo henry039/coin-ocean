@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import "./DashboardPage.css";
 import {Link} from 'react-router-dom';
-
-
+import axios from 'axios';
 
 class DashboardPage extends Component {
   constructor() {
@@ -15,23 +14,9 @@ class DashboardPage extends Component {
   }
 
   componentDidMount() {
-    fetch("https://api.coinmarketcap.com/v1/ticker/?convert=USD&limit=100")
-      .then(res => res.json())
-      .then(
-        result => {
-          this.setState({
-            coin: result,
-            coinlist: true
-          });
-        },
-
-        error => {
-          this.setState({
-            error,
-            coinlist: false
-          });
-        }
-      );
+    axios.get(process.env.REACT_APP_API_MARKET)
+      .then((res) => this.setState({ coin : res.data, coinlist : true}))
+      .catch((error) => this.setState({error, coinlist: false}))
   }
 
 

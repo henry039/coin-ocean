@@ -338,8 +338,8 @@ export default class WalletButtonfct extends Component {
     return (
       <div>
         <div className="profileboard">
-          <button className="btn btn-outline-success infoboardbtn" onClick={this.buttonwatchClick}>WatchList</button>
-          <button className="btn btn-outline-info infoboardbtn" onClick={this.buttoninvestClick}>Investing</button>
+          <button className="btn btn-outline-success infoboardbtn" onClick={this.buttonwatchClick}>Favourite</button>
+          <button className="btn btn-outline-info infoboardbtn" onClick={this.buttoninvestClick}>Portfolio</button>
           <button className="btn btn-outline-danger infoboardbtn" onClick={this.buttontradeClick}>TradeHistory</button>
           <button className="btn btn-outline-primary infoboardbtn" onClick={this.buttoncommnetClick}>MyComment</button>
           <button className="btn btn-outline-warning infoboardbtn" onClick={this.buttonsettingClick}>Setting</button>

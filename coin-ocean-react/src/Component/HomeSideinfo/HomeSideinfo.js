@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "../HomeSideinfo/HomeSideinfo.css";
-
-
+import axios from 'axios';
 
 class HomeSideinfo extends Component {
   constructor() {
@@ -14,26 +13,11 @@ class HomeSideinfo extends Component {
   }
 
   componentDidMount() {
-    fetch("https://api.coinmarketcap.com/v1/ticker/?convert=USD&limit=10")
-      .then(res => res.json())
-      .then(
-        result => {
-          this.setState({
-            coin: result,
-            coinlist: true
-          });
-        },
-
-        error => {
-          this.setState({
-            error,
-            coinlist: false
-          });
-        }
-      );
+    axios.get(process.env.REACT_APP_API_MARKET)
+      .then((res) => this.setState({ coin : res.data.slice(0, 10), coinlist : true }))
+      .catch((error) => this.setState({error, coinlist : false}))
   }
-
-
+  
   render() {
     let coins = null;
 

@@ -6,15 +6,10 @@ const socketIO = require('./model/ws/websocket')
 require('dotenv').config()
 
 let app = express()
-let server = app.listen(5000)
+let server = app.listen(8080)
 
 // react build
-// app.use(express.static(__dirname+'/coin-ocean-react/build'))
-// app.get('/*', (req, res)=> {
-//     res.sendFile(__dirname+'/coin-ocean-react/build/index.html')
-// })
 app.use(cors({
-    // origin: [ 'http://localhost:3000'], 
     origin: [process.env.LOCALHOST], 
     exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
     maxAge: 5,
@@ -22,8 +17,12 @@ app.use(cors({
     allowMethods: ['GET', 'POST'],
     allowHeaders: ['Content-Type', 'Authorization', 'Accept'],
 }))
-// app.use(cors())
 app.use(parser.urlencoded({extended: false}))
 app.use(parser.json())
 router(app)
+app.use(express.static(__dirname+'/coin-ocean-react/build'))
+app.get('/*', (req, res)=> {
+    res.sendFile(__dirname+'/coin-ocean-react/build/index.html')
+})
+
 socketIO(server)

@@ -2,6 +2,7 @@ import React from 'react';
 import ReactApexChart from "react-apexcharts";
 import Ind from "../CoinInfo/indivcoincard"
 import HM from "../HourMin_Chart/HM"
+import axios from 'axios';
 import { formatter } from '../../redux/selectors'
 import './hischart.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -167,20 +168,9 @@ class ChartHistory extends React.Component {
         })
 
         // =====================William add=====================
-        fetch("https://api.coinmarketcap.com/v1/ticker/?convert=USD&limit=100")
-            .then(res => res.json())
-            .then(
-                result => {
-                    this.setState({
-                        info: result.filter(e => {return e.symbol === this.state.pageid.toUpperCase()})
-                    });
-                },
-                error => {
-                    this.setState({
-                        error
-                    });
-                }
-            )
+        axios.get(process.env.REACT_APP_API_MARKET)
+            .then((res) => this.setState({ info : res.data.filter(e => {return e.symbol === this.state.pageid.toUpperCase()}) }))
+            .catch((error) => this.setState({error}))
         // =====================William add end=====================
     }
     handleClick = (e) => {

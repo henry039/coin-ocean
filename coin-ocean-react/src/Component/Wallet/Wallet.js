@@ -1,10 +1,9 @@
 import React, { Component, Fragment } from "react";
 import './Wallet.css'
-// import usericon from '../../picture/press.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faStickyNote } from '@fortawesome/free-solid-svg-icons'
-import { user_profile, total_asset, formatter, wallet_today_earn_lost, wallet_today_earn_lost_percent, wallet_coins_name, wallet_rest, wallet} from '../../redux/selectors'
+import { user_profile, total_asset, formatter, wallet_today_earn_lost, wallet_today_earn_lost_percent, wallet_rest, wallet} from '../../redux/selectors'
 library.add(faStickyNote);
 
 export default class Wallet extends Component {
@@ -25,9 +24,9 @@ export default class Wallet extends Component {
                                 </div>
                                 <div className="walletuser">
                                     <h4>{profile.displayname}</h4>
-                                    <h6>Member ID: 007</h6>
+                                    {/* <h6>Member ID: 007</h6>
                                     <h6>Ranking: 1</h6>
-                                    <h6>EYN coin: 100</h6>
+                                    <h6>EYN coin: 100</h6> */}
                                     {/* <h4>Coinshu</h4>
                                     <h6>Member ID: 007</h6>
                                     <h6>Ranking: 1</h6>
@@ -70,9 +69,9 @@ export default class Wallet extends Component {
                                 </div>
                                 <div className="walletuser">
                                     <h4>{profile.displayname}</h4>
-                                    <h6>Member ID: 007</h6>
+                                    {/* <h6>Member ID: 007</h6>
                                     <h6>Ranking: 1</h6>
-                                    <h6>EYN coin: 100</h6>
+                                    <h6>EYN coin: 100</h6> */}
                                     {/* <h4>Coinshu</h4>
                                     <h6>Member ID: 007</h6>
                                     <h6>Ranking: 1</h6>

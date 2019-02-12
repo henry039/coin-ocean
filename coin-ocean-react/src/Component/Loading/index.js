@@ -9,9 +9,6 @@ const styles = theme => ({
 });
 
 class Loading extends React.Component {
-    constructor(props){
-        super(props)
-    }
     render(){
         return (
             <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center' , height: '100vh'}}>

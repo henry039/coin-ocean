@@ -7,6 +7,7 @@ import News from "../News/news";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import { withRouter } from 'react-router-dom';
+import axios from 'axios';
 
 class NC extends Component {
   constructor(props) {
@@ -22,33 +23,42 @@ class NC extends Component {
   }
 
   componentDidMount() {
-    fetch("https://api.coinmarketcap.com/v1/ticker/?convert=USD&limit=100")
-        .then(res => res.json())
-        .then(
-            result => {
-            this.setState({
-                info: result.filter(e => {return e.symbol === this.state.pageid2.toUpperCase()}),
-            });
-            let getname = this.state.info[0].id.toString()
-            const Api = new CryptoNewsApi("40d4452688001be85d8a40dd3fd5de35");
-            Api.getTopNewsByCoin(getname)
-              .then(articles => {
-                this.setState({
-                  news: articles
-                });
-                console.log(this.state.news);
-              })
-              .catch(error => console.error(error));
+    axios.get(process.env.REACT_APP_API_MARKET)
+      .then((res) => {
+        this.setState({ info : res.data.filter(e => e.symbol === this.state.pageid2.toLocaleUpperCase()) })
+      })
+      .then(() => {
+        const getName = this.state.info[0].id.toString()
+        const Api = new CryptoNewsApi('40d4452688001be85d8a40dd3fd5de35')
+        Api.getTopNewsByCoin(getName)
+          .then(articles => this.setState({news : articles}))
+      })
+      .catch((error) => this.setState({error}))
+    // fetch("https://api.coinmarketcap.com/v1/ticker/?convert=USD&limit=100")
+    //     .then(res => res.json())
+    //     .then(
+    //         result => {
+    //         this.setState({
+    //             info: result.filter(e => {return e.symbol === this.state.pageid2.toUpperCase()}),
+    //         });
+    //         let getname = this.state.info[0].id.toString()
+    //         const Api = new CryptoNewsApi("40d4452688001be85d8a40dd3fd5de35");
+    //         Api.getTopNewsByCoin(getname)
+    //           .then(articles => {
+    //             this.setState({
+    //               news: articles
+    //             });
+    //             console.log(this.state.news);
+    //           })
+    //           .catch(error => console.error(error));
           
-            },
-            error => {
-            this.setState({
-                error
-            });
-            }
-        );
-
-      
+    //         },
+    //         error => {
+    //         this.setState({
+    //             error
+    //         });
+    //         }
+    //     );
   }
 
 

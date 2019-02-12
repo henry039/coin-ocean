@@ -43,7 +43,7 @@ class Ranking extends Component {
                             <Fragment>
                                 <tr>
                                 <th scope="row">{index + 1}</th>
-                                <td><img src={rank.photourl} style={{height: '40px', borderRadius : '10px'}}/><br/>{rank.displayname}</td>
+                                <td><img src={rank.photourl} style={{height: '40px', borderRadius : '10px'}} alt='avatar'/><br/>{rank.displayname}</td>
                                 <td>{`${rank.diff.toFixed(2)}%`}</td>
                                 </tr>
                             </Fragment>
