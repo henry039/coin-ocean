@@ -14,7 +14,9 @@ class Loading extends React.Component {
     }
     render(){
         return (
-            <CircularProgress className={this.props.classes.progress} />
+            <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center' , height: '100vh'}}>
+                <CircularProgress className={this.props.classes.progress} />
+            </div>
         )
     }
 }

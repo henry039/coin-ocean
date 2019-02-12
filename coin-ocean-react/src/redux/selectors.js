@@ -122,8 +122,7 @@ export const trade_history_making = (state, action) => {
     // seperate first time trade
     if(wallet(state).coins.length !== 0){
         const coin_match_index_wallet = (wallet_coins_name(state).indexOf(symbol) >= 0) ? wallet_coins_name(state).indexOf(symbol) : undefined;
-        const coin_on_hold = wallet_coins_quantity(state)[coin_match_index_wallet]
-    
+        const coin_on_hold = (wallet_coins_quantity(state)[coin_match_index_wallet] === undefined) ? 0 : wallet_coins_quantity(state)[coin_match_index_wallet]
         if (type === 'buy' && rest > coin_payment) {
             return {
                 coins: [

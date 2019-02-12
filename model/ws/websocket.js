@@ -2,6 +2,7 @@ const webSocket = require('socket.io');
 const { minute, hour } = require('../data_src/10minutesStore')
 const { combine } = require('../data_src/history')
 const { realtime_price } = require('../data_src/realtime_price')
+const { ranking_24hr } = require('../dailyUpdate/ranking')
 const CronJob = require('cron').CronJob
 
 module.exports = (server) => {
@@ -12,9 +13,18 @@ module.exports = (server) => {
             socket.emit('realtime price', await realtime_price())
         })
         job.start()
-
+        
         socket.on('realtime price init', async()=>{
             socket.emit('realtime price init reply', await realtime_price())
+        })
+
+        const ranking = new CronJob('0 0 */1 * * *', async()=>{
+            socket.emit('ranking update', await ranking_24hr())
+        })
+        ranking.start()
+        
+        socket.on('ranking init', async()=>{
+            socket.emit('ranking init reply', await ranking_24hr())
         })
 
         socket.on('minute chart init', async (coin_id)=>{

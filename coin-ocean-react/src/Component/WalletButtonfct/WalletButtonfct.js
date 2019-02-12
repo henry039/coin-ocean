@@ -92,13 +92,13 @@ export default class WalletButtonfct extends Component {
     });
   };
 
-  componentDidMount() {
+  componentWillMount() {
     const uid = user_uid(this.props.state)
     axios.get("https://api.coinmarketcap.com/v1/ticker/?convert=USD&limit=100")
       .then((res) => this.setState({coin_detail : res.data}))
       .catch((err) => console.log(err))
-    
-    axios.post('http://localhost:5000/api/get/subscribe', {uid})
+
+    axios.post(`${process.env.REACT_APP_HTTP}/api/get/subscribe`, {uid})
       .then((res) => this.setState({coin_list : res.data}))
       .catch((err) => console.log(err))
   }
@@ -135,18 +135,20 @@ export default class WalletButtonfct extends Component {
               </div>
               {(this.state.coin_list.map((coin) => {
                 const detail = this.state.coin_detail.filter((data) => data['symbol'] === coin)
-                return (
-                  <WatchList
-                    rank={detail[0].rank}
-                    name={detail[0].name}
-                    marketcap={detail[0].market_cap_usd}
-                    price={detail[0].price_usd}
-                    change={detail[0].percent_change_24h}
-                    re_keyid={detail[0].id}
-                    keyid={`#${detail[0].id}`}
-                    symbol={detail[0].symbol}
-                  />
-                )
+                if(this.state.coin_detail.length !== 0){
+                  return (
+                    <WatchList
+                      rank={detail[0].rank}
+                      name={detail[0].name}
+                      marketcap={detail[0].market_cap_usd}
+                      price={detail[0].price_usd}
+                      change={detail[0].percent_change_24h}
+                      re_keyid={detail[0].id}
+                      keyid={`#${detail[0].id}`}
+                      symbol={detail[0].symbol}
+                    />
+                  )
+                }
               }))}
             </div>
           );
@@ -248,7 +250,7 @@ export default class WalletButtonfct extends Component {
       } else if (this.state.Application) {
         info = (
           <div className="applist">
-            <Application />
+            <Application uid={user_uid(state)}/>
           </div>
         );
       }

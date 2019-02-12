@@ -31,7 +31,8 @@ class Ind extends Component {
           action: [
             symbol, type, this.state.quantity, this.props.price_usd
           ]
-        }).then(() => this.closeTrade.click())
+        })
+        this.closeTrade.click()
       }else{
         alert('Invalid Trade')
       }
@@ -46,14 +47,14 @@ class Ind extends Component {
       const uid = user_uid(state)
       const type = e.target.name
       const reminder = [symbol, type, this.state.targetprice]
-      axios.post('http://localhost:5000/api/get/reminder', {uid})
+      axios.post(`${process.env.REACT_APP_HTTP}/api/get/reminder`, {uid})
         .then((res) => {
           if(res.data.length === 0 ){
-            axios.post('http://localhost:5000/api/update/reminder', {uid, reminder : [reminder]})
-              .then(()=> this.closeRemind.click())
+            axios.post(`${process.env.REACT_APP_HTTP}/api/update/reminder`, {uid, reminder : [reminder]})
+              .then(()=> {this.closeRemind.click();})
             } else {
-            axios.post('http://localhost:5000/api/update/reminder', {uid, reminder : [...res.data, reminder]})
-              .then(()=> this.closeRemind.click())
+            axios.post(`${process.env.REACT_APP_HTTP}/api/update/reminder`, {uid, reminder : [...res.data, reminder]})
+              .then(()=> {this.closeRemind.click();})
           }
         })
         .catch((err) => console.log(err))
@@ -65,14 +66,14 @@ class Ind extends Component {
   handleSubscribe = () => {
     const uid = user_uid(this.props.state)
     const symbol = this.props.symbol
-    axios.post('http://localhost:5000/api/get/subscribe', {uid})
+    axios.post(`${process.env.REACT_APP_HTTP}/api/get/subscribe`, {uid})
       .then((res) => res.data)
       .then((data) => {
         if(data.length > 0){
           const coinList = [...new Set([...data, symbol])]
-          axios.post('http://localhost:5000/api/update/subscribe', {uid, coinList})
+          axios.post(`${process.env.REACT_APP_HTTP}/api/update/subscribe`, {uid, coinList})
         }else{
-          axios.post('http://localhost:5000/api/update/subscribe', {uid, coinList : [symbol]})
+          axios.post(`${process.env.REACT_APP_HTTP}/api/update/subscribe`, {uid, coinList : [symbol]})
         }
       })
   }

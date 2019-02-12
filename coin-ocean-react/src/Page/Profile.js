@@ -24,8 +24,8 @@ class Profile extends Component {
   }
 
   render() {
-    const { state, uid, wallet, history } = this.props;
-    if(uid !== undefined){
+    const { state, uid, wallet, history, comments } = this.props;
+    if(uid !== undefined &&  comments !== undefined && history !== undefined){
       return (
         <Fragment>
           {/* (wallet(state).coins.length === 0 &&
@@ -36,7 +36,6 @@ class Profile extends Component {
           (wallet(state).coins.length !== 0 &&
               trade_history(state).length !== 0) */}
           {(wallet.coins.length === 0 &&
-            // comments(state).length === 0 &&
             history.length === 0) ? (
               <Fragment>
                 <Titlebar />
@@ -63,5 +62,6 @@ class Profile extends Component {
   }
 }
 
-export default connect((state) => ({ state, uid: user_uid(state), wallet : wallet(state), history : trade_history(state) }), { getWallet_DB, getTradeHistory_DB, getUserComments_DB })(Profile);
+export default connect((state) => ({ state, uid: user_uid(state), wallet : wallet(state), history : trade_history(state) ,
+comments : comments(state)}), { getWallet_DB, getTradeHistory_DB, getUserComments_DB })(Profile);
 

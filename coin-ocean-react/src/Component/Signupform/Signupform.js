@@ -28,7 +28,7 @@ class Signupform extends Component {
                     displayName: `${this.state.fname} ${this.state.lname}`,
                     photoURL: "https://upload.wikimedia.org/wikipedia/commons/f/f4/User_Avatar_2.png"
                 })
-                .then(() => axios.post('http://localhost:5000/api/add/user', {uid : user.uid, payload : {photourl : user.photoURL, displayname: user.displayName, email: user.email}}))
+                .then(() => axios.post(`${process.env.REACT_APP_HTTP}/api/add/user`, {uid : user.uid, payload : {photourl : user.photoURL, displayname: user.displayName, email: user.email}}))
                 .then(() => {
                     this.props.userLogin(user.uid, {
                         photourl: user.photoURL, displayname: user.displayName

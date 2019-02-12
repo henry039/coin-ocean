@@ -12,27 +12,31 @@ import firebase from './Component/Firebase'
 import RankPage from './Page/RankPage'
 import AboutPage from './Page/AboutPage'
 
-import { BrowserRouter as Router,
-Route, Switch } from 'react-router-dom'
+import {
+  BrowserRouter as Router,
+  Route, Switch
+} from 'react-router-dom'
 import { connect } from 'react-redux'
-import { getPrice, userLogin, getWallet_DB } from './redux/actions'
+import { getPrice, userLogin, getWallet_DB, getUserComments_DB, getTradeHistory_DB } from './redux/actions'
 class App extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.ws = openSocket(process.env.REACT_APP_WS)
-    this.ws.on('realtime price', (reply)=>{
+    this.ws.on('realtime price', (reply) => {
       this.props.getPrice(reply)
     })
     firebase.auth().onAuthStateChanged((user) => {
-      if(user){
-        this.props.userLogin(user.uid, {photourl : user.photoURL, displayname: user.displayName})
+      if (user) {
+        this.props.userLogin(user.uid, { photourl: user.photoURL, displayname: user.displayName })
         this.props.getWallet_DB(user.uid)
+        this.props.getTradeHistory_DB(user.uid)
+        this.props.getUserComments_DB(user.uid)
       }
     })
   }
-  componentWillMount(){
+  componentWillMount() {
     this.ws.emit('realtime price init')
-    this.ws.on('realtime price init reply', (reply)=>{
+    this.ws.on('realtime price init reply', (reply) => {
       this.props.getPrice(reply)
     })
   }
@@ -56,4 +60,4 @@ class App extends Component {
   }
 }
 
-export default connect((state)=>({prices : state.prices}), {getPrice, userLogin, getWallet_DB})(App);
+export default connect((state) => ({ prices: state.prices }), { getPrice, userLogin, getWallet_DB, getTradeHistory_DB, getUserComments_DB })(App);

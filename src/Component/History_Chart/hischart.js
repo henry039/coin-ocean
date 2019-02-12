@@ -9,7 +9,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 import { withRouter } from 'react-router-dom';
 
 
-const url = 'http://localhost:5000/api/bitcoin'
+// const url = 'http://localhost:5000/api/bitcoin'
 
 class ChartHistory extends React.Component {
     constructor(props) {
@@ -133,10 +133,10 @@ class ChartHistory extends React.Component {
     }
 
     componentDidMount() {
-        axios.get(url).then(res => {
-            this.setState({history : res.data})
-            this.updateSeries(res.data.slice(res.data.length -365 * 5))
-        })
+        // axios.get(url).then(res => {
+        //     this.setState({history : res.data})
+        //     this.updateSeries(res.data.slice(res.data.length -365 * 5))
+        // })
 
         // =====================William add=====================
         fetch("https://api.coinmarketcap.com/v1/ticker/?convert=USD&limit=100")

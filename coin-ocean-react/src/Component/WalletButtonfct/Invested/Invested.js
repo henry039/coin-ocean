@@ -12,23 +12,25 @@ export default class Invested extends Component {
                             <a href="/"><p>{coin}</p></a>
                             <small><p>{symbol}</p></small>
                         </div>
-                        <div>
-                            <p>{assets}</p>
-                            <small><p>{quantity}</p></small>
-                        </div>
-                        <div>
-                            <p>{price}</p>
-                            <small><p>{cost}</p></small>
-                        </div>
-                        <div>
-                            <p>{tdyearn}</p>
-                            <small><p>{tdypercent}</p></small>
-                        </div>
-                        <div>
-                            <p>{totearn}</p>
-                            <small><p>{totpercent} </p></small>
-                        </div>
-                        <p>{invest}</p>
+                            <div className="investcoin">  
+                                <p>{assets}</p>
+                                <small><p>{quantity}</p></small>
+                            </div>
+                            <div className="investcoin">
+                                <p>{price}</p>
+                                <small><p>{cost}</p></small>
+                            </div>
+                            <div className="investcoin">
+                                <p>{tdyearn}</p>
+                                <small><p>{tdypercent}</p></small>
+                            </div>
+                            <div className="investcoin">
+                                <p>{totearn}</p>
+                                <small><p>{totpercent} </p></small>
+                            </div>
+                            <div className="investcoin">
+                                <p>{invest}</p>
+                            </div>
                     </div>
                 </div>
             )

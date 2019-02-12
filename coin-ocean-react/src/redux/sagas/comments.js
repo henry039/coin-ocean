@@ -31,7 +31,6 @@ export function* addCommentSaga() {
 		const {payload} = yield take(actions.actionType.ADD_DB_COMMENTS);
 		try {
 			const {data} = yield call(api.addComments_api, payload.uid, payload.body);
-			console.log(data)
 			yield put(actions.addComments(data.body));
 		} catch(error) {
 			yield put(actions.emitError(error.response));

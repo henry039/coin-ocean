@@ -1,4 +1,5 @@
 import React,{Component} from 'react';
+import Reminder from '../../Reminder'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faAddressCard, faCogs, faBell, faCrown  } from '@fortawesome/free-solid-svg-icons'
@@ -14,6 +15,7 @@ class Setting extends Component{
                 <button><FontAwesomeIcon icon="cogs" /></button>
                 <button><FontAwesomeIcon icon="bell" /></button>
                 <button><FontAwesomeIcon icon="crown" /></button>
+                <Reminder uid={this.props.uid}/>
             </div>
         )
     }

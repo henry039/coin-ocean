@@ -29,7 +29,7 @@ class SoicalLogin extends React.Component {
 
   isNewUser = () => {
     if (firebase.auth().currentUser.metadata.creationTime === firebase.auth().currentUser.metadata.lastSignInTime) {
-      axios.post('http://localhost:5000/api/add/user', {
+      axios.post(`${process.env.REACT_APP_HTTP}/api/add/user`, {
         uid: firebase.auth().currentUser.uid,
         payload: {
           photourl: firebase.auth().currentUser.photoURL,

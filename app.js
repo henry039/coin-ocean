@@ -3,7 +3,7 @@ const router = require('./routers')
 const parser = require('body-parser')
 const cors = require('cors')
 const socketIO = require('./model/ws/websocket')
-
+require('dotenv').config()
 
 let app = express()
 let server = app.listen(5000)
@@ -14,7 +14,8 @@ let server = app.listen(5000)
 //     res.sendFile(__dirname+'/coin-ocean-react/build/index.html')
 // })
 app.use(cors({
-    origin: [ 'http://localhost:3000'], 
+    // origin: [ 'http://localhost:3000'], 
+    origin: [process.env.LOCALHOST], 
     exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
     maxAge: 5,
     credentials: true,

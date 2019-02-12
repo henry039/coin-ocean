@@ -44,6 +44,9 @@
 
 .comcontext{
     padding: 20px;
+    border: 1px solid #000000 !important;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
 }
 
 

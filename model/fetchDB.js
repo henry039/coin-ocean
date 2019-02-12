@@ -75,36 +75,17 @@ class fetchDB {
     //     return fakeData
     // }
 
-    // dailyUpdate(coin, payload) {
-    //     let { date, price, txVol, marketCap } = payload
-    //     if (price !== undefined && txVol !== undefined && marketCap !== undefined) {
-    //         return knex.transaction(trx => {
-    //             trx(`${coin}`)
-    //                 .insert({
-    //                     date,
-    //                     price,
-    //                     txVol,
-    //                     marketCap
-    //                 })
-    //                 .returning('id')
-    //                 .then(trx.commit)
-    //                 .catch(trx.rollback)
-    //         })
-    //         .then((id) => knex(`${coin}`).where('id', ...id))
-    //     } else {
-    //         return Promise.reject(new Error('Payload missing'))
-    //     }
-    // }
-
     // Wallet Section
     createWallet(uid, payload) {
-        let { rest } = payload
-        if (rest !== undefined) {
+        let { rest, dailyPL } = payload
+        const dailyPL2 = JSON.stringify(dailyPL)
+        if (rest !== undefined && dailyPL !== undefined) {
             return knex.transaction(trx => {
                 trx('wallet')
                     .insert({
                         rest,
-                        uid
+                        uid,
+                        dailyPL : dailyPL2
                     })
                     .then(trx.commit)
                     .catch(trx.rollback)
@@ -118,11 +99,15 @@ class fetchDB {
         return knex('wallet').where('uid', uid)
             .then(reply => {
                 if (reply[0] === undefined) {
-                    return this.createWallet(uid, { rest: 100000000 })
+                    return this.createWallet(uid, { rest: 1000000 , dailyPL: [1000000]})
                 } else {
                     return reply
                 }
             })
+    }
+
+    getAllWallet(){
+        return knex('wallet')
     }
 
     updateWallet(uid, payload) {
@@ -143,8 +128,7 @@ class fetchDB {
         }
     }
 
-    dailyUpdateWallet(uid, payload) {
-        let { dailyPL } = payload
+    dailyUpdateWallet(uid, dailyPL) {
         if (dailyPL !== undefined) {
             return knex.transaction(trx => {
                 trx('wallet')
@@ -224,9 +208,10 @@ class fetchDB {
     }
 }
 let a = new fetchDB()
-// a.getWallet('test1').then(console.log)
+// a.getAllWallet().then(console.log)
+// a.getWallet('test2').then(console.log)
 // a.updateWallet('test1', {coins: [['BTC' ,49],["ETH", 500]], rest:7500}).then(console.log).catch(err => console.error(err))
-// a.dailyUpdateWallet('test1', {dailyPL: [17640, 19870]}).then(console.log).catch(err => console.error(err))
+// a.dailyUpdateWallet('test2', [100000000]).then(console.log).catch(err => console.error(err))
 
 // a.insertTradeHistory('test1', {action : ['BTC','buy', 13, 3750]}).then(console.log).catch(err => console.error(err))
 // a.getTradeHistory('test1').then(console.log)
