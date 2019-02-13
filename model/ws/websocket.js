@@ -27,6 +27,12 @@ module.exports = (server) => {
             socket.emit('ranking init reply', await ranking_24hr())
         })
 
+        socket.on('ranking profile init', async(uid)=>{
+            const wholeLiist = await ranking_24hr()
+            const currentRank = wholeLiist.map((rank) => rank.uid).indexOf(uid) + 1
+            socket.emit('ranking profile init reply', currentRank)
+        })
+
         socket.on('minute chart init', async (coin_id)=>{
             socket.emit('minute chart reply', {
                 data : await minute(coin_id)

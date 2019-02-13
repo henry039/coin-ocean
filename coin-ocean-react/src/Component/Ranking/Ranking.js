@@ -16,14 +16,22 @@ class Ranking extends Component {
         this.ws.on('ranking update', (reply)=>{
             this.setState({ranking : reply})
         })
-    }
-
-    componentWillMount(){
         this.ws.emit('ranking init')
+    }
+    componentDidMount(){
         this.ws.on('ranking init reply', (reply)=>{
-            this.setState({ranking : reply})
+            const top10 = reply.slice(0, 10)
+            this.setState({ranking : top10})
         })
     }
+    
+    componentDidUpdate(){
+        this.ws.on('ranking init reply', (reply)=>{
+            const top10 = reply.slice(0, 10)
+            this.setState({ranking : top10})
+        })
+    }
+    
     render() {
         if(this.state.ranking.length > 0){
             return (

@@ -59,12 +59,12 @@ class Signinform extends Component {
 
                                 </div>
 
-                                <div className="form-group">
+                                {/* <div className="form-group">
                                     <div className="form-check">
                                         <input className="form-check-input" type="checkbox" id="gridCheck" />
                                         <label className="form-check-label" for="gridCheck">Remember me</label>
                                     </div>
-                                </div>
+                                </div> */}
 
                                 <button type="submit" className="btn btn-warning">Sign in EasyMoney</button>
                             </form>

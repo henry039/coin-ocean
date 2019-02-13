@@ -44,8 +44,10 @@ async function ranking_24hr() {
             return -1;
         return 0;
     }
-    return user_diff_percent.sort(compare).slice(0, 9)
-}
 
+    // return user_diff_percent.sort(compare).slice(0, 10)
+    return user_diff_percent.sort(compare)
+}
 // ranking_24hr().then(console.log)
+// ranking_24hr().then((res) => res.map((rank) => rank.uid).indexOf('gWDCHnG5ePMeUZ3oYTXzRdY8YBC3') + 1).then(console.log)
 module.exports = { ranking_24hr }
