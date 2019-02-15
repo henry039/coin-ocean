@@ -1,13 +1,10 @@
 # coin-ocean
 
-### `yarn install && yarn client-install`
+### `npm install`
+### `npm run client-install`
 
 To install dependencies
 
-### `yarn dev`
+### `npm run dev`
 
 To run both server
-
-### `http://localhost:5000/api/bitcoin`
-
-To retrieve bitcoin json details for about a year
